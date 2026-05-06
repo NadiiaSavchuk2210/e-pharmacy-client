@@ -1,0 +1,244 @@
+:root {
+  /* FONT FAMILY */
+  --font-inter: 'Inter';
+
+  /* FOUNDATION COLOR PALETTE */
+  --color-neutral-0: #ffffff;
+  --color-neutral-50: #f7f8fa;
+  --color-neutral-100: #f1f1f1;
+  --color-neutral-200: #e7f1ed;
+  --color-neutral-300: #d5d6d7;
+  --color-neutral-400: #93939a;
+  --color-neutral-500: #6a6a6f;
+  --color-neutral-700: #252539;
+  --color-neutral-900: #1d1e21;
+
+  --color-brand-500: #59b17a;
+  --color-brand-100: rgb(89 177 122 / 0.1);
+
+  --color-danger-500: #e85050;
+  --color-danger-100: rgb(232 80 80 / 0.1);
+
+  --color-warning-500: #ffc531;
+
+  --color-overlay-45: rgb(29 30 33 / 0.45);
+
+  --color-shadow-soft: rgb(29 30 33 / 0.02);
+
+  /* SEMANTIC COLORS */
+  --color-bg: var(--color-neutral-0);
+  --color-surface: var(--color-neutral-0);
+  --color-surface-muted: var(--color-neutral-50);
+  --color-surface-subtle: var(--color-neutral-100);
+
+  --color-card-bg: var(--color-neutral-200);
+
+  --color-text: var(--color-neutral-900);
+  --color-text-muted: var(--color-neutral-700);
+  --color-text-subtle: var(--color-neutral-400);
+  --color-text-weak: rgb(29 30 33 / 0.4);
+  --color-text-inverse: var(--color-neutral-0);
+
+  --color-border: rgb(241 241 241 / 0.8);
+  --color-border-subtle: rgb(241 241 241 / 0.45);
+
+  --color-accent: var(--color-brand-500);
+  --color-accent-soft: var(--color-brand-100);
+
+  --color-danger: var(--color-danger-500);
+  --color-danger-soft: var(--color-danger-100);
+
+  --color-warning: var(--color-warning-500);
+  --color-overlay: var(--color-overlay-45);
+
+  /* COMPONENT TOKENS */
+  --button-primary-bg: var(--color-accent);
+  --button-primary-text: var(--color-text-inverse);
+
+  --button-outline-bg: var(--color-surface);
+  --button-outline-border: var(--color-accent);
+  --button-outline-text: var(--color-accent);
+
+  --button-danger-bg: var(--color-danger);
+  --button-danger-text: var(--color-text-inverse);
+
+  --input-bg: var(--color-surface);
+  --input-border: var(--color-border);
+  --input-border-focus: var(--color-accent);
+
+  --card-border: var(--color-border);
+
+  /* TYPOGRAPHY */
+  --font-family-base:
+    var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  --font-family-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  --text-12: 0.75rem;
+  --text-14: 0.875rem;
+  --text-16: 1rem;
+  --text-18: 1.125rem;
+  --text-20: 1.25rem;
+  --text-24: 1.5rem;
+  --text-28: 1.75rem;
+  --text-36: 2.25rem;
+  --text-48: 3rem;
+  --text-74: 4.625rem;
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  --line-height-120: 1.2;
+  --line-height-150: 1.5;
+
+  /* SPACING */
+  --space-4: 0.25rem;
+  --space-8: 0.5rem;
+  --space-12: 0.75rem;
+  --space-16: 1rem;
+  --space-20: 1.25rem;
+  --space-24: 1.5rem;
+  --space-32: 2rem;
+  --space-40: 2.5rem;
+  --space-48: 3rem;
+  --space-64: 4rem;
+  --space-80: 5rem;
+
+  --section-y-mobile: 2.5rem;
+  --section-y-tablet: 3.75rem;
+  --section-y-desktop: 5rem;
+
+  /* RADIUS */
+  --radius-md: 0.5rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* SHADOWS */
+  --shadow-sm: 0 -1px 14px 0 var(--color-shadow-soft);
+
+  /* TRANSITIONS */
+  --transition-fast: 150ms ease-in-out;
+  --transition-base: 250ms ease-in-out;
+
+  /* LAYOUT */
+  --container-max: 335px;
+  --container-max-tablet: 704px;
+  --container-max-desktop: 1184px;
+  --container-padding: 16px;
+}
+
+/* AUTO DARK MODE (system preference) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-bg: #0b0d0e;
+    --color-surface: #101314;
+    --color-surface-muted: #15191b;
+    --color-surface-subtle: #1b2023;
+    --color-card-bg: #132019;
+
+    --color-text: #f4f5f6;
+    --color-text-muted: #c7cdd0;
+    --color-text-subtle: #8d9599;
+    --color-text-weak: rgb(244 245 246 / 0.45);
+    --color-text-inverse: #ffffff;
+
+    --color-border: rgb(255 255 255 / 0.08);
+    --color-border-subtle: rgb(255 255 255 / 0.04);
+
+    --color-accent: var(--color-brand-500);
+    --color-accent-soft: rgb(89 177 122 / 0.18);
+
+    --color-danger: var(--color-danger-500);
+    --color-danger-soft: rgb(232 80 80 / 0.16);
+
+    --color-warning: #e7b12a;
+    --color-overlay: rgb(0 0 0 / 0.62);
+
+    /* COMPONENT TOKENS */
+    --button-primary-bg: var(--color-accent);
+    --button-primary-text: #ffffff;
+
+    --button-outline-bg: transparent;
+    --button-outline-border: rgb(89 177 122 / 0.55);
+    --button-outline-text: var(--color-accent);
+
+    --button-danger-bg: var(--color-danger);
+    --button-danger-text: #ffffff;
+
+    --input-bg: #101314;
+    --input-border: rgb(255 255 255 / 0.08);
+    --input-border-focus: var(--color-accent);
+
+    --card-border: rgb(255 255 255 / 0.06);
+
+    --color-shadow-soft: rgb(0 0 0 / 0.24);
+  }
+}
+
+/* MANUAL DARK MODE */
+:root[data-theme='dark'] {
+  --color-bg: #0b0d0e;
+  --color-surface: #101314;
+  --color-surface-muted: #15191b;
+  --color-surface-subtle: #1b2023;
+  --color-card-bg: #132019;
+
+  --color-text: #f4f5f6;
+  --color-text-muted: #c7cdd0;
+  --color-text-subtle: #8d9599;
+  --color-text-weak: rgb(244 245 246 / 0.45);
+  --color-text-inverse: #ffffff;
+
+  --color-border: rgb(255 255 255 / 0.08);
+  --color-border-subtle: rgb(255 255 255 / 0.04);
+
+  --color-accent: var(--color-brand-500);
+  --color-accent-soft: rgb(89 177 122 / 0.18);
+
+  --color-danger: var(--color-danger-500);
+  --color-danger-soft: rgb(232 80 80 / 0.16);
+
+  --color-warning: #e7b12a;
+  --color-overlay: rgb(0 0 0 / 0.62);
+
+  --button-primary-bg: var(--color-accent);
+  --button-primary-text: #ffffff;
+
+  --button-outline-bg: transparent;
+  --button-outline-border: rgb(89 177 122 / 0.55);
+  --button-outline-text: var(--color-accent);
+
+  --button-danger-bg: var(--color-danger);
+  --button-danger-text: #ffffff;
+
+  --input-bg: #101314;
+  --input-border: rgb(255 255 255 / 0.08);
+  --input-border-focus: var(--color-accent);
+
+  --card-border: rgb(255 255 255 / 0.06);
+
+  --color-shadow-soft: rgb(0 0 0 / 0.24);
+}
+
+@media (min-width: 375px) {
+  :root {
+    --container-padding: 20px;
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --container-max: var(--container-max-tablet);
+    --container-padding: 32px;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --container-max: var(--container-max-desktop);
+    --container-padding: 40px;
+  }
+}
