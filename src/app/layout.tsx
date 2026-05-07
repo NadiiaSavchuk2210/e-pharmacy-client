@@ -1,6 +1,6 @@
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import 'modern-normalize';
+import { Inter } from 'next/font/google';
+
 import './globals.css';
 
 const inter = Inter({
@@ -9,11 +9,6 @@ const inter = Inter({
   display: 'swap',
   fallback: ['Arial', 'Helvetica', 'sans-serif'],
 });
-
-export const metadata: Metadata = {
-  title: 'E-Pharmacy',
-  description: 'E-Pharmacy client',
-};
 
 export default function RootLayout({
   children,
@@ -30,3 +25,6 @@ export default function RootLayout({
     </html>
   );
 }
+
+export { metadata } from './metadata';
+export { viewport } from './viewport';
