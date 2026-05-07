@@ -1,0 +1,11 @@
+const LoginPage = () => {
+  return (
+    <div>
+      <h1>LoginPage</h1>
+    </div>
+  );
+};
+
+export { metadata } from './metadata';
+
+export default LoginPage;
