@@ -68,6 +68,14 @@
             <path stroke-width="2.6667" stroke-miterlimit="4" stroke-linecap="round" stroke-linejoin="round"
                 d="M8 8l16 16"></path>
         </symbol>
+        <symbol id="icon-burger" viewBox="0 0 39 32">
+            <path stroke-width="2.4615" stroke-miterlimit="4" stroke-linecap="round" stroke-linejoin="round"
+                d="M34.877 16.255h-29.538"></path>
+            <path stroke-width="2.4615" stroke-miterlimit="4" stroke-linecap="round" stroke-linejoin="round"
+                d="M34.877 9.855h-29.538"></path>
+            <path stroke-width="2.4615" stroke-miterlimit="4" stroke-linecap="round" stroke-linejoin="round"
+                d="M34.877 22.655h-29.538"></path>
+        </symbol>
 
     </defs>
 </svg>
