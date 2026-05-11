@@ -1,22 +1,25 @@
 :root {
-  /* FONT FAMILY */
-  --font-inter: 'Inter';
-
   /* FOUNDATION COLOR PALETTE */
   --color-neutral-0: #ffffff;
   --color-neutral-50: #f7f8fa;
   --color-neutral-100: #f1f1f1;
   --color-neutral-200: #e7f1ed;
   --color-neutral-300: #d5d6d7;
+  --color-neutral-350: #d9d9d9;
   --color-neutral-400: #93939a;
   --color-neutral-500: #6a6a6f;
   --color-neutral-700: #252539;
   --color-neutral-900: #1d1e21;
 
   --color-brand-500: #59b17a;
+  --color-brand-600: #3f945f;
+  --color-brand-700: #34784f;
   --color-brand-100: rgb(89 177 122 / 0.1);
+  --color-brand-border: rgba(89, 177, 122, 0.5);
 
   --color-danger-500: #e85050;
+  --color-danger-600: #cc3838;
+  --color-danger-700: #bf3030;
   --color-danger-100: rgb(232 80 80 / 0.1);
 
   --color-warning-500: #ffc531;
@@ -41,6 +44,7 @@
 
   --color-border: rgb(241 241 241 / 0.8);
   --color-border-subtle: rgb(241 241 241 / 0.45);
+  --color-border-inverse: rgba(241, 241, 241, 0.5);
 
   --color-accent: var(--color-brand-500);
   --color-accent-soft: var(--color-brand-100);
@@ -52,15 +56,41 @@
   --color-overlay: var(--color-overlay-45);
 
   /* COMPONENT TOKENS */
-  --button-primary-bg: var(--color-accent);
+  --button-primary-bg: var(--color-brand-500);
+  --button-primary-hover-bg: var(--color-brand-600);
   --button-primary-text: var(--color-text-inverse);
 
   --button-outline-bg: var(--color-surface);
-  --button-outline-border: var(--color-accent);
+  --button-outline-border: var(--color-brand-border);
   --button-outline-text: var(--color-accent);
+  --button-outline-inverse-border: var(--color-border-inverse);
+  --button-outline-inverse-text: var(--color-text-inverse);
+  --button-outline-inverse-hover-bg: var(--color-neutral-0);
+  --button-outline-inverse-hover-border: var(--color-brand-border);
+  --button-outline-inverse-hover-text: var(--color-brand-700);
 
-  --button-danger-bg: var(--color-danger);
+  --button-danger-bg: var(--color-danger-700);
+  --button-danger-hover-bg: #a92828;
   --button-danger-text: var(--color-text-inverse);
+  --button-delete-bg: var(--color-danger-soft);
+  --button-delete-text: var(--color-danger);
+  --button-delete-hover-bg: var(--color-danger);
+  --button-delete-hover-text: var(--color-text-inverse);
+
+  --link-auth-register-border: var(--color-border-inverse);
+  --link-auth-register-text: var(--color-neutral-100);
+  --link-auth-register-hover-bg: var(--color-neutral-0);
+  --link-auth-register-hover-border: var(--color-neutral-0);
+  --link-auth-register-hover-text: var(--color-brand-600);
+  --link-auth-login-text: var(--color-neutral-100);
+  --link-auth-login-hover-text: var(--color-neutral-0);
+  --link-logout-border: var(--color-brand-border);
+  --link-logout-text: var(--color-brand-500);
+  --link-logout-hover-bg: var(--color-brand-500);
+  --link-logout-hover-border: var(--color-brand-500);
+  --link-logout-hover-text: var(--color-text-inverse);
+
+  --header-brand-bg: var(--color-brand-500);
 
   --input-bg: var(--color-surface);
   --input-border: var(--color-border);
@@ -77,6 +107,7 @@
 
   --text-12: 0.75rem;
   --text-14: 0.875rem;
+  --text-14-08: 0.88rem;
   --text-16: 1rem;
   --text-18: 1.125rem;
   --text-20: 1.25rem;
@@ -88,23 +119,33 @@
 
   --font-weight-normal: 400;
   --font-weight-medium: 500;
+  --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
-  --line-height-120: 1.2;
-  --line-height-150: 1.5;
+  --line-height-1: 1rem;
+  --line-height-120: 1.2rem;
+  --line-height-18: 1.13rem;
+  --line-height-150: 1.5rem;
 
   /* SPACING */
   --space-4: 0.25rem;
   --space-8: 0.5rem;
+  --space-13: 0.81rem;
+  --space-14: 0.875rem;
   --space-12: 0.75rem;
+  --space-15: 0.9375rem;
   --space-16: 1rem;
   --space-20: 1.25rem;
   --space-24: 1.5rem;
+  --space-25: 1.5625rem;
+  --space-28: 1.75rem;
   --space-32: 2rem;
   --space-40: 2.5rem;
   --space-48: 3rem;
   --space-64: 4rem;
   --space-80: 5rem;
+  --space-112: 7rem;
+  --space-120: 7.5rem;
 
   --section-y-mobile: 2.5rem;
   --section-y-tablet: 3.75rem;
@@ -114,6 +155,7 @@
   --radius-md: 0.5rem;
   --radius-xl: 1rem;
   --radius-2xl: 1.5rem;
+  --radius-4xl: 3.75rem;
   --radius-full: 9999px;
 
   /* SHADOWS */
@@ -127,29 +169,29 @@
   --container-max: 335px;
   --container-max-tablet: 704px;
   --container-max-desktop: 1184px;
-  --container-padding: 16px;
+  --container-padding: 20px;
 }
 
 /* AUTO DARK MODE (system preference) */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --color-bg: #0b0d0e;
-    --color-surface: #101314;
-    --color-surface-muted: #15191b;
-    --color-surface-subtle: #1b2023;
-    --color-card-bg: #132019;
+    --color-bg: #0f1712;
+    --color-surface: #152018;
+    --color-surface-muted: #1b2a20;
+    --color-surface-subtle: #223329;
+    --color-card-bg: #18271e;
 
-    --color-text: #f4f5f6;
-    --color-text-muted: #c7cdd0;
-    --color-text-subtle: #8d9599;
-    --color-text-weak: rgb(244 245 246 / 0.45);
+    --color-text: #f4f7f5;
+    --color-text-muted: #d3ddd7;
+    --color-text-subtle: #b8c6bd;
+    --color-text-weak: rgb(244 247 245 / 0.58);
     --color-text-inverse: #ffffff;
 
-    --color-border: rgb(255 255 255 / 0.08);
-    --color-border-subtle: rgb(255 255 255 / 0.04);
+    --color-border: rgb(255 255 255 / 0.14);
+    --color-border-subtle: rgb(255 255 255 / 0.08);
 
-    --color-accent: var(--color-brand-500);
-    --color-accent-soft: rgb(89 177 122 / 0.18);
+    --color-accent: #2d6b46;
+    --color-accent-soft: rgb(122 217 159 / 0.16);
 
     --color-danger: var(--color-danger-500);
     --color-danger-soft: rgb(232 80 80 / 0.16);
@@ -158,21 +200,47 @@
     --color-overlay: rgb(0 0 0 / 0.62);
 
     /* COMPONENT TOKENS */
-    --button-primary-bg: var(--color-accent);
+    --button-primary-bg: var(--color-brand-700);
+    --button-primary-hover-bg: #2d6b46;
     --button-primary-text: #ffffff;
 
     --button-outline-bg: transparent;
-    --button-outline-border: rgb(89 177 122 / 0.55);
+    --button-outline-border: rgb(122 217 159 / 0.7);
     --button-outline-text: var(--color-accent);
+    --button-outline-inverse-border: var(--color-border-inverse);
+    --button-outline-inverse-text: #ffffff;
+    --button-outline-inverse-hover-bg: #ffffff;
+    --button-outline-inverse-hover-border: rgb(89 177 122 / 0.65);
+    --button-outline-inverse-hover-text: var(--color-brand-700);
 
-    --button-danger-bg: var(--color-danger);
+    --button-danger-bg: var(--color-danger-700);
+    --button-danger-hover-bg: #a92828;
     --button-danger-text: #ffffff;
+    --button-delete-bg: rgb(232 80 80 / 0.18);
+    --button-delete-text: #ff8a8a;
+    --button-delete-hover-bg: var(--color-danger-600);
+    --button-delete-hover-text: #ffffff;
 
-    --input-bg: #101314;
-    --input-border: rgb(255 255 255 / 0.08);
+    --link-auth-register-border: rgb(244 247 245 / 0.62);
+    --link-auth-register-text: #f4f7f5;
+    --link-auth-register-hover-bg: #ffffff;
+    --link-auth-register-hover-border: #ffffff;
+    --link-auth-register-hover-text: var(--color-brand-700);
+    --link-auth-login-text: #f4f7f5;
+    --link-auth-login-hover-text: #ffffff;
+    --link-logout-border: rgb(122 217 159 / 0.7);
+    --link-logout-text: var(--color-accent);
+    --link-logout-hover-bg: var(--color-brand-700);
+    --link-logout-hover-border: var(--color-brand-700);
+    --link-logout-hover-text: #ffffff;
+
+    --header-brand-bg: var(--color-brand-700);
+
+    --input-bg: var(--color-surface);
+    --input-border: var(--color-border);
     --input-border-focus: var(--color-accent);
 
-    --card-border: rgb(255 255 255 / 0.06);
+    --card-border: var(--color-border-subtle);
 
     --color-shadow-soft: rgb(0 0 0 / 0.24);
   }
@@ -180,23 +248,23 @@
 
 /* MANUAL DARK MODE */
 :root[data-theme='dark'] {
-  --color-bg: #0b0d0e;
-  --color-surface: #101314;
-  --color-surface-muted: #15191b;
-  --color-surface-subtle: #1b2023;
-  --color-card-bg: #132019;
+  --color-bg: #0f1712;
+  --color-surface: #152018;
+  --color-surface-muted: #1b2a20;
+  --color-surface-subtle: #223329;
+  --color-card-bg: #18271e;
 
-  --color-text: #f4f5f6;
-  --color-text-muted: #c7cdd0;
-  --color-text-subtle: #8d9599;
-  --color-text-weak: rgb(244 245 246 / 0.45);
+  --color-text: #f4f7f5;
+  --color-text-muted: #d3ddd7;
+  --color-text-subtle: #b8c6bd;
+  --color-text-weak: rgb(244 247 245 / 0.58);
   --color-text-inverse: #ffffff;
 
-  --color-border: rgb(255 255 255 / 0.08);
-  --color-border-subtle: rgb(255 255 255 / 0.04);
+  --color-border: rgb(255 255 255 / 0.14);
+  --color-border-subtle: rgb(255 255 255 / 0.08);
 
-  --color-accent: var(--color-brand-500);
-  --color-accent-soft: rgb(89 177 122 / 0.18);
+  --color-accent: var(--color-brand-700);
+  --color-accent-soft: rgb(122 217 159 / 0.16);
 
   --color-danger: var(--color-danger-500);
   --color-danger-soft: rgb(232 80 80 / 0.16);
@@ -204,29 +272,49 @@
   --color-warning: #e7b12a;
   --color-overlay: rgb(0 0 0 / 0.62);
 
-  --button-primary-bg: var(--color-accent);
+  --button-primary-bg: var(--color-brand-700);
+  --button-primary-hover-bg: #2d6b46;
   --button-primary-text: #ffffff;
 
   --button-outline-bg: transparent;
-  --button-outline-border: rgb(89 177 122 / 0.55);
+  --button-outline-border: rgb(122 217 159 / 0.7);
   --button-outline-text: var(--color-accent);
+  --button-outline-inverse-border: var(--color-border-inverse);
+  --button-outline-inverse-text: #ffffff;
+  --button-outline-inverse-hover-bg: #ffffff;
+  --button-outline-inverse-hover-border: rgb(89 177 122 / 0.65);
+  --button-outline-inverse-hover-text: var(--color-brand-700);
 
-  --button-danger-bg: var(--color-danger);
+  --button-danger-bg: var(--color-danger-700);
+  --button-danger-hover-bg: #a92828;
   --button-danger-text: #ffffff;
+  --button-delete-bg: rgb(232 80 80 / 0.18);
+  --button-delete-text: #ff8a8a;
+  --button-delete-hover-bg: var(--color-danger-600);
+  --button-delete-hover-text: #ffffff;
 
-  --input-bg: #101314;
-  --input-border: rgb(255 255 255 / 0.08);
+  --link-auth-register-border: rgb(244 247 245 / 0.62);
+  --link-auth-register-text: #f4f7f5;
+  --link-auth-register-hover-bg: #ffffff;
+  --link-auth-register-hover-border: #ffffff;
+  --link-auth-register-hover-text: var(--color-brand-700);
+  --link-auth-login-text: #f4f7f5;
+  --link-auth-login-hover-text: #ffffff;
+  --link-logout-border: rgb(122 217 159 / 0.7);
+  --link-logout-text: var(--color-accent);
+  --link-logout-hover-bg: var(--color-brand-700);
+  --link-logout-hover-border: var(--color-brand-700);
+  --link-logout-hover-text: #ffffff;
+
+  --header-brand-bg: var(--color-brand-700);
+
+  --input-bg: var(--color-surface);
+  --input-border: var(--color-border);
   --input-border-focus: var(--color-accent);
 
-  --card-border: rgb(255 255 255 / 0.06);
+  --card-border: var(--color-border-subtle);
 
   --color-shadow-soft: rgb(0 0 0 / 0.24);
-}
-
-@media (min-width: 375px) {
-  :root {
-    --container-padding: 20px;
-  }
 }
 
 @media (min-width: 768px) {

@@ -1,6 +1,8 @@
 import 'modern-normalize';
 import { Inter } from 'next/font/google';
 
+import SharedLayout from '@/shared/layout/SharedLayout';
+
 import './globals.css';
 
 const inter = Inter({
@@ -19,9 +21,12 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${inter.variable} h-full antialiased`}
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <SharedLayout>{children}</SharedLayout>
+      </body>
     </html>
   );
 }

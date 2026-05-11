@@ -29,13 +29,6 @@ img {
   max-width: 100%;
 }
 
-button,
-input,
-textarea,
-select {
-  font: inherit;
-}
-
 /* LAYOUT */
 .container {
   width: min(100% - (var(--container-padding) * 2), var(--container-max));
@@ -66,74 +59,4 @@ p {
 :where(a, button, input, textarea, select):focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
-}
-
-/* BUTTON DESIGN SYSTEM */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  padding-inline: var(--space-20);
-  border-radius: var(--radius-full);
-  font-weight: var(--font-weight-medium);
-  transition:
-    background-color var(--transition-fast),
-    border-color var(--transition-fast),
-    color var(--transition-fast),
-    opacity var(--transition-fast);
-  cursor: pointer;
-}
-
-.btn:hover {
-  opacity: 0.92;
-}
-.btn-primary {
-  background: var(--button-primary-bg);
-  color: var(--button-primary-text);
-  border: none;
-}
-
-.btn-outline {
-  background: var(--button-outline-bg);
-  color: var(--button-outline-text);
-  border: 1px solid var(--button-outline-border);
-}
-
-.btn-danger {
-  background: var(--button-danger-bg);
-  color: var(--button-danger-text);
-  border: none;
-}
-
-/* INPUT DESIGN SYSTEM */
-input,
-textarea,
-select {
-  width: 100%;
-  min-height: 44px;
-  padding: 0 var(--space-16);
-  border-radius: var(--radius-2xl);
-  border: 1px solid var(--input-border);
-  background: var(--input-bg);
-  color: var(--color-text);
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-  outline: none;
-  border-color: var(--input-border-focus);
-}
-
-/* CARD DESIGN SYSTEM */
-.card {
-  border-radius: var(--radius-2xl);
-  border: 1px solid var(--card-border);
-  background: var(--color-surface);
-}
-
-.card-tinted {
-  background: var(--color-card-bg);
-  border-radius: var(--radius-2xl);
 }
