@@ -1,32 +1,56 @@
 @import './variables.css';
 
-/* RESET */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
+@layer base {
+  /* RESET */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
 
-html {
-  font-size: 16px;
-  scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-body {
-  margin: 0;
-  font-family: var(--font-family-base);
-  font-size: var(--text-16);
-  font-weight: var(--font-weight-normal);
-  line-height: var(--line-height-150);
-  color: var(--color-text);
-  background: var(--color-bg);
-}
+  body {
+    margin: 0;
+    font-family: var(--font-family-base);
+    font-size: var(--text-16);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--line-height-150);
+    color: var(--color-text);
+    background: var(--color-bg);
+  }
 
-img {
-  display: block;
-  max-width: 100%;
+  img {
+    display: block;
+    max-width: 100%;
+  }
+
+  /* TYPOGRAPHY */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0;
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-120);
+  }
+
+  p {
+    margin: 0;
+  }
+
+  /* ACCESSIBILITY FOCUS */
+  :where(a, button, input, textarea, select):focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
 }
 
 /* LAYOUT */
@@ -37,26 +61,4 @@ img {
 
 .page {
   min-height: 100svh;
-}
-
-/* TYPOGRAPHY */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 0;
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-120);
-}
-
-p {
-  margin: 0;
-}
-
-/* ACCESSIBILITY FOCUS */
-:where(a, button, input, textarea, select):focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 2px;
 }

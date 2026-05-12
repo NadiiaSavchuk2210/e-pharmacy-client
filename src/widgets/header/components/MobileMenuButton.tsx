@@ -1,37 +1,41 @@
 import { cn } from '@/lib/utils';
 
-import type { HeaderTone } from './constants';
+import type { HeaderTone } from '../constants';
 
 type MobileMenuButtonProps = {
   isOpen: boolean;
+  controlsId?: string;
+  hasPopup?: boolean;
   tone?: Extract<HeaderTone, 'brand' | 'inverse'>;
   onClick: () => void;
 };
 
 export const MobileMenuButton = ({
   isOpen,
+  controlsId,
+  hasPopup = false,
   tone = 'inverse',
   onClick,
 }: MobileMenuButtonProps) => {
   const lineColor = tone === 'inverse' ? 'bg-neutral-0' : 'bg-brand-500';
-  const interactiveState =
-    tone === 'inverse' || isOpen
-      ? 'hover:bg-neutral-0/10 focus-visible:ring-neutral-0/70'
-      : 'hover:bg-brand-100 focus-visible:ring-brand-500';
-  const lineInteractiveColor =
-    isOpen
-      ? 'group-hover:bg-brand-700 group-focus-visible:bg-brand-700'
-      : tone === 'inverse'
-        ? 'group-hover:bg-neutral-100 group-focus-visible:bg-neutral-100'
-        : 'group-hover:bg-brand-700 group-focus-visible:bg-brand-700';
+  const interactiveState = isOpen
+    ? 'hover:bg-neutral-0 focus-visible:bg-neutral-0 focus-visible:ring-neutral-0/80'
+    : tone === 'inverse'
+      ? 'focus-visible:ring-neutral-0/70'
+      : 'focus-visible:ring-brand-500';
+  const lineInteractiveColor = isOpen
+    ? 'group-hover:bg-brand-700 group-focus-visible:bg-brand-700'
+    : tone === 'inverse'
+      ? 'group-hover:bg-neutral-900 group-focus-visible:bg-neutral-900'
+      : 'group-hover:bg-brand-700 group-focus-visible:bg-brand-700';
 
   return (
     <button
       type="button"
       aria-label={isOpen ? 'Close menu' : 'Open menu'}
-      aria-expanded={isOpen}
-      aria-haspopup="dialog"
-      aria-controls="mobile-menu"
+      aria-expanded={controlsId ? isOpen : undefined}
+      aria-haspopup={hasPopup ? 'dialog' : undefined}
+      aria-controls={controlsId}
       data-state={isOpen ? 'open' : 'closed'}
       className={cn(
         'group z-[60] flex size-8 cursor-pointer items-center justify-center rounded-full transition-[background-color,box-shadow,transform] duration-base ease-base xl:hidden',
@@ -43,7 +47,8 @@ export const MobileMenuButton = ({
     >
       <span
         className={cn(
-          'absolute h-0.5 w-8 rounded-full transition-[background-color,opacity,transform] duration-base ease-base group-hover:opacity-90',
+          'absolute h-0.5 rounded-full transition-[background-color,opacity,transform] duration-base ease-base group-hover:opacity-100',
+          isOpen ? 'w-6' : 'w-8',
           lineColor,
           lineInteractiveColor,
           isOpen ? 'translate-y-0 rotate-45 bg-neutral-0' : '-translate-y-2',
@@ -51,7 +56,8 @@ export const MobileMenuButton = ({
       />
       <span
         className={cn(
-          'absolute h-0.5 w-8 rounded-full transition-[background-color,opacity,transform] duration-base ease-base group-hover:opacity-90',
+          'absolute h-0.5 rounded-full transition-[background-color,opacity,transform] duration-base ease-base group-hover:opacity-100',
+          isOpen ? 'w-6' : 'w-8',
           lineColor,
           lineInteractiveColor,
           isOpen && 'scale-x-0 opacity-0',
@@ -59,7 +65,8 @@ export const MobileMenuButton = ({
       />
       <span
         className={cn(
-          'absolute h-0.5 w-8 rounded-full transition-[background-color,opacity,transform] duration-base ease-base group-hover:opacity-90',
+          'absolute h-0.5 rounded-full transition-[background-color,opacity,transform] duration-base ease-base group-hover:opacity-100',
+          isOpen ? 'w-6' : 'w-8',
           lineColor,
           lineInteractiveColor,
           isOpen ? 'translate-y-0 -rotate-45 bg-neutral-0' : 'translate-y-2',

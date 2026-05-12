@@ -2,18 +2,16 @@ import Link from 'next/link';
 
 import { cn } from '@/lib/utils';
 
-import type { HeaderTone } from './constants';
+import type { HeaderTone } from '../constants';
 
 type HeaderLogoProps = {
   tone?: Extract<HeaderTone, 'default' | 'inverse'>;
   className?: string;
-  onClick?: () => void;
 };
 
 export const HeaderLogo = ({
   tone = 'default',
   className,
-  onClick,
 }: HeaderLogoProps) => {
   const isInverse = tone === 'inverse';
   const logoSmSrc = isInverse
@@ -34,7 +32,6 @@ export const HeaderLogo = ({
           : 'focus-visible:ring-brand-700 focus-visible:ring-offset-neutral-0',
         className,
       )}
-      onClick={onClick}
     >
       <picture>
         <source media="(min-width: 48rem)" srcSet={logoLgSrc} />
