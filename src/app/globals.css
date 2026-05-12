@@ -8,6 +8,7 @@
 @theme inline {
   --color-neutral-0: var(--color-neutral-0);
   --color-neutral-50: var(--color-neutral-50);
+  --color-neutral-50-30: var(--color-neutral-50-30);
   --color-neutral-100: var(--color-neutral-100);
   --color-neutral-200: var(--color-neutral-200);
   --color-neutral-300: var(--color-neutral-300);
@@ -45,6 +46,8 @@
   --color-border: var(--color-border);
   --color-border-subtle: var(--color-border-subtle);
   --color-border-inverse: var(--color-border-inverse);
+  --color-border-inverse-soft: var(--color-border-inverse-soft);
+  --color-border-inverse-hover: var(--color-border-inverse-hover);
   --color-accent: var(--color-accent);
   --color-accent-soft: var(--color-accent-soft);
   --color-danger: var(--color-danger);
@@ -99,6 +102,7 @@
   --font-mono: var(--font-family-mono);
   --font-inter: var(--font-inter);
 
+  --text-10: 0.625rem;
   --text-12: 0.75rem;
   --text-14: 0.875rem;
   --text-14-08: 0.88rem;
@@ -118,11 +122,13 @@
 
   --leading-1: 1rem;
   --leading-120: 1.2rem;
+  --leading-20: var(--line-height-20);
   --leading-18: 1.13rem;
   --leading-150: 1.5rem;
 
   --spacing-space-4: var(--space-4);
   --spacing-space-8: var(--space-8);
+  --spacing-space-10: var(--space-10);
   --spacing-space-13: var(--space-13);
   --spacing-space-14: var(--space-14);
   --spacing-space-12: var(--space-12);
@@ -135,6 +141,8 @@
   --spacing-space-32: var(--space-32);
   --spacing-space-40: var(--space-40);
   --spacing-space-48: var(--space-48);
+  --spacing-space-50: var(--space-50);
+  --spacing-space-60: var(--space-60);
   --spacing-space-64: var(--space-64);
   --spacing-space-80: var(--space-80);
   --spacing-space-112: var(--space-112);
@@ -275,5 +283,63 @@
   }
   html {
     @apply font-sans;
+  }
+}
+
+@layer utilities {
+  .layout-footer {
+    display: grid;
+    grid-template-areas:
+      'logo'
+      'text'
+      'navLinks'
+      'copyright';
+    grid-template-columns: 1fr;
+    grid-template-rows: 32px 74px 78px auto;
+    gap: 20px;
+    justify-content: space-between;
+  }
+
+  .area-logo {
+    grid-area: logo;
+  }
+
+  .area-text {
+    grid-area: text;
+  }
+
+  .area-navLinks {
+    grid-area: navLinks;
+  }
+
+  .area-socials {
+    grid-area: socials;
+  }
+
+  .area-copyright {
+    grid-area: copyright;
+  }
+
+  @media (min-width: 768px) {
+    .layout-footer {
+      grid-template-areas:
+        'logo navLinks'
+        'text socials'
+        'copyright copyright';
+      grid-template-columns: 261px auto;
+      grid-template-rows: 44px 128px auto;
+    }
+  }
+
+  @media (min-width: 1440px) {
+    .layout-footer {
+      grid-template-areas:
+        'logo        navLinks   socials'
+        'text        text       text'
+        'copyright   copyright  copyright';
+
+      grid-template-columns: 311px auto auto;
+      grid-template-rows: 44px 104px auto;
+    }
   }
 }

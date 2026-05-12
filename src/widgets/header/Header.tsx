@@ -1,16 +1,18 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { cn } from '@/lib/utils';
+import { HeaderUserAction } from '@/widgets/header/components/HeaderUserAction';
+import { MobileMenu } from '@/widgets/header/components/MobileMenu';
 import { AUTH_ROUTES } from '@/widgets/header/constants';
-import { HeaderAuthLinks } from '@/widgets/header/HeaderAuthLinks';
-import { HeaderLogo } from '@/widgets/header/HeaderLogo';
-import { HeaderNavigation } from '@/widgets/header/HeaderNavigation';
-import { HeaderUserAction } from '@/widgets/header/HeaderUserAction';
-import { MobileMenu } from '@/widgets/header/MobileMenu';
-import { MobileMenuButton } from '@/widgets/header/MobileMenuButton';
+import { useBodyScrollLock } from '@/widgets/header/hooks/useBodyScrollLock';
+
+import { HeaderAuthLinks } from './components/HeaderAuthLinks';
+import { HeaderLogo } from './components/HeaderLogo';
+import { HeaderNavigation } from './components/HeaderNavigation';
+import { MobileMenuButton } from './components/MobileMenuButton';
 
 const Header = () => {
   const pathname = usePathname();
@@ -22,20 +24,7 @@ const Header = () => {
   const isUser = false;
   const isLoggedInView = isUser;
 
-  useEffect(() => {
-    document.body.style.overflow = isMenuOpen ? 'hidden' : '';
-
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setIsMenuOpen(false);
-    };
-
-    window.addEventListener('keydown', handleEscape);
-
-    return () => {
-      document.body.style.overflow = '';
-      window.removeEventListener('keydown', handleEscape);
-    };
-  }, [isMenuOpen]);
+  useBodyScrollLock(isMenuOpen);
 
   const closeMenu = () => setIsMenuOpen(false);
 
@@ -59,11 +48,15 @@ const Header = () => {
           />
         )}
 
-        <MobileMenuButton
-          isOpen={isMenuOpen}
-          tone={isHomePage ? 'inverse' : 'brand'}
-          onClick={() => setIsMenuOpen((current) => !current)}
-        />
+        {!isMenuOpen && (
+          <MobileMenuButton
+            isOpen={false}
+            controlsId="mobile-menu"
+            hasPopup
+            tone={isHomePage ? 'inverse' : 'brand'}
+            onClick={() => setIsMenuOpen(true)}
+          />
+        )}
       </div>
 
       <MobileMenu

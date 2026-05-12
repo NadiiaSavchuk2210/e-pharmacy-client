@@ -2,6 +2,7 @@
   /* FOUNDATION COLOR PALETTE */
   --color-neutral-0: #ffffff;
   --color-neutral-50: #f7f8fa;
+  --color-neutral-50-30: rgba(247, 248, 250, 0.3);
   --color-neutral-100: #f1f1f1;
   --color-neutral-200: #e7f1ed;
   --color-neutral-300: #d5d6d7;
@@ -45,6 +46,8 @@
   --color-border: rgb(241 241 241 / 0.8);
   --color-border-subtle: rgb(241 241 241 / 0.45);
   --color-border-inverse: rgba(241, 241, 241, 0.5);
+  --color-border-inverse-soft: rgba(247, 248, 250, 0.1);
+  --color-border-inverse-hover: rgba(247, 248, 250, 0.5);
 
   --color-accent: var(--color-brand-500);
   --color-accent-soft: var(--color-brand-100);
@@ -105,6 +108,7 @@
   --font-family-mono:
     ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
+  --text-10: 0.625rem;
   --text-12: 0.75rem;
   --text-14: 0.875rem;
   --text-14-08: 0.88rem;
@@ -124,12 +128,14 @@
 
   --line-height-1: 1rem;
   --line-height-120: 1.2rem;
+  --line-height-20: 1.25rem;
   --line-height-18: 1.13rem;
   --line-height-150: 1.5rem;
 
   /* SPACING */
   --space-4: 0.25rem;
   --space-8: 0.5rem;
+  --space-10: 0.625rem;
   --space-13: 0.81rem;
   --space-14: 0.875rem;
   --space-12: 0.75rem;
@@ -142,6 +148,8 @@
   --space-32: 2rem;
   --space-40: 2.5rem;
   --space-48: 3rem;
+  --space-50: 3.125rem;
+  --space-60: 3.75rem;
   --space-64: 4rem;
   --space-80: 5rem;
   --space-112: 7rem;
