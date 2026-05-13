@@ -21,7 +21,7 @@ const AppShell = ({ children }: Props) => {
   const main = (
     <main className="flex-1">
       {isAuthRoute && (
-        <div className="container | flex flex-col gap-5 relative md:gap-[54px] lg:flex-row lg:items-center">
+        <div className="container | flex flex-col gap-5 relative md:gap-[54px] lg:flex-row lg:items-center lg:h-[434px]">
           <HeroBanner />
           {children}
 

@@ -1,6 +1,7 @@
 import * as Yup from 'yup';
 
-import { NAME_REGEX, PASSWORD_REGEX, PHONE_REGEX } from '../../constants/regex';
+import { NAME_REGEX, PASSWORD_REGEX } from '../../constants/regex';
+import { isValidRegisterPhone } from '../lib/isValidRegisterPhone';
 
 export const registerSchema = Yup.object({
   email: Yup.string()
@@ -31,15 +32,11 @@ export const registerSchema = Yup.object({
   phone: Yup.string()
     .trim()
     .required('Phone is required')
-    .matches(
-      PHONE_REGEX,
-      'Phone can include only numbers, spaces, brackets, hyphens, and +',
-    )
-    .test('phone-digits', 'Phone must contain 10 to 15 digits', (value) => {
-      const digits = value?.replace(/\D/g, '') ?? '';
-
-      return digits.length >= 10 && digits.length <= 15;
-    }),
+    .test(
+      'phone-number',
+      'phone must be a valid phone number',
+      isValidRegisterPhone,
+    ),
 });
 
 export type RegisterFormValues = Yup.InferType<typeof registerSchema>;
