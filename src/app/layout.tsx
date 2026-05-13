@@ -1,7 +1,8 @@
 import 'modern-normalize';
 import { Inter } from 'next/font/google';
+import { Suspense } from 'react';
 
-import SharedLayout from '@/shared/layout/SharedLayout';
+import AppShell from '@/shared/layout/AppShell';
 
 import './globals.css';
 
@@ -25,7 +26,9 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
-        <SharedLayout>{children}</SharedLayout>
+        <Suspense>
+          <AppShell>{children}</AppShell>
+        </Suspense>
       </body>
     </html>
   );

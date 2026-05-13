@@ -6,7 +6,6 @@ import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { HeaderUserAction } from '@/widgets/header/components/HeaderUserAction';
 import { MobileMenu } from '@/widgets/header/components/MobileMenu';
-import { AUTH_ROUTES } from '@/widgets/header/constants';
 import { useBodyScrollLock } from '@/widgets/header/hooks/useBodyScrollLock';
 
 import { HeaderAuthLinks } from './components/HeaderAuthLinks';
@@ -18,17 +17,12 @@ const Header = () => {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isHomePage = pathname === '/home';
-  const isAuthRoute = AUTH_ROUTES.includes(
-    pathname as (typeof AUTH_ROUTES)[number],
-  );
   const isUser = false;
   const isLoggedInView = isUser;
 
   useBodyScrollLock(isMenuOpen);
 
   const closeMenu = () => setIsMenuOpen(false);
-
-  if (isAuthRoute) return null;
 
   return (
     <header className={cn(isHomePage && 'bg-header-brand-bg')}>

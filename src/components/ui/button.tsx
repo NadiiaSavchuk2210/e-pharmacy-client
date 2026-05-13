@@ -38,7 +38,7 @@ const buttonVariants = cva(
         default:
           'h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2',
         primary:
-          'h-[2.75rem] w-[17.5rem] gap-1.5 px-space-112 py-space-13 text-14-08 leading-18',
+          'h-[2.75rem] w-[17.5rem] gap-1.5 px-space-112 py-space-13 text-14 leading-18',
         outline:
           'h-[2.125rem] w-[4.625rem] gap-1 px-[1.13rem] py-space-8 text-16 leading-18',
         pill: 'min-h-[2.875rem] min-w-[7.4375rem] gap-1.5 px-space-32 py-space-16 text-16 leading-1',

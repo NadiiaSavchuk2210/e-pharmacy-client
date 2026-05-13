@@ -15,7 +15,7 @@ const SharedLayout = ({ children }: Props) => {
       <Suspense fallback={<HeaderSkeleton />}>
         <Header />
       </Suspense>
-      <main className="flex-1">{children}</main>
+      {children}
       <Suspense fallback={<FooterSkeleton />}>
         <Footer />
       </Suspense>

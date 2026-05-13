@@ -1,8 +1,10 @@
+import RegisterForm from '@/features/auth/register/ui/RegisterForm';
+
 const RegisterPage = () => {
   return (
-    <div>
-      <h1>RegisterPage</h1>
-    </div>
+    <>
+      <RegisterForm />
+    </>
   );
 };
 
