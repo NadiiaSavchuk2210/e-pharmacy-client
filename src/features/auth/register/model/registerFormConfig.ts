@@ -1,7 +1,5 @@
 import { type RegisterFormValues } from './registerSchema';
 
-export const PRIVATE_REDIRECT_PATH = '/medicine';
-
 export const INITIAL_REGISTER_VALUES: RegisterFormValues = {
   name: '',
   email: '',

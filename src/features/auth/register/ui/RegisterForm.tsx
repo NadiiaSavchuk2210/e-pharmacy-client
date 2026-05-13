@@ -1,30 +1,23 @@
 'use client';
 
-import {
-  Field,
-  Form,
-  Formik,
-  type FieldProps,
-  type FormikHelpers,
-} from 'formik';
-import Link from 'next/link';
+import { Form, Formik, type FormikHelpers } from 'formik';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { cn } from '@/lib/utils';
-
-import RegisterValidationNotifier from './RegisterValidationNotifier';
+import { getAuthFieldErrors } from '../../api/authError';
+import { AUTH_PRIVATE_REDIRECT_PATH } from '../../constants/routes';
+import { persistAuthToken } from '../../lib/persistAuthToken';
+import AuthFormFooter from '../../ui/AuthFormFooter';
+import { AUTH_FORM_STYLES } from '../../ui/authFormStyles';
+import AuthTextField from '../../ui/AuthTextField';
+import AuthValidationNotifier from '../../ui/AuthValidationNotifier';
 import { useRegisterMutation, RegisterApiError } from '../api/registerApi';
-import { persistAuthToken } from '../lib/persistAuthToken';
 import {
   formatRegisterPhone,
   normalizeRegisterPhone,
 } from '../lib/registerPhoneMask';
 import {
   INITIAL_REGISTER_VALUES,
-  PRIVATE_REDIRECT_PATH,
   REGISTER_FIELDS,
 } from '../model/registerFormConfig';
 import {
@@ -51,14 +44,16 @@ const RegisterForm = () => {
       persistAuthToken(data);
       resetForm();
       toast.success('Your account has been created. Welcome!');
-      router.push(PRIVATE_REDIRECT_PATH);
+      router.push(AUTH_PRIVATE_REDIRECT_PATH);
     } catch (error) {
       if (error instanceof RegisterApiError) {
         setStatus(error.message);
         toast.error(error.message);
 
-        if (error.errors) {
-          setErrors(error.errors);
+        const fieldErrors = getAuthFieldErrors(error.errors);
+
+        if (fieldErrors) {
+          setErrors(fieldErrors);
         }
 
         return;
@@ -79,66 +74,26 @@ const RegisterForm = () => {
     >
       {({ isSubmitting, status }) => {
         const isRegistering = isSubmitting || registerMutation.isPending;
+        const getFieldFormatting = (
+          name: (typeof REGISTER_FIELDS)[number]['name'],
+        ) =>
+          name === 'phone'
+            ? {
+                formatValue: formatRegisterPhone,
+                normalizeValue: formatRegisterPhone,
+              }
+            : {};
 
         return (
-          <Form
-            className=" w-full max-w-[335px] flex flex-col content-start gap-space-10 md:max-w-[574px] md:flex-row md:flex-wrap md:gap-space-14 lg:pt-[194px] lg:max-w-none lg:flex-1 lg:flex-row"
-            noValidate
-          >
-            <RegisterValidationNotifier />
+          <Form className={AUTH_FORM_STYLES.register.form} noValidate>
+            <AuthValidationNotifier />
 
-            {REGISTER_FIELDS.map(({ name, label, ...inputProps }) => (
-              <Field key={name} name={name}>
-                {({
-                  field,
-                  form,
-                  meta,
-                }: FieldProps<RegisterFormValues[typeof name]>) => {
-                  const hasError = Boolean(meta.touched && meta.error);
-                  const errorId = `${name}-error`;
-                  const fieldProps =
-                    name === 'phone'
-                      ? {
-                          ...field,
-                          value: formatRegisterPhone(field.value),
-                          onChange: (
-                            event: React.ChangeEvent<HTMLInputElement>,
-                          ) => {
-                            form.setFieldValue(
-                              name,
-                              formatRegisterPhone(event.target.value),
-                            );
-                          },
-                        }
-                      : field;
-
-                  return (
-                    <label className="flex w-full flex-col gap-space-4 text-12 font-medium leading-18 text-text-muted md:w-[17.5rem] lg:w-[calc((100%_-_var(--space-14))_/_2)]">
-                      <span className="hidden">{label}</span>
-                      <Input
-                        {...fieldProps}
-                        {...inputProps}
-                        aria-describedby={hasError ? errorId : undefined}
-                        aria-invalid={hasError}
-                        className={cn(
-                          'w-full',
-                          hasError &&
-                            'border-danger bg-danger-soft text-danger placeholder:text-danger/70 focus:border-danger',
-                        )}
-                      />
-                      {hasError && (
-                        <span
-                          id={errorId}
-                          role="alert"
-                          className="text-12 font-normal leading-18 text-danger"
-                        >
-                          {meta.error}
-                        </span>
-                      )}
-                    </label>
-                  );
-                }}
-              </Field>
+            {REGISTER_FIELDS.map((field) => (
+              <AuthTextField
+                key={field.name}
+                {...field}
+                {...getFieldFormatting(field.name)}
+              />
             ))}
 
             {status && (
@@ -150,24 +105,13 @@ const RegisterForm = () => {
               </p>
             )}
 
-            <div className="mt-space-10 mb-1 w-full flex text-14 leading-18 md:mt-12 md:mr-[100%] md:mb-0 md:max-w-[280px] lg:mt-[48px] lg:w-[calc((100%_-_var(--space-14))_/_2)]">
-              <Button
-                type="submit"
-                variant="primary"
-                size="primary"
-                className="w-full"
-                disabled={isRegistering}
-              >
-                {isRegistering ? 'Registering...' : 'Register'}
-              </Button>
-            </div>
-
-            <Link
-              href="/login"
-              className="w-full text-center text-12 font-normal leading-18 text-text-weak md:max-w-[280px] lg:w-[calc((100%_-_var(--space-14))_/_2)]"
-            >
-              Already have an account?
-            </Link>
+            <AuthFormFooter
+              isSubmitting={isRegistering}
+              submitLabel="Register"
+              submittingLabel="Registering..."
+              navigationHref="/login"
+              navigationLabel="Already have an account?"
+            />
           </Form>
         );
       }}
