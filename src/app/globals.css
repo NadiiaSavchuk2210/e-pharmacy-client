@@ -5,6 +5,11 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@theme {
+  --breakpoint-sm: 23.4375rem;
+  --breakpoint-lg: 90rem;
+}
+
 @theme inline {
   --color-neutral-0: var(--color-neutral-0);
   --color-neutral-50: var(--color-neutral-50);
@@ -19,6 +24,7 @@
   --color-neutral-900: var(--color-neutral-900);
 
   --color-brand-100: var(--color-brand-100);
+  --color-brand-50: var(--color-brand-50);
   --color-brand-500: var(--color-brand-500);
   --color-brand-600: var(--color-brand-600);
   --color-brand-700: var(--color-brand-700);
@@ -113,6 +119,7 @@
   --text-28: 1.75rem;
   --text-36: 2.25rem;
   --text-48: 3rem;
+  --text-54: 3.375rem;
   --text-74: 4.625rem;
 
   --font-weight-normal: var(--font-weight-normal);
@@ -123,6 +130,8 @@
   --leading-1: 1rem;
   --leading-120: 1.2rem;
   --leading-20: var(--line-height-20);
+  --leading-34: var(--line-height-34);
+  --leading-60: var(--line-height-60);
   --leading-18: 1.13rem;
   --leading-150: 1.5rem;
 

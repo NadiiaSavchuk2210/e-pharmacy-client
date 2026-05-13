@@ -1,8 +1,10 @@
+import LoginForm from '@/features/auth/login/ui/LoginForm';
+
 const LoginPage = () => {
   return (
-    <div>
-      <h1>LoginPage</h1>
-    </div>
+    <>
+      <LoginForm />
+    </>
   );
 };
 

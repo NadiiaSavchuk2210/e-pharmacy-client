@@ -2,8 +2,6 @@
 
 import { usePathname } from 'next/navigation';
 
-import { AUTH_ROUTES } from '@/widgets/header/constants';
-
 import FooterBottom from './components/FooterBottom';
 import FooterLogo from './components/FooterLogo';
 import FooterNavigation from './components/FooterNavigation';
@@ -12,11 +10,6 @@ import FooterText from './components/FooterText';
 
 const Footer = () => {
   const pathname = usePathname();
-  const isAuthRoute = AUTH_ROUTES.includes(
-    pathname as (typeof AUTH_ROUTES)[number],
-  );
-
-  if (isAuthRoute) return null;
 
   return (
     <footer className="bg-accent py-5 md:py-8">

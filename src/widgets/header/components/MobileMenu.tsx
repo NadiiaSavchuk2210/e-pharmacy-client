@@ -9,15 +9,19 @@ import { MobileMenuButton } from './MobileMenuButton';
 
 type MobileMenuProps = {
   isLoggedIn: boolean;
+  isLoggingOut?: boolean;
   isOpen: boolean;
   pathname: string;
+  onLogout?: () => void | Promise<void>;
   onClose: () => void;
 };
 
 export const MobileMenu = ({
   isLoggedIn,
+  isLoggingOut = false,
   isOpen,
   pathname,
+  onLogout,
   onClose,
 }: MobileMenuProps) => {
   return (
@@ -62,7 +66,12 @@ export const MobileMenu = ({
 
           {isLoggedIn ? (
             <div className="flex justify-center">
-              <HeaderUserAction inverse onNavigate={onClose} />
+              <HeaderUserAction
+                inverse
+                isLoggingOut={isLoggingOut}
+                onLogout={onLogout}
+                onNavigate={onClose}
+              />
             </div>
           ) : (
             <HeaderAuthLinks

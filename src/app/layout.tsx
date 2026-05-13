@@ -1,9 +1,12 @@
 import 'modern-normalize';
 import { Inter } from 'next/font/google';
+import { Suspense } from 'react';
 
-import SharedLayout from '@/shared/layout/SharedLayout';
+import AppShell from '@/shared/layout/AppShell';
 
 import './globals.css';
+import QueryProvider from '../shared/api/QueryProvider';
+import AppToaster from '../shared/ui/AppToaster';
 
 const inter = Inter({
   variable: '--font-inter',
@@ -25,7 +28,12 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
-        <SharedLayout>{children}</SharedLayout>
+        <QueryProvider>
+          <Suspense>
+            <AppShell>{children}</AppShell>
+          </Suspense>
+          <AppToaster />
+        </QueryProvider>
       </body>
     </html>
   );
