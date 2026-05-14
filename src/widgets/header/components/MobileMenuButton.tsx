@@ -6,7 +6,7 @@ type MobileMenuButtonProps = {
   isOpen: boolean;
   controlsId?: string;
   hasPopup?: boolean;
-  tone?: Extract<HeaderTone, 'brand' | 'inverse'>;
+  tone?: Extract<HeaderTone, 'brand' | 'inverse' | 'sticky'>;
   onClick: () => void;
 };
 
@@ -17,17 +17,27 @@ export const MobileMenuButton = ({
   tone = 'inverse',
   onClick,
 }: MobileMenuButtonProps) => {
-  const lineColor = tone === 'inverse' ? 'bg-neutral-0' : 'bg-brand-500';
+  const isSticky = tone === 'sticky';
+  const lineColor =
+    tone === 'inverse'
+      ? 'bg-neutral-0'
+      : isSticky
+        ? 'bg-neutral-900 dark:bg-neutral-0'
+        : 'bg-brand-700 dark:bg-neutral-0';
   const interactiveState = isOpen
     ? 'hover:bg-neutral-0 focus-visible:bg-neutral-0 focus-visible:ring-neutral-0/80'
+    : isSticky
+      ? 'focus-visible:ring-neutral-900/70 dark:focus-visible:ring-neutral-0/70'
     : tone === 'inverse'
       ? 'focus-visible:ring-neutral-0/70'
-      : 'focus-visible:ring-brand-500';
+      : 'focus-visible:ring-brand-700 dark:focus-visible:ring-neutral-0/70';
   const lineInteractiveColor = isOpen
     ? 'group-hover:bg-brand-700 group-focus-visible:bg-brand-700'
+    : isSticky
+      ? 'group-hover:bg-brand-700 group-focus-visible:bg-brand-700 dark:group-hover:bg-neutral-0 dark:group-focus-visible:bg-neutral-0'
     : tone === 'inverse'
       ? 'group-hover:bg-neutral-900 group-focus-visible:bg-neutral-900'
-      : 'group-hover:bg-brand-700 group-focus-visible:bg-brand-700';
+      : 'group-hover:bg-brand-700 group-focus-visible:bg-brand-700 dark:group-hover:bg-neutral-0 dark:group-focus-visible:bg-neutral-0';
 
   return (
     <button

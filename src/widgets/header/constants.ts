@@ -1,1 +1,1 @@
-export type HeaderTone = 'default' | 'brand' | 'inverse';
+export type HeaderTone = 'default' | 'brand' | 'inverse' | 'sticky';

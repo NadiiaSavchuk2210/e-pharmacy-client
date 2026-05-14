@@ -85,13 +85,13 @@
   --link-auth-register-text: var(--color-neutral-100);
   --link-auth-register-hover-bg: var(--color-neutral-0);
   --link-auth-register-hover-border: var(--color-neutral-0);
-  --link-auth-register-hover-text: var(--color-brand-600);
+  --link-auth-register-hover-text: var(--color-brand-700);
   --link-auth-login-text: var(--color-neutral-100);
   --link-auth-login-hover-text: var(--color-neutral-0);
   --link-logout-border: var(--color-brand-border);
-  --link-logout-text: var(--color-brand-500);
-  --link-logout-hover-bg: var(--color-brand-500);
-  --link-logout-hover-border: var(--color-brand-500);
+  --link-logout-text: var(--color-brand-700);
+  --link-logout-hover-bg: var(--color-brand-700);
+  --link-logout-hover-border: var(--color-brand-700);
   --link-logout-hover-text: var(--color-text-inverse);
 
   --header-brand-bg: var(--color-brand-500);
@@ -101,6 +101,10 @@
   --input-border-focus: var(--color-accent);
 
   --card-border: var(--color-border);
+
+  --scrollbar-track: var(--color-neutral-100);
+  --scrollbar-thumb: var(--color-neutral-400);
+  --scrollbar-thumb-hover: var(--color-brand-600);
 
   /* TYPOGRAPHY */
   --font-family-base:
@@ -120,6 +124,7 @@
   --text-28: 1.75rem;
   --text-36: 2.25rem;
   --text-48: 3rem;
+  --text-50: 3.125rem;
   --text-54: 3.375rem;
   --text-74: 4.625rem;
 
@@ -130,9 +135,12 @@
 
   --line-height-1: 1rem;
   --line-height-120: 1.2rem;
+  --line-height-16: 1rem;
   --line-height-20: 1.25rem;
   --line-height-34: 2.125rem;
+  --line-height-50: 3.125rem;
   --line-height-60: 3.75rem;
+  --line-height-74: 4.625rem;
   --line-height-18: 1.13rem;
   --line-height-150: 1.5rem;
 
@@ -172,6 +180,7 @@
 
   /* SHADOWS */
   --shadow-sm: 0 -1px 14px 0 var(--color-shadow-soft);
+  --text-shadow-hero: 0 4px 85px rgba(29, 30, 33, 0.3);
 
   /* TRANSITIONS */
   --transition-fast: 150ms ease-in-out;
@@ -240,11 +249,11 @@
     --link-auth-register-hover-text: var(--color-brand-700);
     --link-auth-login-text: #f4f7f5;
     --link-auth-login-hover-text: #ffffff;
-    --link-logout-border: rgb(122 217 159 / 0.7);
-    --link-logout-text: var(--color-accent);
-    --link-logout-hover-bg: var(--color-brand-700);
-    --link-logout-hover-border: var(--color-brand-700);
-    --link-logout-hover-text: #ffffff;
+    --link-logout-border: rgb(244 247 245 / 0.62);
+    --link-logout-text: #f4f7f5;
+    --link-logout-hover-bg: #ffffff;
+    --link-logout-hover-border: #ffffff;
+    --link-logout-hover-text: var(--color-brand-700);
 
     --header-brand-bg: var(--color-brand-700);
 
@@ -253,6 +262,10 @@
     --input-border-focus: var(--color-accent);
 
     --card-border: var(--color-border-subtle);
+
+    --scrollbar-track: #0b120e;
+    --scrollbar-thumb: #3f5f4b;
+    --scrollbar-thumb-hover: #59b17a;
 
     --color-shadow-soft: rgb(0 0 0 / 0.24);
   }
@@ -312,11 +325,11 @@
   --link-auth-register-hover-text: var(--color-brand-700);
   --link-auth-login-text: #f4f7f5;
   --link-auth-login-hover-text: #ffffff;
-  --link-logout-border: rgb(122 217 159 / 0.7);
-  --link-logout-text: var(--color-accent);
-  --link-logout-hover-bg: var(--color-brand-700);
-  --link-logout-hover-border: var(--color-brand-700);
-  --link-logout-hover-text: #ffffff;
+  --link-logout-border: rgb(244 247 245 / 0.62);
+  --link-logout-text: #f4f7f5;
+  --link-logout-hover-bg: #ffffff;
+  --link-logout-hover-border: #ffffff;
+  --link-logout-hover-text: var(--color-brand-700);
 
   --header-brand-bg: var(--color-brand-700);
 
@@ -325,6 +338,10 @@
   --input-border-focus: var(--color-accent);
 
   --card-border: var(--color-border-subtle);
+
+  --scrollbar-track: #0b120e;
+  --scrollbar-thumb: #3f5f4b;
+  --scrollbar-thumb-hover: #59b17a;
 
   --color-shadow-soft: rgb(0 0 0 / 0.24);
 }
