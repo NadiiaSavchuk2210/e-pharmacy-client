@@ -1,6 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
 
 import { apiClient } from '@/shared/api/apiClient';
+import {
+  type ApiSuccessResponse,
+  unwrapApiResponse,
+} from '@/shared/api/apiResponse';
 
 import { normalizeRegisterError } from './registerError';
 import { type RegisterResponse } from './registerTypes';
@@ -11,12 +15,11 @@ const REGISTER_PATH =
 
 export const registerUser = async (values: RegisterFormValues) => {
   try {
-    const { data } = await apiClient.post<RegisterResponse>(
-      REGISTER_PATH,
-      values,
-    );
+    const { data } = await apiClient.post<
+      ApiSuccessResponse<RegisterResponse> | RegisterResponse
+    >(REGISTER_PATH, values);
 
-    return data;
+    return unwrapApiResponse(data);
   } catch (error) {
     throw normalizeRegisterError(error);
   }

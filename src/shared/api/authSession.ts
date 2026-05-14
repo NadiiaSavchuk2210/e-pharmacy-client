@@ -10,6 +10,17 @@ const ACCESS_TOKEN_KEY = 'accessToken';
 const REFRESH_TOKEN_KEY = 'refreshToken';
 const ACCESS_TOKEN_EXPIRES_AT_KEY = 'accessTokenExpiresAt';
 const AUTH_SESSION_CHANGE_EVENT = 'auth-session-change';
+const LEGACY_LOCAL_STORAGE_KEYS = [
+  ACCESS_TOKEN_KEY,
+  REFRESH_TOKEN_KEY,
+  ACCESS_TOKEN_EXPIRES_AT_KEY,
+];
+const SENSITIVE_SESSION_STORAGE_KEYS = [
+  REFRESH_TOKEN_KEY,
+  ACCESS_TOKEN_EXPIRES_AT_KEY,
+];
+
+let authAccessToken: string | null = null;
 
 const isBrowser = () => typeof window !== 'undefined';
 
@@ -19,17 +30,28 @@ const notifyAuthSessionChange = () => {
   window.dispatchEvent(new Event(AUTH_SESSION_CHANGE_EVENT));
 };
 
-export const getAuthAccessToken = () => {
-  if (!isBrowser()) return null;
+const clearLegacyAuthStorage = () => {
+  if (!isBrowser()) return;
 
-  return window.localStorage.getItem(ACCESS_TOKEN_KEY);
+  LEGACY_LOCAL_STORAGE_KEYS.forEach((key) => {
+    window.localStorage.removeItem(key);
+  });
+
+  SENSITIVE_SESSION_STORAGE_KEYS.forEach((key) => {
+    window.sessionStorage.removeItem(key);
+  });
 };
 
-export const getAuthRefreshToken = () => {
+const readStoredAccessToken = () => {
   if (!isBrowser()) return null;
 
-  return window.localStorage.getItem(REFRESH_TOKEN_KEY);
+  return window.sessionStorage.getItem(ACCESS_TOKEN_KEY);
 };
+
+clearLegacyAuthStorage();
+authAccessToken = readStoredAccessToken();
+
+export const getAuthAccessToken = () => authAccessToken;
 
 export const hasAuthSession = () => Boolean(getAuthAccessToken());
 
@@ -38,19 +60,13 @@ export const persistAuthSession = (data: AuthSessionResponse) => {
 
   const accessToken = data.token ?? data.accessToken;
 
+  authAccessToken = accessToken ?? null;
+  clearLegacyAuthStorage();
+
   if (accessToken) {
-    window.localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
-  }
-
-  if (data.refreshToken) {
-    window.localStorage.setItem(REFRESH_TOKEN_KEY, data.refreshToken);
-  }
-
-  if (data.expiresIn && accessToken) {
-    window.localStorage.setItem(
-      ACCESS_TOKEN_EXPIRES_AT_KEY,
-      String(Date.now() + data.expiresIn * 1000),
-    );
+    window.sessionStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
+  } else {
+    window.sessionStorage.removeItem(ACCESS_TOKEN_KEY);
   }
 
   notifyAuthSessionChange();
@@ -59,9 +75,9 @@ export const persistAuthSession = (data: AuthSessionResponse) => {
 export const clearAuthSession = () => {
   if (!isBrowser()) return;
 
-  window.localStorage.removeItem(ACCESS_TOKEN_KEY);
-  window.localStorage.removeItem(REFRESH_TOKEN_KEY);
-  window.localStorage.removeItem(ACCESS_TOKEN_EXPIRES_AT_KEY);
+  authAccessToken = null;
+  clearLegacyAuthStorage();
+  window.sessionStorage.removeItem(ACCESS_TOKEN_KEY);
   notifyAuthSessionChange();
 };
 

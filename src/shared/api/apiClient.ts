@@ -1,9 +1,9 @@
 import axios, { AxiosHeaders, type InternalAxiosRequestConfig } from 'axios';
 
+import { unwrapApiResponse, type ApiSuccessResponse } from './apiResponse';
 import {
   clearAuthSession,
   getAuthAccessToken,
-  getAuthRefreshToken,
   persistAuthSession,
   type AuthSessionResponse,
 } from './authSession';
@@ -48,24 +48,21 @@ const isRefreshRequest = (config?: InternalAxiosRequestConfig) => {
 };
 
 const refreshAccessToken = async () => {
-  const refreshToken = getAuthRefreshToken();
-
-  if (!refreshToken) {
-    clearAuthSession();
-    throw new Error('Missing refresh token');
-  }
-
   if (!refreshAccessTokenRequest) {
     refreshAccessTokenRequest = refreshClient
-      .post<AuthSessionResponse>(AUTH_REFRESH_PATH, { refreshToken })
+      .post<ApiSuccessResponse<AuthSessionResponse> | AuthSessionResponse>(
+        AUTH_REFRESH_PATH,
+        null,
+      )
       .then(({ data }) => {
-        const accessToken = data.token ?? data.accessToken;
+        const session = unwrapApiResponse(data);
+        const accessToken = session.token ?? session.accessToken;
 
         if (!accessToken) {
           throw new Error('Refresh response did not include an access token');
         }
 
-        persistAuthSession({ ...data, refreshToken });
+        persistAuthSession(session);
 
         return accessToken;
       })
