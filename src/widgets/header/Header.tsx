@@ -23,12 +23,33 @@ const Header = () => {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedInView, setIsLoggedInView] = useState(false);
+  const [isHeaderGlass, setIsHeaderGlass] = useState(false);
   const logoutMutation = useLogoutMutation();
   const isHomePage = pathname === '/home';
+  const isInverseHeader = isHomePage && !isHeaderGlass;
+  const interactiveTone = isHeaderGlass
+    ? 'sticky'
+    : isInverseHeader
+      ? 'inverse'
+      : 'brand';
 
   useBodyScrollLock(isMenuOpen);
 
   const closeMenu = () => setIsMenuOpen(false);
+
+  useEffect(() => {
+    const updateHeaderBackground = () => {
+      setIsHeaderGlass(window.scrollY > 0);
+    };
+
+    updateHeaderBackground();
+
+    window.addEventListener('scroll', updateHeaderBackground, {
+      passive: true,
+    });
+
+    return () => window.removeEventListener('scroll', updateHeaderBackground);
+  }, []);
 
   useEffect(() => {
     const syncAuthState = () => setIsLoggedInView(hasAuthSession());
@@ -51,16 +72,28 @@ const Header = () => {
   };
 
   return (
-    <header className={cn(isHomePage && 'bg-header-brand-bg')}>
+    <header
+      className={cn(
+        'sticky top-0 z-50 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-base ease-base',
+        isHeaderGlass
+          ? 'border-b border-neutral-0/20 bg-neutral-0/35 shadow-[0_0.0625rem_0_rgb(255_255_255_/_0.35)_inset] backdrop-blur-2xl backdrop-saturate-150'
+          : isHomePage
+            ? 'bg-header-brand-bg'
+            : 'bg-bg',
+      )}
+    >
       <div className="container | flex w-full items-center justify-between py-space-25 md:py-space-28 xl:py-8">
-        <HeaderLogo tone={isHomePage ? 'inverse' : 'default'} />
+        <HeaderLogo
+          tone={isHeaderGlass ? 'sticky' : isInverseHeader ? 'inverse' : 'default'}
+        />
 
         <HeaderNavigation pathname={pathname} />
 
         {isLoggedInView ? (
           <div className="hidden xl:flex">
             <HeaderUserAction
-              inverse={isHomePage}
+              inverse={isInverseHeader}
+              sticky={isHeaderGlass}
               isLoggingOut={logoutMutation.isPending}
               onLogout={handleLogout}
             />
@@ -68,7 +101,7 @@ const Header = () => {
         ) : (
           <HeaderAuthLinks
             className="hidden xl:flex"
-            tone={isHomePage ? 'inverse' : 'brand'}
+            tone={interactiveTone}
           />
         )}
 
@@ -77,7 +110,7 @@ const Header = () => {
             isOpen={false}
             controlsId="mobile-menu"
             hasPopup
-            tone={isHomePage ? 'inverse' : 'brand'}
+            tone={interactiveTone}
             onClick={() => setIsMenuOpen(true)}
           />
         )}

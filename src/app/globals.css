@@ -119,6 +119,7 @@
   --text-28: 1.75rem;
   --text-36: 2.25rem;
   --text-48: 3rem;
+  --text-50: 3.125rem;
   --text-54: 3.375rem;
   --text-74: 4.625rem;
 
@@ -129,9 +130,12 @@
 
   --leading-1: 1rem;
   --leading-120: 1.2rem;
+  --leading-16: var(--line-height-16);
   --leading-20: var(--line-height-20);
   --leading-34: var(--line-height-34);
+  --leading-50: var(--line-height-50);
   --leading-60: var(--line-height-60);
+  --leading-74: var(--line-height-74);
   --leading-18: 1.13rem;
   --leading-150: 1.5rem;
 
@@ -168,6 +172,7 @@
   --radius-full: var(--radius-full);
 
   --shadow-sm: var(--shadow-sm);
+  --text-shadow-hero: var(--text-shadow-hero);
 
   --duration-fast: 150ms;
   --duration-base: 250ms;

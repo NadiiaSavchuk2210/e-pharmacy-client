@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 import type { HeaderTone } from '../constants';
 
 type HeaderLogoProps = {
-  tone?: Extract<HeaderTone, 'default' | 'inverse'>;
+  tone?: Extract<HeaderTone, 'default' | 'inverse' | 'sticky'>;
   className?: string;
 };
 
@@ -14,6 +14,7 @@ export const HeaderLogo = ({
   className,
 }: HeaderLogoProps) => {
   const isInverse = tone === 'inverse';
+  const isSticky = tone === 'sticky';
   const logoSmSrc = isInverse
     ? '/logos/e-pharmacy-logo-white-sm.svg'
     : '/logos/e-pharmacy-logo-green-sm.svg';
@@ -29,7 +30,9 @@ export const HeaderLogo = ({
         'transition duration-fast ease-fast hover:opacity-80 focus-visible:outline-none focus-visible:ring-[0.25rem] focus-visible:ring-offset-[0.1875rem]',
         isInverse
           ? 'focus-visible:ring-neutral-0 focus-visible:ring-offset-header-brand-bg'
-          : 'focus-visible:ring-brand-700 focus-visible:ring-offset-neutral-0',
+          : isSticky
+            ? 'focus-visible:ring-brand-700 focus-visible:ring-offset-bg'
+            : 'focus-visible:ring-brand-700 focus-visible:ring-offset-neutral-0',
         className,
       )}
     >
@@ -46,7 +49,11 @@ export const HeaderLogo = ({
       <span
         className={cn(
           'text-16 font-semibold leading-150 md:text-20',
-          isInverse ? 'text-text-inverse' : 'text-text',
+          isInverse
+            ? 'text-text-inverse'
+            : isSticky
+              ? 'text-neutral-900'
+              : 'text-text',
         )}
       >
         E-Pharmacy

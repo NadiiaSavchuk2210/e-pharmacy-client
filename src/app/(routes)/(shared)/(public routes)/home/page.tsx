@@ -1,7 +1,9 @@
+import MainBanner from './components/MainBanner';
+
 const HomePage = async () => {
   return (
     <>
-      <h1 className="text-accent">HomePage</h1>
+      <MainBanner />
     </>
   );
 };

@@ -4,6 +4,7 @@ import Footer from '@/widgets/footer/Footer';
 import Header from '@/widgets/header/Header';
 
 import { FooterSkeleton, HeaderSkeleton } from './LayoutSkeletons';
+import ScrollToTopButton from '../ui/ScrollToTopButton';
 
 interface Props {
   children: React.ReactNode;
@@ -19,6 +20,7 @@ const SharedLayout = ({ children }: Props) => {
       <Suspense fallback={<FooterSkeleton />}>
         <Footer />
       </Suspense>
+      <ScrollToTopButton />
     </>
   );
 };
