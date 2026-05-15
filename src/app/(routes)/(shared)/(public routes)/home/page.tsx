@@ -1,4 +1,5 @@
 import MainBanner from './components/MainBanner';
+import MedicineStores from './components/MedicineStores';
 import PromoBanners from './components/PromoBanners';
 
 const HomePage = async () => {
@@ -7,6 +8,7 @@ const HomePage = async () => {
       <MainBanner />
 
       <PromoBanners />
+      <MedicineStores />
     </>
   );
 };

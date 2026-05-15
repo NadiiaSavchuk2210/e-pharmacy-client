@@ -1,14 +1,14 @@
 <svg aria-hidden="true" style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1"
     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <defs>
-        <symbol id="icon-map-pin" viewBox="0 0 32 32">
+        <symbol id="icon-map-pin" viewBox="0 0 32 32" fill="none">
             <path stroke-width="2.6667" stroke-miterlimit="4" stroke-linecap="round" stroke-linejoin="round"
                 d="M28 13.333c0 9.333-12 17.333-12 17.333s-12-8-12-17.333c0-3.183 1.264-6.235 3.515-8.485s5.303-3.515 8.485-3.515c3.183 0 6.235 1.264 8.485 3.515s3.515 5.303 3.515 8.485z">
             </path>
             <path stroke-width="2.6667" stroke-miterlimit="4" stroke-linecap="round" stroke-linejoin="round"
                 d="M16 17.333c2.209 0 4-1.791 4-4s-1.791-4-4-4c-2.209 0-4 1.791-4 4s1.791 4 4 4z"></path>
         </symbol>
-        <symbol id="icon-phone" viewBox="0 0 32 32">
+        <symbol id="icon-phone" viewBox="0 0 32 32" fill="none">
             <path stroke-width="2.6667" stroke-miterlimit="4" stroke-linecap="round" stroke-linejoin="round"
                 d="M29.33 22.56v4c0.002 0.371-0.075 0.739-0.223 1.079s-0.367 0.646-0.641 0.897c-0.274 0.251-0.597 0.442-0.948 0.561s-0.725 0.163-1.094 0.13c-4.103-0.446-8.044-1.848-11.507-4.093-3.222-2.047-5.953-4.779-8-8-2.253-3.478-3.656-7.439-4.093-11.56-0.033-0.369 0.010-0.74 0.129-1.091s0.308-0.673 0.558-0.947c0.25-0.273 0.553-0.492 0.892-0.641s0.705-0.227 1.075-0.227h4c0.647-0.006 1.274 0.223 1.765 0.645s0.811 1.008 0.902 1.649c0.169 1.28 0.482 2.537 0.933 3.747 0.179 0.477 0.218 0.996 0.112 1.495s-0.353 0.956-0.712 1.319l-1.693 1.693c1.898 3.338 4.662 6.102 8 8l1.693-1.693c0.363-0.359 0.82-0.605 1.319-0.712s1.017-0.067 1.494 0.112c1.21 0.451 2.467 0.764 3.747 0.933 0.648 0.091 1.239 0.418 1.662 0.917s0.647 1.136 0.631 1.79z">
             </path>
@@ -41,8 +41,8 @@
             <path stroke-width="2.88" stroke-miterlimit="4" stroke-linecap="round" stroke-linejoin="round"
                 d="M6.662 16h18.667"></path>
         </symbol>
-        <symbol id="icon-star" viewBox="0 0 32 32">
-            <path stroke-width="2.4" stroke-miterlimit="4" stroke-linecap="butt" stroke-linejoin="miter"
+        <symbol id="icon-star" viewBox="0 0 32 32" fill="currentColor" stroke="none">
+            <path
                 d="M19.6 9.395c0.318 0.603 0.898 1.024 1.57 1.141l7.6 1.313-5.375 5.535c-0.475 0.489-0.697 1.171-0.6 1.846l1.098 7.635-6.922-3.402-0.234-0.1c-0.476-0.169-0.996-0.169-1.473 0l-0.234 0.1-6.924 3.402 1.1-7.635c0.097-0.675-0.125-1.357-0.6-1.846l-5.377-5.535 7.602-1.313c0.672-0.116 1.252-0.538 1.57-1.141l3.6-6.822 3.6 6.822z">
             </path>
         </symbol>
