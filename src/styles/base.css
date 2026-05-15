@@ -22,6 +22,10 @@
     background: var(--scrollbar-track);
   }
 
+  *::-webkit-scrollbar-corner {
+    background: var(--scrollbar-track);
+  }
+
   *::-webkit-scrollbar-thumb {
     background-color: var(--scrollbar-thumb);
     border: 0.1875rem solid var(--scrollbar-track);
@@ -36,6 +40,7 @@
     font-size: 16px;
     scroll-behavior: smooth;
     scroll-padding-top: 5rem;
+    background: var(--color-bg);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -96,4 +101,17 @@
 
 .page {
   min-height: 100svh;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
 }
