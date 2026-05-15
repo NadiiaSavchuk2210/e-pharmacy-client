@@ -1,9 +1,12 @@
 import MainBanner from './components/MainBanner';
+import PromoBanners from './components/PromoBanners';
 
 const HomePage = async () => {
   return (
     <>
       <MainBanner />
+
+      <PromoBanners />
     </>
   );
 };

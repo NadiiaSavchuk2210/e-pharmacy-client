@@ -12,10 +12,12 @@
 
 @theme inline {
   --color-neutral-0: var(--color-neutral-0);
+  --color-neutral-25: var(--color-neutral-25);
   --color-neutral-50: var(--color-neutral-50);
   --color-neutral-50-30: var(--color-neutral-50-30);
   --color-neutral-100: var(--color-neutral-100);
   --color-neutral-200: var(--color-neutral-200);
+  --color-neutral-200-40: var(--color-neutral-200-40);
   --color-neutral-300: var(--color-neutral-300);
   --color-neutral-350: var(--color-neutral-350);
   --color-neutral-400: var(--color-neutral-400);
@@ -38,6 +40,7 @@
   --color-shadow-soft: var(--color-shadow-soft);
 
   --color-bg: var(--color-bg);
+  --color-bg-subtle: var(--color-bg-subtle);
   --color-surface: var(--color-surface);
   --color-surface-muted: var(--color-surface-muted);
   --color-surface-subtle: var(--color-surface-subtle);
@@ -103,6 +106,10 @@
   --color-input-border: var(--input-border);
   --color-input-border-focus: var(--input-border-focus);
   --color-card-border: var(--card-border);
+  --color-promo-banner-link: var(--promo-banner-link);
+  --color-promo-banner-link-hover: var(--promo-banner-link-hover);
+  --color-promo-banner-number-bg: var(--promo-banner-number-bg);
+  --color-promo-banner-number-text: var(--promo-banner-number-text);
 
   --font-sans: var(--font-family-base);
   --font-mono: var(--font-family-mono);
@@ -110,6 +117,7 @@
 
   --text-10: 0.625rem;
   --text-12: 0.75rem;
+  --text-13: 0.8125rem;
   --text-14: 0.875rem;
   --text-14-08: 0.88rem;
   --text-16: 1rem;
@@ -132,6 +140,8 @@
   --leading-120: 1.2rem;
   --leading-16: var(--line-height-16);
   --leading-20: var(--line-height-20);
+  --leading-22: var(--line-height-22);
+  --leading-28: var(--line-height-28);
   --leading-34: var(--line-height-34);
   --leading-50: var(--line-height-50);
   --leading-60: var(--line-height-60);
@@ -147,6 +157,7 @@
   --spacing-space-12: var(--space-12);
   --spacing-space-15: var(--space-15);
   --spacing-space-16: var(--space-16);
+  --spacing-space-18: var(--space-18);
   --spacing-space-20: var(--space-20);
   --spacing-space-24: var(--space-24);
   --spacing-space-25: var(--space-25);

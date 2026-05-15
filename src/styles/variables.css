@@ -1,10 +1,12 @@
 :root {
   /* FOUNDATION COLOR PALETTE */
   --color-neutral-0: #ffffff;
+  --color-neutral-25: #fdfdfd;
   --color-neutral-50: #f7f8fa;
   --color-neutral-50-30: rgba(247, 248, 250, 0.3);
   --color-neutral-100: #f1f1f1;
   --color-neutral-200: #e7f1ed;
+  --color-neutral-200-40: rgba(231, 241, 237, 0.4);
   --color-neutral-300: #d5d6d7;
   --color-neutral-350: #d9d9d9;
   --color-neutral-400: #93939a;
@@ -32,6 +34,7 @@
 
   /* SEMANTIC COLORS */
   --color-bg: var(--color-neutral-0);
+  --color-bg-subtle: var(--color-neutral-25);
   --color-surface: var(--color-neutral-0);
   --color-surface-muted: var(--color-neutral-50);
   --color-surface-subtle: var(--color-neutral-100);
@@ -101,6 +104,10 @@
   --input-border-focus: var(--color-accent);
 
   --card-border: var(--color-border);
+  --promo-banner-link: var(--color-text-subtle);
+  --promo-banner-link-hover: var(--color-brand-700);
+  --promo-banner-number-bg: var(--color-accent-soft);
+  --promo-banner-number-text: var(--color-accent);
 
   --scrollbar-track: var(--color-neutral-100);
   --scrollbar-thumb: var(--color-neutral-400);
@@ -115,6 +122,7 @@
 
   --text-10: 0.625rem;
   --text-12: 0.75rem;
+  --text-13: 0.8125rem;
   --text-14: 0.875rem;
   --text-14-08: 0.88rem;
   --text-16: 1rem;
@@ -137,6 +145,8 @@
   --line-height-120: 1.2rem;
   --line-height-16: 1rem;
   --line-height-20: 1.25rem;
+  --line-height-22: 1.375rem;
+  --line-height-28: 1.75rem;
   --line-height-34: 2.125rem;
   --line-height-50: 3.125rem;
   --line-height-60: 3.75rem;
@@ -153,6 +163,7 @@
   --space-12: 0.75rem;
   --space-15: 0.9375rem;
   --space-16: 1rem;
+  --space-18: 1.125rem;
   --space-20: 1.25rem;
   --space-24: 1.5rem;
   --space-25: 1.5625rem;
@@ -197,6 +208,7 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
     --color-bg: #0f1712;
+    --color-bg-subtle: #17241b;
     --color-surface: #152018;
     --color-surface-muted: #1b2a20;
     --color-surface-subtle: #223329;
@@ -262,6 +274,10 @@
     --input-border-focus: var(--color-accent);
 
     --card-border: var(--color-border-subtle);
+    --promo-banner-link: #c7d7cf;
+    --promo-banner-link-hover: #bdf3d0;
+    --promo-banner-number-bg: rgb(122 217 159 / 0.18);
+    --promo-banner-number-text: #9fe0b9;
 
     --scrollbar-track: #0b120e;
     --scrollbar-thumb: #3f5f4b;
@@ -274,6 +290,7 @@
 /* MANUAL DARK MODE */
 :root[data-theme='dark'] {
   --color-bg: #0f1712;
+  --color-bg-subtle: #17241b;
   --color-surface: #152018;
   --color-surface-muted: #1b2a20;
   --color-surface-subtle: #223329;
@@ -338,6 +355,10 @@
   --input-border-focus: var(--color-accent);
 
   --card-border: var(--color-border-subtle);
+  --promo-banner-link: #c7d7cf;
+  --promo-banner-link-hover: #bdf3d0;
+  --promo-banner-number-bg: rgb(122 217 159 / 0.18);
+  --promo-banner-number-text: #9fe0b9;
 
   --scrollbar-track: #0b120e;
   --scrollbar-thumb: #3f5f4b;

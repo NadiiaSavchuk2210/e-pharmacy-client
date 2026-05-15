@@ -2,11 +2,11 @@ import 'modern-normalize';
 import { Inter } from 'next/font/google';
 import { Suspense } from 'react';
 
+import QueryProvider from '@/shared/api/QueryProvider';
 import AppShell from '@/shared/layout/AppShell';
+import AppToaster from '@/shared/ui/AppToaster';
 
 import './globals.css';
-import QueryProvider from '../shared/api/QueryProvider';
-import AppToaster from '../shared/ui/AppToaster';
 
 const inter = Inter({
   variable: '--font-inter',

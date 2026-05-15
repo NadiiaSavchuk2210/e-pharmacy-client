@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og';
 
 import { getProductById } from '../product.data';
 
-export const size = {
+const imageSize = {
   width: 1200,
   height: 630,
 };
@@ -138,6 +138,6 @@ export async function GET(_request: Request, { params }: Props) {
         </div>
       </div>
     </div>,
-    size,
+    imageSize,
   );
 }
