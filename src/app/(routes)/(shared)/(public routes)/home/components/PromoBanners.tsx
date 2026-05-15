@@ -28,7 +28,7 @@ const bannerItemClassName =
   'flex w-full flex-col gap-space-14 rounded-[27px] border-[1.15px] border-border bg-bg-subtle px-space-18 py-space-14 shadow-sm transition-[background-color,border-color,box-shadow] duration-[650ms] ease-[cubic-bezier(0.25,0.1,0.25,1)] hover:border-accent hover:bg-accent-soft hover:shadow-md md:w-[calc((100%_-_var(--space-28))_/_2)] lg:w-[calc((100%_-_(var(--space-28)_+_var(--space-28)))_/_3)]';
 
 const bannerTitleClassName =
-  'flex max-w-[186px] items-center gap-space-14 text-16 font-medium leading-22 text-text-muted md:text-20 md:leading-28';
+  'flex items-center gap-space-14 text-16 font-medium leading-22 text-text-muted md:text-20 md:leading-28';
 
 const bannerNumberClassName =
   'flex size-[54px] shrink-0 items-center justify-center rounded-full bg-promo-banner-number-bg text-center text-24 font-normal leading-150 text-promo-banner-number-text transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] md:size-[74px] md:text-28 md:leading-28';

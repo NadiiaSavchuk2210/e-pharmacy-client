@@ -14,6 +14,8 @@
   --color-neutral-700: #252539;
   --color-neutral-900: #1d1e21;
 
+  --color-mint-100: #e7f1ed;
+
   --color-brand-500: #59b17a;
   --color-brand-600: #3f945f;
   --color-brand-700: #34784f;
@@ -131,6 +133,7 @@
   --text-24: 1.5rem;
   --text-28: 1.75rem;
   --text-36: 2.25rem;
+  --text-40: 2.5rem;
   --text-48: 3rem;
   --text-50: 3.125rem;
   --text-54: 3.375rem;
@@ -165,6 +168,7 @@
   --space-16: 1rem;
   --space-18: 1.125rem;
   --space-20: 1.25rem;
+  --space-22: 1.375rem;
   --space-24: 1.5rem;
   --space-25: 1.5625rem;
   --space-28: 1.75rem;
