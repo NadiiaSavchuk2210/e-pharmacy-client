@@ -3,6 +3,18 @@
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
 
+@keyframes features-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(
+      calc(-50% - var(--promo-features-gap-shift, var(--space-24)))
+    );
+  }
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme {
@@ -167,6 +179,7 @@
   --spacing-space-25: var(--space-25);
   --spacing-space-28: var(--space-28);
   --spacing-space-32: var(--space-32);
+  --spacing-space-36: var(--space-36);
   --spacing-space-39: var(--space-39);
   --spacing-space-40: var(--space-40);
   --spacing-space-44: var(--space-44);
