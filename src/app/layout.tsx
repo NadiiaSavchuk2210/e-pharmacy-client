@@ -2,7 +2,7 @@ import 'modern-normalize';
 import { Inter } from 'next/font/google';
 import { Suspense } from 'react';
 
-import QueryProvider from '@/shared/api/QueryProvider';
+import QueryProvider from '@/app/providers/QueryProvider';
 import AppShell from '@/shared/layout/AppShell';
 import AppToaster from '@/shared/ui/AppToaster';
 

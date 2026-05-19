@@ -3,7 +3,7 @@ export type AuthValidationErrors<TValues extends object> = Partial<
 >;
 
 export type AuthResponse<TUser, TErrors extends object> = {
-  message?: string;
+  message?: string | string[];
   error?: string;
   user?: TUser;
   token?: string;

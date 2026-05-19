@@ -17,6 +17,10 @@ const getAuthErrorMessage = <TValues extends object>(
   data: AuthResponse<unknown, AuthValidationErrors<TValues>> | undefined,
   fallbackMessage: string,
 ) => {
+  if (Array.isArray(data?.message)) {
+    return data.message.join('\n');
+  }
+
   return data?.message ?? data?.error ?? fallbackMessage;
 };
 

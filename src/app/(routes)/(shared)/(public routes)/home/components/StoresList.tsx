@@ -1,16 +1,20 @@
 import Link from 'next/link';
 
 import { Badge } from '@/components/ui/badge';
-import { medicineStores } from '@/shared/constants/medicineStores';
+import type { MedicineStore } from '@/entities/medicine-store';
 import { Icon } from '@/shared/ui/Icon';
 
 const storeItemClassName =
   'group relative h-[202px] w-full max-w-[335px] overflow-hidden rounded-[27px] border-[1.15px] border-card-border bg-card-bg shadow-sm transition-[scale,background-color,border-color,box-shadow] duration-[650ms] ease-[cubic-bezier(0.25,0.1,0.25,1)] hover:scale-[1.02] hover:border-accent hover:bg-accent-soft hover:shadow-md focus-within:scale-[1.02] focus-within:border-accent focus-within:bg-accent-soft focus-within:shadow-md md:h-[232px] md:max-w-none md:w-[calc((100%_-_var(--space-16))_/_2)] lg:w-[calc((100%_-_72px)_/_3)]';
 
-const StoresList = () => {
+type StoresListProps = {
+  stores: MedicineStore[];
+};
+
+const StoresList = ({ stores }: StoresListProps) => {
   return (
     <ul className="flex flex-col items-center justify-start gap-space-20 md:flex-row md:flex-wrap md:gap-x-space-16 md:gap-y-space-32 lg:gap-x-[36px] lg:gap-y-[38px]">
-      {medicineStores.map(
+      {stores.map(
         ({ id, name, rating, address, phone, status }) => (
           <li key={id} className={storeItemClassName}>
             <Link

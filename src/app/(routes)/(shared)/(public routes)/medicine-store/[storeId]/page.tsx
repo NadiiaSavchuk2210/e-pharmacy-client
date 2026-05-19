@@ -2,10 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { Badge } from '@/components/ui/badge';
-import {
-  getMedicineStoreById,
-  medicineStores,
-} from '@/shared/constants/medicineStores';
+import { getMedicineStoreById } from '@/entities/medicine-store';
 import { Icon } from '@/shared/ui/Icon';
 
 interface Props {
@@ -14,14 +11,9 @@ interface Props {
   }>;
 }
 
-export const generateStaticParams = () =>
-  medicineStores.map(({ id }) => ({
-    storeId: id,
-  }));
-
 const MedicineStoreDetailsPage = async ({ params }: Props) => {
   const { storeId } = await params;
-  const store = getMedicineStoreById(storeId);
+  const store = await getMedicineStoreById(storeId);
 
   if (!store) {
     notFound();
@@ -88,7 +80,7 @@ const MedicineStoreDetailsPage = async ({ params }: Props) => {
             </div>
           </div>
 
-          <div>
+          <div className="pl-[calc(18px+var(--space-8))]">
             <dt className="mb-space-4 text-12 font-semibold uppercase leading-space-16 text-text-weak">
               Working hours
             </dt>
@@ -97,7 +89,7 @@ const MedicineStoreDetailsPage = async ({ params }: Props) => {
             </dd>
           </div>
 
-          <div>
+          <div className="pl-[calc(18px+var(--space-8))]">
             <dt className="mb-space-4 text-12 font-semibold uppercase leading-space-16 text-text-weak">
               Store manager
             </dt>

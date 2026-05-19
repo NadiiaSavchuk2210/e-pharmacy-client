@@ -7,9 +7,9 @@ import {
   persistAuthSession,
   type AuthSessionResponse,
 } from './authSession';
+import { BACKEND_URL } from './backend';
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3000';
+const API_BASE_URL = BACKEND_URL;
 const AUTH_REFRESH_PATH =
   process.env.NEXT_PUBLIC_REFRESH_PATH ?? '/api/user/refresh';
 

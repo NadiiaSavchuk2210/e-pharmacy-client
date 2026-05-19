@@ -1,3 +1,5 @@
+import { Reviews } from '@/widgets/reviews';
+
 import MainBanner from './components/MainBanner';
 import MedicineStores from './components/MedicineStores';
 import Promo from './components/Promo';
@@ -11,6 +13,7 @@ const HomePage = async () => {
       <PromoBanners />
       <MedicineStores />
       <Promo />
+      <Reviews />
     </>
   );
 };

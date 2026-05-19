@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 
 import { getProductById } from './product.data';
@@ -11,6 +12,10 @@ interface Props {
 const Product = async ({ params }: Props) => {
   const { productId } = await params;
   const product = await getProductById(productId);
+
+  if (!product) {
+    notFound();
+  }
 
   return <p>Product: {product.name}</p>;
 };
