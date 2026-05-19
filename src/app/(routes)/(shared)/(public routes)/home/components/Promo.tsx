@@ -31,7 +31,7 @@ const Promo = () => {
   });
 
   return (
-    <section className="container | overflow-hidden pt-10 pb-5 md:pt-space-60 md:pb-6 lg:[--container-max:1248px]">
+    <section className="container | overflow-hidden pt-10 md:pt-space-60 lg:[--container-max:1248px]">
       <div className="rounded-[var(--space-32)] bg-accent px-5 pt-10 pb-5 text-text-inverse dark:bg-brand-700 md:pt-space-104 md:pb-space-40 md:pl-space-48 lg:flex lg:flex-row lg:gap-[19px] lg:py-space-40 lg:pr-space-40 lg:pl-space-80">
         <div className="mb-space-39 md:mb-space-83 md:max-w-[604px] lg:pt-space-64 lg:mb-0 lg:max-w-[501px]">
           <h2 className="mb-5 font-semibold text-28 leading-space-32 tracking-[-0.01em] md:mb-space-24 md:text-48 md:leading-space-55">
@@ -51,18 +51,18 @@ const Promo = () => {
           </Button>
         </div>
         <picture>
-          <source media="(min-width: 1440px)" srcSet={promoImgLgSrcSet} />
+          <source media="(min-width: 768px)" srcSet={promoImgLgSrcSet} />
           <Image
             src={PromoImgSm}
             width={294}
             height={335}
             alt="Promo"
             sizes={commonPromoImageProps.sizes}
-            className="block w-[18.375rem] lg:h-space-406 lg:w-[38rem]"
+            className="block w-[18.375rem] md:h-space-406 md:w-[38rem]"
           />
         </picture>
       </div>
-      <div className="pt-space-24 pb-space-44 md:pt-space-36 md:pb-space-64">
+      <div className="pt-space-48 pb-space-44 md:pt-[72px] md:pb-space-64">
         <div className="motion-safe:[animation:features-marquee_var(--promo-features-marquee-duration)_linear_infinite] flex w-max [--promo-features-gap:var(--space-48)] [--promo-features-gap-shift:var(--space-24)] gap-[var(--promo-features-gap)] md:[--promo-features-gap:var(--space-32)] md:[--promo-features-gap-shift:var(--space-16)] lg:w-full lg:animate-none lg:justify-between lg:[--promo-features-gap:var(--space-24)] lg:[--promo-features-gap-shift:var(--space-12)]">
           {[...features, ...features].map((feature, index) => (
             <div

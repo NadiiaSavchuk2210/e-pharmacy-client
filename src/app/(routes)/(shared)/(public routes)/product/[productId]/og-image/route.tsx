@@ -105,6 +105,10 @@ export async function GET(_request: Request, { params }: Props) {
   const { productId } = await params;
   const product = await getProductById(productId);
 
+  if (!product) {
+    return new Response('Product not found', { status: 404 });
+  }
+
   return new ImageResponse(
     <div style={styles.page}>
       <div style={styles.content}>

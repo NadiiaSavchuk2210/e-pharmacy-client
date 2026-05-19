@@ -1,3 +1,10 @@
+import {
+  dispatchBrowserEvent,
+  getBrowserGlobal,
+  isBrowser,
+  removeStorageItems,
+} from './authSession.helpers';
+
 export type AuthSessionResponse = {
   token?: string;
   accessToken?: string;
@@ -22,30 +29,26 @@ const SENSITIVE_SESSION_STORAGE_KEYS = [
 
 let authAccessToken: string | null = null;
 
-const isBrowser = () => typeof window !== 'undefined';
-
 const notifyAuthSessionChange = () => {
-  if (!isBrowser()) return;
-
-  window.dispatchEvent(new Event(AUTH_SESSION_CHANGE_EVENT));
+  dispatchBrowserEvent(AUTH_SESSION_CHANGE_EVENT);
 };
 
 const clearLegacyAuthStorage = () => {
   if (!isBrowser()) return;
 
-  LEGACY_LOCAL_STORAGE_KEYS.forEach((key) => {
-    window.localStorage.removeItem(key);
-  });
+  const browserGlobal = getBrowserGlobal();
 
-  SENSITIVE_SESSION_STORAGE_KEYS.forEach((key) => {
-    window.sessionStorage.removeItem(key);
-  });
+  removeStorageItems(browserGlobal.localStorage, LEGACY_LOCAL_STORAGE_KEYS);
+  removeStorageItems(
+    browserGlobal.sessionStorage,
+    SENSITIVE_SESSION_STORAGE_KEYS,
+  );
 };
 
 const readStoredAccessToken = () => {
   if (!isBrowser()) return null;
 
-  return window.sessionStorage.getItem(ACCESS_TOKEN_KEY);
+  return getBrowserGlobal().sessionStorage?.getItem(ACCESS_TOKEN_KEY) ?? null;
 };
 
 clearLegacyAuthStorage();
@@ -63,10 +66,12 @@ export const persistAuthSession = (data: AuthSessionResponse) => {
   authAccessToken = accessToken ?? null;
   clearLegacyAuthStorage();
 
+  const browserGlobal = getBrowserGlobal();
+
   if (accessToken) {
-    window.sessionStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
+    browserGlobal.sessionStorage?.setItem(ACCESS_TOKEN_KEY, accessToken);
   } else {
-    window.sessionStorage.removeItem(ACCESS_TOKEN_KEY);
+    browserGlobal.sessionStorage?.removeItem(ACCESS_TOKEN_KEY);
   }
 
   notifyAuthSessionChange();
@@ -77,7 +82,7 @@ export const clearAuthSession = () => {
 
   authAccessToken = null;
   clearLegacyAuthStorage();
-  window.sessionStorage.removeItem(ACCESS_TOKEN_KEY);
+  getBrowserGlobal().sessionStorage?.removeItem(ACCESS_TOKEN_KEY);
   notifyAuthSessionChange();
 };
 

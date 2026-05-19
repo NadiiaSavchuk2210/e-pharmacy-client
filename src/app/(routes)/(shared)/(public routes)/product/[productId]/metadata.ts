@@ -15,6 +15,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { productId } = await params;
   const product = await getProductById(productId);
 
+  if (!product) {
+    return {
+      title: 'Product not found',
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+
   const title = product.name;
   const description = `${product.name} by ${product.suppliers}. Explore product details, price, availability, and customer reviews on E-Pharmacy.`;
   const canonicalPath = `/product/${productId}`;
