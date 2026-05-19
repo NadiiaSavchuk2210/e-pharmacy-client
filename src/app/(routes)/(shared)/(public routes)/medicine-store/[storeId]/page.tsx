@@ -22,10 +22,10 @@ const MedicineStoreDetailsPage = async ({ params }: Props) => {
   return (
     <section className="container | py-space-40 md:py-space-60 lg:[--container-max:1184px]">
       <Link
-        href="/home"
+        href="/medicine-store"
         className="mb-space-32 inline-flex text-14 font-medium leading-space-18 text-brand-700 transition-colors hover:text-brand-500"
       >
-        Back to home
+        Back to all stores
       </Link>
 
       <div className="overflow-hidden rounded-[27px] border border-card-border bg-card-bg p-space-24 shadow-sm md:p-space-40">

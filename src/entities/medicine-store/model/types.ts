@@ -1,4 +1,3 @@
-export type ApiMedicineStoreStatus = 'OPEN' | 'CLOSE' | 'open' | 'close';
 export type MedicineStoreStatus = 'open' | 'close';
 
 export type ApiMedicineStore = {
@@ -9,10 +8,7 @@ export type ApiMedicineStore = {
   city: string;
   phone: string;
   rating: number;
-  status?: ApiMedicineStoreStatus;
-  isOpen?: boolean;
-  workingHours?: string;
-  manager?: string;
+  isOpen: boolean;
 };
 
 export type MedicineStore = {
@@ -25,4 +21,27 @@ export type MedicineStore = {
   status: MedicineStoreStatus;
   workingHours: string;
   manager: string;
+};
+
+export type MedicineStorePageMeta = {
+  totalItems: number;
+  currentPage: number;
+  perPage: number;
+  totalPages: number;
+};
+
+export type ApiMedicineStorePage = {
+  items: ApiMedicineStore[];
+  meta: MedicineStorePageMeta;
+};
+
+export type MedicineStorePage = {
+  items: MedicineStore[];
+  meta: MedicineStorePageMeta;
+};
+
+export type MedicineStoreSearchParams = {
+  limit?: string | number;
+  page?: string | number;
+  random?: boolean | string;
 };
