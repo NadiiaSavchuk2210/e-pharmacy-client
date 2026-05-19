@@ -1,17 +1,34 @@
 import { ApiFetchError, fetchApiData } from '@/shared/api/apiFetch';
 
-import { fetchApiStores, fetchStores } from './storesApi.helpers';
-import { findStoreInList, normalizeMedicineStore } from '../lib/storeMappers';
+import {
+  findFallbackApiStoreById,
+  fetchStores,
+  fetchStoresPage,
+} from './storesApi.helpers';
+import { normalizeMedicineStore } from '../lib/storeMappers';
 
-import type { ApiMedicineStore } from '../model/types';
+import type {
+  ApiMedicineStore,
+  MedicineStoreSearchParams,
+} from '../model/types';
 
 export const getRandomNearestMedicineStores = (limit = 6) =>
-  fetchStores('/stores/random-nearest', limit);
+  fetchStores('/stores/random-nearest', { limit });
 
 export const getNearestMedicineStores = (limit = 10) =>
-  fetchStores('/stores/nearest', limit);
+  fetchStores('/stores/nearest', { limit });
 
-export const getMedicineStores = (limit = 100) => fetchStores('/stores', limit);
+export const getRandomMedicineStores = (limit = 6) =>
+  fetchStores('/stores', { limit, random: true });
+
+export const getMedicineStores = (limit = 9) =>
+  fetchStores('/stores', { limit });
+
+export const getMedicineStoresPage = ({
+  limit = 9,
+  page,
+}: MedicineStoreSearchParams = {}) =>
+  fetchStoresPage('/stores', { limit, page });
 
 export const getMedicineStoreById = async (id: string) => {
   const encodedId = encodeURIComponent(id);
@@ -22,20 +39,18 @@ export const getMedicineStoreById = async (id: string) => {
       errorMessage: 'Failed to fetch store',
     });
 
-    return normalizeMedicineStore(store, 0);
+    return normalizeMedicineStore(store);
   } catch (error) {
     if (!(error instanceof ApiFetchError) || error.status !== 404) {
       throw error;
     }
   }
 
-  const fallbackStore =
-    findStoreInList(await fetchApiStores('/stores/nearest', 100), id) ??
-    findStoreInList(await fetchApiStores('/stores', 100), id);
+  const fallbackStore = await findFallbackApiStoreById(id);
 
   if (!fallbackStore) {
     return null;
   }
 
-  return normalizeMedicineStore(fallbackStore, 0);
+  return normalizeMedicineStore(fallbackStore);
 };
