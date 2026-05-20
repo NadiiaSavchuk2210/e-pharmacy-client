@@ -55,6 +55,16 @@
     background: var(--color-bg);
   }
 
+  button,
+  input,
+  optgroup,
+  select,
+  textarea {
+    margin: 0;
+    font: inherit;
+    color: inherit;
+  }
+
   img {
     display: block;
     max-width: 100%;
