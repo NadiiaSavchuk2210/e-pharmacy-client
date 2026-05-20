@@ -4,7 +4,6 @@ import {
   getMedicineStoresPage,
   MedicineStoresList,
 } from '@/entities/medicine-store';
-import PageTitle from '@/shared/ui/PageTitle';
 
 import Pagination from './components/Pagination';
 import {
@@ -35,7 +34,9 @@ const MedicineStorePage = async ({ searchParams }: MedicineStorePageProps) => {
 
   return (
     <section className="container | py-[39px] md:py-[52px] lg:py-[68px]">
-      <PageTitle>Medicine store</PageTitle>
+      <h1 className="mb-space-40 font-semibold text-28 leading-space-32 text-text md:mb-space-32">
+        Medicine store
+      </h1>
 
       {stores.length > 0 ? (
         <>

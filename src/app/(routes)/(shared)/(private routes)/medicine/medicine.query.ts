@@ -1,10 +1,6 @@
 import type { ProductSearchParams } from '@/entities/product';
 
-import {
-  PRODUCTS_PER_PAGE,
-  allowedProductsPerPage,
-  productCategories,
-} from './medicine.constants';
+import { PRODUCTS_PER_PAGE, productCategories } from './medicine.constants';
 
 export type MedicineSearchParamsRecord = Record<
   string,
@@ -48,21 +44,12 @@ const normalizeDiscount = (discount?: string) => {
   return String(parsedDiscount);
 };
 
-const normalizeLimit = (limit?: string) => {
-  const parsedLimit = Number.parseInt(limit ?? '', 10);
-
-  return allowedProductsPerPage.some((item) => item === parsedLimit)
-    ? parsedLimit
-    : PRODUCTS_PER_PAGE;
-};
-
 export const getProductQuery = (
   searchParams: MedicineSearchParamsRecord,
 ): ProductSearchParams => {
   const category = getSearchParam(searchParams, 'category')?.trim();
   const name = getSearchParam(searchParams, 'name')?.trim();
   const discount = normalizeDiscount(getSearchParam(searchParams, 'discount'));
-  const limit = normalizeLimit(getSearchParam(searchParams, 'limit'));
 
   return {
     category: productCategories.some((item) => item === category)
@@ -70,7 +57,7 @@ export const getProductQuery = (
       : undefined,
     name: name || undefined,
     discount,
-    limit,
+    limit: PRODUCTS_PER_PAGE,
   };
 };
 
@@ -93,10 +80,6 @@ export const getMedicinePageHref = (
 
   if (query.discount !== undefined && query.discount !== '') {
     searchParams.set('discount', String(query.discount));
-  }
-
-  if (query.limit !== undefined && query.limit !== '') {
-    searchParams.set('limit', String(query.limit));
   }
 
   if (page > 1) {

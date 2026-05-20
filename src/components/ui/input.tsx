@@ -8,7 +8,7 @@ function Input({ className, type, ...props }: React.ComponentProps<'input'>) {
       data-slot="input"
       type={type}
       className={cn(
-        'h-[2.75rem] w-full rounded-4xl border border-input-border bg-input-bg px-[1.125rem] py-[0.8125rem] font-sans text-12 font-normal leading-[1.5] text-text outline-none transition-[border-color,box-shadow] duration-fast ease-fast placeholder:text-12 placeholder:font-normal placeholder:leading-[1.5] placeholder:text-text-weak hover:border-input-border-focus active:border-input-border-focus focus:border-input-border-focus focus-visible:border-input-border-focus focus-visible:ring-[3px] focus-visible:ring-input-border-focus/20 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-input-border aria-invalid:border-danger aria-invalid:hover:border-danger aria-invalid:focus:border-danger aria-invalid:focus-visible:border-danger aria-invalid:focus-visible:ring-danger/20',
+        'h-[2.75rem] w-full rounded-4xl border border-[rgba(29,30,33,0.1)] bg-white px-[1.125rem] py-[0.8125rem] font-sans text-12 font-normal leading-[1.5] text-[#1d1e21] outline-none transition-colors duration-fast ease-fast placeholder:text-12 placeholder:font-normal placeholder:leading-[1.5] placeholder:text-[rgba(29,30,33,0.4)] active:border-[#59b17a] focus:border-[#59b17a] disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-danger',
         className,
       )}
       {...props}
