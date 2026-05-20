@@ -1,3 +1,4 @@
+@import 'modern-normalize' layer(base);
 @import 'tailwindcss';
 @import '../styles/base.css';
 @import 'tw-animate-css';
@@ -63,6 +64,7 @@
   --color-text: var(--color-text);
   --color-text-muted: var(--color-text-muted);
   --color-text-subtle: var(--color-text-subtle);
+  --color-secondary-text: var(--color-secondary-text);
   --color-text-weak: var(--color-text-weak);
   --color-text-inverse: var(--color-text-inverse);
 

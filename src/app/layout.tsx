@@ -1,4 +1,3 @@
-import 'modern-normalize';
 import { Inter } from 'next/font/google';
 import { Suspense } from 'react';
 
