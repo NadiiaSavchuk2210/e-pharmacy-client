@@ -59,7 +59,7 @@ const Pagination = ({ currentPage, totalPages, query }: PaginationProps) => {
   return (
     <nav
       aria-label="Medicine pagination"
-      className="mt-space-40 flex flex-wrap items-center justify-center gap-space-4 md:mt-space-60 md:gap-space-8"
+      className="mt-space-40 flex flex-wrap items-center justify-center gap-space-4 md:mt-space-80 md:gap-space-8"
     >
       <PaginationLink
         href={getMedicinePageHref(query, 1)}
