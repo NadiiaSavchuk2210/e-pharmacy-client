@@ -1,4 +1,5 @@
 import { type RegisterFormValues } from './registerSchema';
+import { type AuthFormFieldName } from '../../api/authTypes';
 
 export const INITIAL_REGISTER_VALUES: RegisterFormValues = {
   name: '',
@@ -7,7 +8,7 @@ export const INITIAL_REGISTER_VALUES: RegisterFormValues = {
   password: '',
 };
 
-type RegisterFieldName = keyof RegisterFormValues;
+type RegisterFieldName = AuthFormFieldName<RegisterFormValues>;
 
 type RegisterFieldConfig = {
   name: RegisterFieldName;

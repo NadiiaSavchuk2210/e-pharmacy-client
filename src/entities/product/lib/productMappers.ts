@@ -1,3 +1,5 @@
+import { getProductImageSrc } from './productImages';
+
 import type { ApiProduct, Product } from '../model/types';
 
 export const normalizeProduct = (product: ApiProduct): Product => {
@@ -7,5 +9,6 @@ export const normalizeProduct = (product: ApiProduct): Product => {
     ...productFields,
     id: String(id),
     apiId: _id,
+    photo: getProductImageSrc(productFields.photo),
   };
 };

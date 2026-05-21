@@ -2,8 +2,8 @@
 
 import { usePathname } from 'next/navigation';
 
-import AuthHeader from '@/features/auth/ui/AuthHeader';
-import HeroBanner from '@/features/auth/ui/HeroBanner';
+import AuthHeader from '@/features/auth/ui/layout/AuthHeader';
+import HeroBanner from '@/features/auth/ui/layout/HeroBanner';
 
 import SharedLayout from './SharedLayout';
 import { Icon } from '../ui/Icon';

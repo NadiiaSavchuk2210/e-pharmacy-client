@@ -1,5 +1,6 @@
 import { Dialog as DialogPrimitive } from 'radix-ui';
 
+import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 
 import { HeaderAuthLinks } from './HeaderAuthLinks';
@@ -8,6 +9,7 @@ import { HeaderUserAction } from './HeaderUserAction';
 import { MobileMenuButton } from './MobileMenuButton';
 
 type MobileMenuProps = {
+  isAuthLoading?: boolean;
   isLoggedIn: boolean;
   isLoggingOut?: boolean;
   isOpen: boolean;
@@ -17,6 +19,7 @@ type MobileMenuProps = {
 };
 
 export const MobileMenu = ({
+  isAuthLoading = false,
   isLoggedIn,
   isLoggingOut = false,
   isOpen,
@@ -64,7 +67,15 @@ export const MobileMenu = ({
             />
           </nav>
 
-          {isLoggedIn ? (
+          {isAuthLoading ? (
+            <div
+              className="flex flex-col items-center gap-space-24"
+              aria-label="Loading account actions"
+            >
+              <Skeleton className="h-[2.875rem] w-[7.4375rem] rounded-4xl bg-neutral-0/25" />
+              <Skeleton className="h-4 w-[2.75rem] bg-neutral-0/25" />
+            </div>
+          ) : isLoggedIn ? (
             <div className="flex justify-center">
               <HeaderUserAction
                 inverse

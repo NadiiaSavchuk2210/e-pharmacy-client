@@ -3,12 +3,11 @@
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+import { Skeleton } from '@/components/ui/skeleton';
+import { AUTH_LOGIN_PATH } from '@/features/auth/constants/routes';
 import { useLogoutMutation } from '@/features/auth/logout/api/logoutApi';
+import { useAuth } from '@/features/auth/model/useAuth';
 import { cn } from '@/lib/utils';
-import {
-  AUTH_SESSION_CHANGE,
-  hasAuthSession,
-} from '@/shared/api/authSession';
 import { HeaderUserAction } from '@/widgets/header/components/HeaderUserAction';
 import { MobileMenu } from '@/widgets/header/components/MobileMenu';
 import { useBodyScrollLock } from '@/widgets/header/hooks/useBodyScrollLock';
@@ -22,10 +21,11 @@ const Header = () => {
   const pathname = usePathname();
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isLoggedInView, setIsLoggedInView] = useState(false);
   const [isHeaderGlass, setIsHeaderGlass] = useState(false);
+  const { isAuthenticated, isAuthLoading } = useAuth();
   const logoutMutation = useLogoutMutation();
   const isHomePage = pathname === '/home';
+  const isLoggedInView = isAuthenticated;
   const isInverseHeader = isHomePage && !isHeaderGlass;
   const interactiveTone = isHeaderGlass
     ? 'sticky'
@@ -51,24 +51,9 @@ const Header = () => {
     return () => window.removeEventListener('scroll', updateHeaderBackground);
   }, []);
 
-  useEffect(() => {
-    const syncAuthState = () => setIsLoggedInView(hasAuthSession());
-
-    syncAuthState();
-
-    window.addEventListener(AUTH_SESSION_CHANGE, syncAuthState);
-    window.addEventListener('storage', syncAuthState);
-
-    return () => {
-      window.removeEventListener(AUTH_SESSION_CHANGE, syncAuthState);
-      window.removeEventListener('storage', syncAuthState);
-    };
-  }, []);
-
   const handleLogout = async () => {
     await logoutMutation.mutateAsync();
-    setIsLoggedInView(false);
-    router.replace('/login');
+    router.replace(AUTH_LOGIN_PATH);
   };
 
   return (
@@ -89,7 +74,15 @@ const Header = () => {
 
         <HeaderNavigation pathname={pathname} />
 
-        {isLoggedInView ? (
+        {isAuthLoading ? (
+          <div
+            className="hidden items-center gap-4 xl:flex"
+            aria-label="Loading account actions"
+          >
+            <Skeleton className="h-[2.875rem] w-[7.4375rem] rounded-4xl" />
+            <Skeleton className="h-4 w-[2.75rem]" />
+          </div>
+        ) : isLoggedInView ? (
           <div className="hidden xl:flex">
             <HeaderUserAction
               inverse={isInverseHeader}
@@ -117,6 +110,7 @@ const Header = () => {
       </div>
 
       <MobileMenu
+        isAuthLoading={isAuthLoading}
         isLoggedIn={isLoggedInView}
         isOpen={isMenuOpen}
         pathname={pathname}

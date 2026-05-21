@@ -1,15 +1,25 @@
-export type AuthValidationErrors<TValues extends object> = Partial<
-  Record<keyof TValues | 'form', string>
+export type AuthFormFieldName<TFormValues extends object> = Extract<
+  keyof TFormValues,
+  string
 >;
 
-export type AuthResponse<TUser, TErrors extends object> = {
+export type AuthValidationErrors<TFormValues extends object> = Partial<
+  Record<AuthFormFieldName<TFormValues> | 'form', string>
+>;
+
+export type AuthTokenResponse = {
+  token: string;
+  tokenType: 'Bearer';
+  expiresIn: number;
+};
+
+export type AuthSessionResponse<TUser extends object> = AuthTokenResponse & {
+  user: TUser;
+};
+
+export type AuthErrorResponse<TErrorDetails extends object> = {
+  statusCode?: number;
   message?: string | string[];
   error?: string;
-  user?: TUser;
-  token?: string;
-  accessToken?: string;
-  refreshToken?: string;
-  tokenType?: 'Bearer';
-  expiresIn?: number;
-  errors?: TErrors;
+  errors?: TErrorDetails;
 };

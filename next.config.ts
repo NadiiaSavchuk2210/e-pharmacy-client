@@ -1,11 +1,20 @@
 import type { NextConfig } from 'next';
 
+const BACKEND_URL = (
+  process.env.NEXT_PUBLIC_API_URL ??
+  'https://e-pharmacy-backend-z5z2.onrender.com'
+).replace(/\/$/, '');
+
 const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
   cacheComponents: true,
   async rewrites() {
     return [
+      {
+        source: '/api/:path*',
+        destination: `${BACKEND_URL}/api/:path*`,
+      },
       {
         source: '/product/:productId/opengraph-image',
         destination: '/product/:productId/og-image',
@@ -21,6 +30,10 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'i.ibb.co',
+      },
+      {
+        protocol: 'https',
+        hostname: 'static.vecteezy.com',
       },
     ],
   },

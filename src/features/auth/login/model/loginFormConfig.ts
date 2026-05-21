@@ -1,11 +1,12 @@
 import { type LoginFormValues } from './loginSchema';
+import { type AuthFormFieldName } from '../../api/authTypes';
 
 export const INITIAL_LOGIN_VALUES: LoginFormValues = {
   email: '',
   password: '',
 };
 
-type LoginFieldName = keyof LoginFormValues;
+type LoginFieldName = AuthFormFieldName<LoginFormValues>;
 
 type LoginFieldConfig = {
   name: LoginFieldName;
@@ -29,6 +30,6 @@ export const LOGIN_FIELDS = [
     label: 'Password',
     type: 'password',
     placeholder: 'Password',
-    autoComplete: 'new-password',
+    autoComplete: 'current-password',
   },
 ] satisfies LoginFieldConfig[];

@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { apiClient } from '@/shared/api/apiClient';
+import { publicApiClient } from '@/shared/api/apiClient';
 import {
   type ApiSuccessResponse,
   unwrapApiResponse,
@@ -8,15 +8,14 @@ import {
 
 import { normalizeLoginError } from './loginError';
 import { type LoginResponse } from './loginTypes';
+import { AUTH_ENDPOINTS } from '../../config/authEndpoints';
 import { type LoginFormValues } from '../model/loginSchema';
-
-const LOGIN_PATH = process.env.NEXT_PUBLIC_LOGIN_PATH ?? '/api/user/login';
 
 export const loginUser = async (values: LoginFormValues) => {
   try {
-    const { data } = await apiClient.post<
+    const { data } = await publicApiClient.post<
       ApiSuccessResponse<LoginResponse> | LoginResponse
-    >(LOGIN_PATH, values);
+    >(AUTH_ENDPOINTS.login, values);
 
     return unwrapApiResponse(data);
   } catch (error) {
