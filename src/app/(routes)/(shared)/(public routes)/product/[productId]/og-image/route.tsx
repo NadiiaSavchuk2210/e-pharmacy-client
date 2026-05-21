@@ -101,13 +101,17 @@ const styles = {
   },
 };
 
-export async function GET(_request: Request, { params }: Props) {
+export async function GET(request: Request, { params }: Props) {
   const { productId } = await params;
   const product = await getProductById(productId);
 
   if (!product) {
     return new Response('Product not found', { status: 404 });
   }
+
+  const productImageSrc = product.photo.startsWith('/')
+    ? new URL(product.photo, request.url).toString()
+    : product.photo;
 
   return new ImageResponse(
     <div style={styles.page}>
@@ -131,9 +135,8 @@ export async function GET(_request: Request, { params }: Props) {
         </div>
 
         <div style={styles.imageWrapper}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={product.photo}
+            src={productImageSrc}
             alt={product.name}
             width={420}
             height={420}

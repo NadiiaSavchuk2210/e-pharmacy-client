@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import {
   emailValidation,
   passwordValidation,
-} from '../../model/authValidation';
+} from '../../model/validation/authValidation';
 
 export const loginSchema = Yup.object({
   email: emailValidation,

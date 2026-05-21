@@ -1,7 +1,10 @@
 import * as Yup from 'yup';
 
 import { NAME_REGEX } from '../../constants/regex';
-import { emailValidation, passwordValidation } from '../../model/authValidation';
+import {
+  emailValidation,
+  passwordValidation,
+} from '../../model/validation/authValidation';
 import { isValidRegisterPhone } from '../lib/isValidRegisterPhone';
 
 export const registerSchema = Yup.object({

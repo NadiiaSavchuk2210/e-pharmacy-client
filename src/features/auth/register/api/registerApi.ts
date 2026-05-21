@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { apiClient } from '@/shared/api/apiClient';
+import { publicApiClient } from '@/shared/api/apiClient';
 import {
   type ApiSuccessResponse,
   unwrapApiResponse,
@@ -8,16 +8,14 @@ import {
 
 import { normalizeRegisterError } from './registerError';
 import { type RegisterResponse } from './registerTypes';
+import { AUTH_ENDPOINTS } from '../../config/authEndpoints';
 import { type RegisterFormValues } from '../model/registerSchema';
-
-const REGISTER_PATH =
-  process.env.NEXT_PUBLIC_REGISTER_PATH ?? '/api/user/register';
 
 export const registerUser = async (values: RegisterFormValues) => {
   try {
-    const { data } = await apiClient.post<
+    const { data } = await publicApiClient.post<
       ApiSuccessResponse<RegisterResponse> | RegisterResponse
-    >(REGISTER_PATH, values);
+    >(AUTH_ENDPOINTS.register, values);
 
     return unwrapApiResponse(data);
   } catch (error) {

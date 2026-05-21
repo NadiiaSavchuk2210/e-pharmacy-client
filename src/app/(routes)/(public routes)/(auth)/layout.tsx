@@ -1,9 +1,11 @@
+import GuestRouteGuard from '@/features/auth/ui/guards/GuestRouteGuard';
+
 interface Props {
   children: React.ReactNode;
 }
 
 const AuthLayout = ({ children }: Props) => {
-  return children;
+  return <GuestRouteGuard>{children}</GuestRouteGuard>;
 };
 
 export default AuthLayout;

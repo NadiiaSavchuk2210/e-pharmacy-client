@@ -5,17 +5,19 @@ import { Suspense } from 'react';
 import { getProducts } from '@/entities/product';
 import PageTitle from '@/shared/ui/PageTitle';
 
-import MedicineFiltersForm from './components/MedicineFiltersForm';
-import MedicinePageSizeSync from './components/MedicinePageSizeSync';
-import Pagination from './components/Pagination';
-import ProductList from './components/ProductList';
 import {
   getCurrentPage,
   getMedicinePageHref,
   getProductQuery,
   hasActiveProductFilters,
   type MedicineSearchParams,
-} from './medicine.query';
+} from './lib';
+import {
+  MedicineFiltersForm,
+  MedicinePageSizeSync,
+  Pagination,
+  ProductList,
+} from './ui';
 
 type MedicinePageProps = {
   searchParams: MedicineSearchParams;
