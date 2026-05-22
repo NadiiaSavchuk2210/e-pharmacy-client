@@ -11,7 +11,9 @@ import {
   getSafeAuthRedirect,
 } from '../../constants/routes';
 import { saveAuthSession } from '../../model/session/authState';
-import AuthFormFooter from '../../ui/form/AuthFormFooter';
+import AuthFormFooter, {
+  type AuthFormFooterClassNames,
+} from '../../ui/form/AuthFormFooter';
 import { AUTH_FORM_STYLES } from '../../ui/form/authFormStyles';
 import AuthTextField from '../../ui/form/AuthTextField';
 import AuthValidationNotifier from '../../ui/form/AuthValidationNotifier';
@@ -19,7 +21,29 @@ import { LoginApiError, useLoginMutation } from '../api/loginApi';
 import { INITIAL_LOGIN_VALUES, LOGIN_FIELDS } from '../model/loginFormConfig';
 import { loginSchema, type LoginFormValues } from '../model/loginSchema';
 
-const LoginForm = () => {
+type LoginFormProps = {
+  redirectPath?: string;
+  onAuthSuccess?: () => void;
+  onNavigateToRegister?: () => void;
+  navigationHref?: string;
+  navigationLabel?: string;
+  formClassName?: string;
+  fieldClassName?: string;
+  inputClassName?: string;
+  footerClassNames?: AuthFormFooterClassNames;
+};
+
+const LoginForm = ({
+  redirectPath,
+  onAuthSuccess,
+  onNavigateToRegister,
+  navigationHref = '/register',
+  navigationLabel = 'Create an account',
+  formClassName,
+  fieldClassName,
+  inputClassName,
+  footerClassNames,
+}: LoginFormProps = {}) => {
   const queryClient = useQueryClient();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -33,15 +57,16 @@ const LoginForm = () => {
 
     try {
       const data = await loginMutation.mutateAsync(values);
-      const redirectPath = getSafeAuthRedirect(
-        searchParams.get('redirect'),
+      const safeRedirectPath = getSafeAuthRedirect(
+        redirectPath ?? searchParams.get('redirect'),
         AUTH_PRIVATE_REDIRECT_PATH,
       );
 
       saveAuthSession(queryClient, data);
       resetForm();
       toast.success('Welcome back!');
-      router.replace(redirectPath);
+      onAuthSuccess?.();
+      router.replace(safeRedirectPath);
     } catch (error) {
       if (error instanceof LoginApiError) {
         setStatus(error.message);
@@ -73,14 +98,15 @@ const LoginForm = () => {
         const isLoggingIn = isSubmitting || loginMutation.isPending;
 
         return (
-          <Form className={AUTH_FORM_STYLES.login.form} noValidate>
+          <Form className={formClassName ?? AUTH_FORM_STYLES.login.form} noValidate>
             <AuthValidationNotifier />
 
             {LOGIN_FIELDS.map((field) => (
               <AuthTextField
                 key={field.name}
                 {...field}
-                className={AUTH_FORM_STYLES.login.field}
+                className={fieldClassName ?? AUTH_FORM_STYLES.login.field}
+                inputClassName={inputClassName}
               />
             ))}
 
@@ -97,9 +123,12 @@ const LoginForm = () => {
               isSubmitting={isLoggingIn}
               submitLabel="Log in"
               submittingLabel="Logging in..."
-              navigationHref="/register"
-              navigationLabel="Don't have an account?"
+              navigationLabel={navigationLabel}
               variant="login"
+              classNames={footerClassNames}
+              {...(onNavigateToRegister
+                ? { onNavigationClick: onNavigateToRegister }
+                : { navigationHref })}
             />
           </Form>
         );

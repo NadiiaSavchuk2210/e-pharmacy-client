@@ -7,45 +7,73 @@ import {
   type AuthFormVariant,
 } from './authFormStyles';
 
-type AuthFormFooterProps = {
+export type AuthFormFooterClassNames = Partial<{
+  submitWrapper: string;
+  submitButton: string;
+  navigationLink: string;
+}>;
+
+type AuthFormFooterBaseProps = {
   isSubmitting: boolean;
   submitLabel: string;
   submittingLabel: string;
-  navigationHref: string;
   navigationLabel: string;
   variant?: AuthFormVariant;
+  classNames?: AuthFormFooterClassNames;
 };
 
-const AuthFormFooter = ({
-  isSubmitting,
-  submitLabel,
-  submittingLabel,
-  navigationHref,
-  navigationLabel,
-  variant = 'register',
-}: AuthFormFooterProps) => {
+type AuthFormFooterProps = AuthFormFooterBaseProps &
+  (
+    | {
+        navigationHref: string;
+        onNavigationClick?: undefined;
+      }
+    | {
+        navigationHref?: undefined;
+        onNavigationClick: () => void;
+      }
+  );
+
+const AuthFormFooter = (props: AuthFormFooterProps) => {
+  const {
+    isSubmitting,
+    submitLabel,
+    submittingLabel,
+    navigationLabel,
+    variant = 'register',
+    classNames,
+  } = props;
   const styles = AUTH_FORM_FOOTER_STYLES[variant];
+  const navigationClassName =
+    classNames?.navigationLink ?? styles.navigationLink;
 
   return (
     <>
-      <div className={styles.submitWrapper}>
+      <div className={classNames?.submitWrapper ?? styles.submitWrapper}>
         <Button
           type="submit"
           variant="primary"
           size="primary"
-          className="w-full"
+          className={classNames?.submitButton ?? 'w-full'}
           disabled={isSubmitting}
         >
           {isSubmitting ? submittingLabel : submitLabel}
         </Button>
       </div>
 
-      <Link
-        href={navigationHref}
-        className={styles.navigationLink}
-      >
-        {navigationLabel}
-      </Link>
+      {props.onNavigationClick ? (
+        <button
+          type="button"
+          className={navigationClassName}
+          onClick={props.onNavigationClick}
+        >
+          {navigationLabel}
+        </button>
+      ) : (
+        <Link href={props.navigationHref} className={navigationClassName}>
+          {navigationLabel}
+        </Link>
+      )}
     </>
   );
 };
