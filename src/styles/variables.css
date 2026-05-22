@@ -67,7 +67,7 @@
 
   /* COMPONENT TOKENS */
   --button-primary-bg: var(--color-brand-500);
-  --button-primary-hover-bg: var(--color-brand-600);
+  --button-primary-hover-bg: var(--color-brand-700);
   --button-primary-text: var(--color-text-inverse);
 
   --button-outline-bg: var(--color-surface);
@@ -230,6 +230,7 @@
     --color-surface-muted: #1b2a20;
     --color-surface-subtle: #223329;
     --color-card-bg: #18271e;
+    --color-neutral-500: #d3ddd7;
 
     --color-text: #f4f7f5;
     --color-text-muted: #d3ddd7;
@@ -240,7 +241,7 @@
     --color-border: rgb(255 255 255 / 0.14);
     --color-border-subtle: rgb(255 255 255 / 0.08);
 
-    --color-accent: #2d6b46;
+    --color-accent: var(--color-brand-700);
     --color-accent-soft: rgb(122 217 159 / 0.16);
 
     --color-danger: var(--color-danger-500);
@@ -286,8 +287,8 @@
 
     --header-brand-bg: var(--color-brand-700);
 
-    --input-bg: var(--color-surface);
-    --input-border: var(--color-border);
+    --input-bg: var(--color-surface-muted);
+    --input-border: rgb(184 198 189 / 0.5);
     --input-border-focus: var(--color-accent);
 
     --card-border: var(--color-border-subtle);
@@ -312,6 +313,7 @@
   --color-surface-muted: #1b2a20;
   --color-surface-subtle: #223329;
   --color-card-bg: #18271e;
+  --color-neutral-500: #d3ddd7;
 
   --color-text: #f4f7f5;
   --color-text-muted: #d3ddd7;
@@ -367,8 +369,8 @@
 
   --header-brand-bg: var(--color-brand-700);
 
-  --input-bg: var(--color-surface);
-  --input-border: var(--color-border);
+  --input-bg: var(--color-surface-muted);
+  --input-border: rgb(184 198 189 / 0.5);
   --input-border-focus: var(--color-accent);
 
   --card-border: var(--color-border-subtle);

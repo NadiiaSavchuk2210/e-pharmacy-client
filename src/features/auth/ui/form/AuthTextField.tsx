@@ -19,6 +19,7 @@ type AuthTextFieldProps<TFieldName extends string> =
     formatValue?: (value: string) => string;
     normalizeValue?: (value: string) => string;
     className?: string;
+    inputClassName?: string;
   };
 
 const AuthTextField = <TFieldName extends string>({
@@ -27,6 +28,7 @@ const AuthTextField = <TFieldName extends string>({
   formatValue,
   normalizeValue,
   className,
+  inputClassName,
   ...inputProps
 }: AuthTextFieldProps<TFieldName>) => {
   return (
@@ -53,7 +55,7 @@ const AuthTextField = <TFieldName extends string>({
               className,
             )}
           >
-            <span className="hidden">{label}</span>
+            <span className="sr-only">{label}</span>
             <Input
               {...fieldProps}
               {...inputProps}
@@ -61,6 +63,7 @@ const AuthTextField = <TFieldName extends string>({
               aria-invalid={hasError}
               className={cn(
                 'w-full',
+                inputClassName,
                 hasError &&
                   'border-danger bg-danger-soft text-danger placeholder:text-danger/70 focus:border-danger',
               )}

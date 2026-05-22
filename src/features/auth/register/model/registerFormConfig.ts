@@ -37,7 +37,7 @@ export const REGISTER_FIELDS = [
     name: 'phone',
     label: 'Phone number',
     type: 'tel',
-    placeholder: 'Phone',
+    placeholder: 'Phone number',
     autoComplete: 'tel',
   },
   {

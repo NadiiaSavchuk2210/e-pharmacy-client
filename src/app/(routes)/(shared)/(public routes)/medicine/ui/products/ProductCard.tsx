@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
@@ -12,9 +14,14 @@ import ProductImage from './ProductImage';
 type ProductCardProps = {
   product: Product;
   imageEager?: boolean;
+  onAddToCart: (product: Product) => void;
 };
 
-const ProductCard = ({ product, imageEager = false }: ProductCardProps) => {
+const ProductCard = ({
+  product,
+  imageEager = false,
+  onAddToCart,
+}: ProductCardProps) => {
   const discountLabel = getDiscountLabel(product.discount);
 
   return (
@@ -61,6 +68,7 @@ const ProductCard = ({ product, imageEager = false }: ProductCardProps) => {
               size="pill"
               aria-label={`Add ${product.name} to cart`}
               className="min-h-[34px] min-w-[108px] px-space-16 py-space-10 text-14 font-medium leading-space-14 border-0"
+              onClick={() => onAddToCart(product)}
             >
               Add to cart
             </Button>
