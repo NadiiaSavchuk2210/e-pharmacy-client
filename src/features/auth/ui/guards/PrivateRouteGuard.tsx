@@ -1,6 +1,5 @@
 'use client';
 
-import { useQueryClient } from '@tanstack/react-query';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
@@ -9,10 +8,8 @@ import {
   getLoginRedirectHref,
   getSafeAuthRedirect,
 } from '../../constants/routes';
-import { useCurrentUserQuery } from '../../model/queries/currentUserQuery';
-import { useAuthSessionRestore } from '../../model/session/authSessionRestore';
-import { clearAuthState } from '../../model/session/authState';
-import { useAuthSessionStatus } from '../../model/session/useAuthSessionStatus';
+import { useClearAuthState } from '../../model/session/authState';
+import { useAuth } from '../../model/useAuth';
 
 type PrivateRouteGuardProps = {
   children: React.ReactNode;
@@ -25,51 +22,49 @@ const getCurrentHref = (pathname: string, searchParams: URLSearchParams) => {
 };
 
 const PrivateRouteGuard = ({ children }: PrivateRouteGuardProps) => {
-  const hasSession = useAuthSessionStatus();
-  const { hasTriedSessionRestore, isCheckingSession } =
-    useAuthSessionRestore();
-  const currentUserQuery = useCurrentUserQuery();
+  const {
+    hasSession,
+    hasTriedSessionRestore,
+    isAuthenticated,
+    isAuthError,
+    isAuthLoading,
+  } = useAuth();
+  const clearAuthState = useClearAuthState();
   const pathname = usePathname();
-  const queryClient = useQueryClient();
   const router = useRouter();
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    if (hasSession || isCheckingSession || !hasTriedSessionRestore) return;
+    if (hasSession || isAuthLoading || !hasTriedSessionRestore) return;
 
     router.replace(getLoginRedirectHref(getCurrentHref(pathname, searchParams)));
   }, [
     hasSession,
     hasTriedSessionRestore,
-    isCheckingSession,
+    isAuthLoading,
     pathname,
     router,
     searchParams,
   ]);
 
   useEffect(() => {
-    if (!currentUserQuery.isError) return;
+    if (!isAuthError) return;
 
-    clearAuthState(queryClient);
+    void clearAuthState();
     router.replace(
       getLoginRedirectHref(
         getSafeAuthRedirect(getCurrentHref(pathname, searchParams), pathname),
       ),
     );
   }, [
-    currentUserQuery.isError,
+    clearAuthState,
+    isAuthError,
     pathname,
-    queryClient,
     router,
     searchParams,
   ]);
 
-  if (
-    isCheckingSession ||
-    !hasSession ||
-    currentUserQuery.isLoading ||
-    !currentUserQuery.isSuccess
-  ) {
+  if (isAuthLoading || !hasSession || !isAuthenticated) {
     return <AuthRouteLoader />;
   }
 

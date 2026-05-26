@@ -4,7 +4,7 @@ import { useSyncExternalStore } from 'react';
 
 import {
   AUTH_SESSION_CHANGE,
-  hasAuthSession,
+  hasAuthAccessToken,
 } from '@/shared/api/authSession';
 
 const subscribeToAuthSession = (onStoreChange: () => void) => {
@@ -18,4 +18,4 @@ const subscribeToAuthSession = (onStoreChange: () => void) => {
 };
 
 export const useAuthSessionStatus = () =>
-  useSyncExternalStore(subscribeToAuthSession, hasAuthSession, () => false);
+  useSyncExternalStore(subscribeToAuthSession, hasAuthAccessToken, () => false);

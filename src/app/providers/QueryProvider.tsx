@@ -3,6 +3,8 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useState } from 'react';
 
+import { MINUTE_MS } from '@/shared/constants/time';
+
 type QueryProviderProps = {
   children: React.ReactNode;
 };
@@ -11,7 +13,7 @@ const createQueryClient = () =>
   new QueryClient({
     defaultOptions: {
       queries: {
-        staleTime: 60_000,
+        staleTime: MINUTE_MS,
         retry: 1,
       },
       mutations: {

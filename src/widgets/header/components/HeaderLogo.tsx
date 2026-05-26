@@ -2,10 +2,10 @@ import Link from 'next/link';
 
 import { cn } from '@/lib/utils';
 
-import type { HeaderTone } from '../constants';
+import type { HeaderLogoTone } from '../constants';
 
 type HeaderLogoProps = {
-  tone?: Extract<HeaderTone, 'default' | 'inverse' | 'sticky'>;
+  tone?: HeaderLogoTone;
   className?: string;
 };
 

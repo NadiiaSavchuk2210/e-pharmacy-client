@@ -8,7 +8,7 @@ import { setAuthorizationHeader } from './apiClient.headers';
 import { refreshAccessToken, refreshAuthSession } from './authRefresh';
 import {
   getAuthAccessToken,
-  shouldRefreshAuthSession,
+  shouldRefreshAuthAccessToken,
 } from '../session/authSession';
 
 import type { RetryableRequestConfig } from './apiClient.types';
@@ -20,7 +20,7 @@ const isRefreshRequest = (config?: InternalAxiosRequestConfig) => {
 export const attachAuthInterceptors = (client: AxiosInstance) => {
   client.interceptors.request.use(
     async (config) => {
-      if (!config.skipAuthRefresh && shouldRefreshAuthSession()) {
+      if (!config.skipAuthRefresh && shouldRefreshAuthAccessToken()) {
         await refreshAuthSession();
       }
 

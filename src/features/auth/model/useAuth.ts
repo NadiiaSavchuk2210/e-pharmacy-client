@@ -6,17 +6,17 @@ import { useAuthSessionStatus } from './session/useAuthSessionStatus';
 
 export const useAuth = () => {
   const hasSession = useAuthSessionStatus();
-  const { isCheckingSession } = useAuthSessionRestore();
+  const { hasTriedSessionRestore, isCheckingSession } =
+    useAuthSessionRestore();
   const currentUserQuery = useCurrentUserQuery();
   const isAuthenticated = hasSession && currentUserQuery.isSuccess;
-  const user = isAuthenticated ? currentUserQuery.data : null;
 
   return {
-    user,
+    user: isAuthenticated ? currentUserQuery.data : null,
+    hasSession,
+    hasTriedSessionRestore,
     isAuthenticated,
-    isAuthLoading:
-      isCheckingSession ||
-      (hasSession && (currentUserQuery.isLoading || currentUserQuery.isFetching)),
+    isAuthLoading: isCheckingSession || (hasSession && currentUserQuery.isLoading),
     isAuthError: currentUserQuery.isError,
     refetchCurrentUser: currentUserQuery.refetch,
   };

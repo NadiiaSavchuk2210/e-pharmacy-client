@@ -1,9 +1,7 @@
+import CartPageClient from './CartPageClient';
+
 const CartPage = () => {
-  return (
-    <div>
-      <h1>CartPage</h1>
-    </div>
-  );
+  return <CartPageClient />;
 };
 
 export { metadata } from './metadata';

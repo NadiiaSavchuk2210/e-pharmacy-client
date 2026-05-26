@@ -1,9 +1,10 @@
+import { THIRTY_SECONDS_MS } from '@/shared/constants/time';
 import {
   dispatchBrowserEvent,
   getBrowserGlobal,
   isBrowser,
   removeStorageItems,
-} from './authSession.helpers';
+} from '@/shared/lib/browser';
 
 export type AuthTokenPayload = {
   token?: string;
@@ -21,9 +22,7 @@ const LEGACY_LOCAL_STORAGE_KEYS = [
   REFRESH_TOKEN_KEY,
   ACCESS_TOKEN_EXPIRES_AT_KEY,
 ];
-const SENSITIVE_SESSION_STORAGE_KEYS = [
-  REFRESH_TOKEN_KEY,
-];
+const SENSITIVE_SESSION_STORAGE_KEYS = [REFRESH_TOKEN_KEY];
 
 let authAccessToken: string | null = null;
 let authAccessTokenExpiresAt: number | null = null;
@@ -64,26 +63,54 @@ const readStoredAccessTokenExpiresAt = () => {
   return Number.isNaN(expiresAt) ? null : expiresAt;
 };
 
+const removeStoredAccessToken = () => {
+  if (!isBrowser()) return;
+
+  const sessionStorage = getBrowserGlobal().sessionStorage;
+
+  sessionStorage?.removeItem(ACCESS_TOKEN_KEY);
+  sessionStorage?.removeItem(ACCESS_TOKEN_EXPIRES_AT_KEY);
+};
+
+const hydrateAuthAccessToken = () => {
+  const accessToken = readStoredAccessToken();
+  const expiresAt = readStoredAccessTokenExpiresAt();
+
+  if (!accessToken) {
+    removeStoredAccessToken();
+    return;
+  }
+
+  if (accessToken && expiresAt && expiresAt <= Date.now()) {
+    removeStoredAccessToken();
+    return;
+  }
+
+  authAccessToken = accessToken;
+  authAccessTokenExpiresAt = expiresAt;
+};
+
 clearLegacyAuthStorage();
-authAccessToken = readStoredAccessToken();
-authAccessTokenExpiresAt = readStoredAccessTokenExpiresAt();
+hydrateAuthAccessToken();
 
 export const getAuthAccessToken = () => authAccessToken;
 
 export const getAuthAccessTokenExpiresAt = () => authAccessTokenExpiresAt;
 
-export const hasAuthSession = () => Boolean(getAuthAccessToken());
+export const hasAuthAccessToken = () => Boolean(getAuthAccessToken());
 
 export const getAuthTokenFromPayload = (data: AuthTokenPayload) =>
   data.token ?? data.accessToken ?? null;
 
-export const isAuthSessionExpired = () => {
+export const isAuthAccessTokenExpired = () => {
   if (!authAccessTokenExpiresAt) return false;
 
   return authAccessTokenExpiresAt <= Date.now();
 };
 
-export const shouldRefreshAuthSession = (refreshLeewayMs = 30_000) => {
+export const shouldRefreshAuthAccessToken = (
+  refreshLeewayMs = THIRTY_SECONDS_MS,
+) => {
   if (!authAccessToken || !authAccessTokenExpiresAt) return false;
 
   return authAccessTokenExpiresAt - Date.now() <= refreshLeewayMs;
@@ -93,7 +120,7 @@ export const persistAuthSession = (data: AuthTokenPayload) => {
   if (!isBrowser()) return;
 
   const accessToken = getAuthTokenFromPayload(data);
-  const expiresAt = data.expiresIn
+  const expiresAt = accessToken && data.expiresIn
     ? Date.now() + data.expiresIn * 1000
     : null;
 
@@ -127,8 +154,7 @@ export const clearAuthSession = () => {
   authAccessToken = null;
   authAccessTokenExpiresAt = null;
   clearLegacyAuthStorage();
-  getBrowserGlobal().sessionStorage?.removeItem(ACCESS_TOKEN_KEY);
-  getBrowserGlobal().sessionStorage?.removeItem(ACCESS_TOKEN_EXPIRES_AT_KEY);
+  removeStoredAccessToken();
   notifyAuthSessionChange();
 };
 

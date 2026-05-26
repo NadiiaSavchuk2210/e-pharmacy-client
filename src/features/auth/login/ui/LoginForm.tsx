@@ -1,6 +1,5 @@
 'use client';
 
-import { useQueryClient } from '@tanstack/react-query';
 import { Form, Formik, type FormikHelpers } from 'formik';
 import { useRouter, useSearchParams } from 'next/navigation';
 import toast from 'react-hot-toast';
@@ -10,7 +9,7 @@ import {
   AUTH_PRIVATE_REDIRECT_PATH,
   getSafeAuthRedirect,
 } from '../../constants/routes';
-import { saveAuthSession } from '../../model/session/authState';
+import { useSaveAuthSession } from '../../model/session/authState';
 import AuthFormFooter, {
   type AuthFormFooterClassNames,
 } from '../../ui/form/AuthFormFooter';
@@ -44,9 +43,9 @@ const LoginForm = ({
   inputClassName,
   footerClassNames,
 }: LoginFormProps = {}) => {
-  const queryClient = useQueryClient();
   const router = useRouter();
   const searchParams = useSearchParams();
+  const saveAuthSession = useSaveAuthSession();
   const loginMutation = useLoginMutation();
 
   const handleSubmit = async (
@@ -62,7 +61,7 @@ const LoginForm = ({
         AUTH_PRIVATE_REDIRECT_PATH,
       );
 
-      saveAuthSession(queryClient, data);
+      saveAuthSession(data);
       resetForm();
       toast.success('Welcome back!');
       onAuthSuccess?.();
