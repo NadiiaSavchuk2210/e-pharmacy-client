@@ -1,30 +1,40 @@
-import type { User } from '@/entities/user';
+'use client';
+
+import { useQueryClient } from '@tanstack/react-query';
+import { useCallback } from 'react';
+
 import {
   clearAuthSession,
   persistAuthSession,
-  type AuthTokenPayload,
 } from '@/shared/api/authSession';
 
 import { authQueryKeys } from '../queries/authQueryKeys';
 
-import type { QueryClient } from '@tanstack/react-query';
+import type { AuthSessionWithUser } from './types';
 
-type AuthSessionWithUser = AuthTokenPayload & {
-  user?: User;
+export const useSaveAuthSession = () => {
+  const queryClient = useQueryClient();
+
+  return useCallback(
+    (session: AuthSessionWithUser) => {
+      persistAuthSession(session);
+
+      if (session.user) {
+        queryClient.setQueryData(authQueryKeys.currentUser(), session.user);
+      } else {
+        queryClient.removeQueries({ queryKey: authQueryKeys.currentUser() });
+      }
+    },
+    [queryClient],
+  );
 };
 
-export const saveAuthSession = (
-  queryClient: QueryClient,
-  session: AuthSessionWithUser,
-) => {
-  persistAuthSession(session);
+export const useClearAuthState = () => {
+  const queryClient = useQueryClient();
 
-  if (session.user) {
-    queryClient.setQueryData(authQueryKeys.currentUser(), session.user);
-  }
-};
-
-export const clearAuthState = (queryClient: QueryClient) => {
-  clearAuthSession();
-  queryClient.removeQueries({ queryKey: authQueryKeys.all });
+  return useCallback(async () => {
+    clearAuthSession();
+    await queryClient.cancelQueries({ queryKey: authQueryKeys.all });
+    queryClient.removeQueries({ queryKey: authQueryKeys.all });
+  }, [queryClient]);
 };

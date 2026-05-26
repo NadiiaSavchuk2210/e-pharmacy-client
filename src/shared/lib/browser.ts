@@ -1,4 +1,4 @@
-type BrowserStorage = {
+export type BrowserStorage = {
   getItem: (key: string) => string | null;
   setItem: (key: string, value: string) => void;
   removeItem: (key: string) => void;
@@ -14,8 +14,7 @@ type BrowserGlobal = typeof globalThis & {
 
 export const getBrowserGlobal = () => globalThis as BrowserGlobal;
 
-export const isBrowser = () =>
-  typeof getBrowserGlobal().window !== 'undefined';
+export const isBrowser = () => typeof getBrowserGlobal().window !== 'undefined';
 
 export const dispatchBrowserEvent = (eventName: string) => {
   if (!isBrowser()) return;

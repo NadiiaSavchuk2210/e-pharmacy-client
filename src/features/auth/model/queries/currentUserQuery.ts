@@ -3,6 +3,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { getCurrentUser } from '@/entities/user';
+import { FIVE_MINUTES_MS } from '@/shared/constants/time';
 
 import { authQueryKeys } from './authQueryKeys';
 import { useAuthSessionStatus } from '../session/useAuthSessionStatus';
@@ -12,9 +13,9 @@ export const useCurrentUserQuery = () => {
 
   return useQuery({
     queryKey: authQueryKeys.currentUser(),
-    queryFn: getCurrentUser,
+    queryFn: ({ signal }) => getCurrentUser(signal),
     enabled: hasSession,
     retry: false,
-    staleTime: 5 * 60_000,
+    staleTime: FIVE_MINUTES_MS,
   });
 };

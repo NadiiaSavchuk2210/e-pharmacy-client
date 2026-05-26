@@ -6,7 +6,11 @@ import toast from 'react-hot-toast';
 
 import type { Product } from '@/entities/product';
 import { useAuth } from '@/features/auth/model';
-import { addProductToUserCart } from '@/features/cart';
+import {
+  getCartErrorMessage,
+  getCartProductId,
+  useAddProductToUserCart,
+} from '@/features/cart';
 
 import AuthRequiredDialog from './AuthRequiredDialog';
 import ProductCard from './ProductCard';
@@ -21,6 +25,8 @@ const ProductList = ({ products, currentPage }: ProductListProps) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
+  const [pendingProductId, setPendingProductId] = useState<string | null>(null);
+  const addProductToUserCart = useAddProductToUserCart();
 
   const redirectPath = useMemo(() => {
     const params = searchParams.toString();
@@ -28,14 +34,24 @@ const ProductList = ({ products, currentPage }: ProductListProps) => {
     return params ? `${pathname}?${params}` : pathname;
   }, [pathname, searchParams]);
 
-  const handleAddToCart = (product: Product) => {
+  const handleAddToCart = async (product: Product) => {
     if (!user) {
       setIsAuthDialogOpen(true);
       return;
     }
 
-    addProductToUserCart(user.id, product);
-    toast.success(`${product.name} added to cart`);
+    const productId = getCartProductId(product);
+
+    setPendingProductId(productId);
+
+    try {
+      await addProductToUserCart(user.id, product);
+      toast.success(`${product.name} added to cart`);
+    } catch (error) {
+      toast.error(getCartErrorMessage(error));
+    } finally {
+      setPendingProductId(null);
+    }
   };
 
   return (
@@ -44,12 +60,13 @@ const ProductList = ({ products, currentPage }: ProductListProps) => {
         Products List
       </h2>
 
-      <ul className="grid grid-cols-[335px] justify-center gap-y-space-20 md:grid-cols-[repeat(3,226px)] md:justify-between md:gap-y-space-32 lg:grid-cols-[repeat(4,280px)] lg:gap-y-space-40">
+      <ul className="grid w-full grid-cols-1 justify-center gap-y-space-20 sm:grid-cols-[335px] md:grid-cols-[repeat(3,226px)] md:justify-between md:gap-y-space-32 lg:grid-cols-[repeat(4,280px)] lg:gap-y-space-40">
         {products.map((product, index) => (
           <ProductCard
             key={`${product.apiId ?? product.id}-${currentPage}-${index}`}
             product={product}
             imageEager={index === 0}
+            isAddToCartPending={pendingProductId === getCartProductId(product)}
             onAddToCart={handleAddToCart}
           />
         ))}

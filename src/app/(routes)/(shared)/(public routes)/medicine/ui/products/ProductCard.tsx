@@ -14,18 +14,20 @@ import ProductImage from './ProductImage';
 type ProductCardProps = {
   product: Product;
   imageEager?: boolean;
+  isAddToCartPending?: boolean;
   onAddToCart: (product: Product) => void;
 };
 
 const ProductCard = ({
   product,
   imageEager = false,
+  isAddToCartPending = false,
   onAddToCart,
 }: ProductCardProps) => {
   const discountLabel = getDiscountLabel(product.discount);
 
   return (
-    <li className="group flex w-[335px] flex-col gap-space-8 transition-transform duration-[650ms] ease-[cubic-bezier(0.25,0.1,0.25,1)] hover:scale-[1.01] focus-within:scale-[1.01] md:w-[226px] lg:w-[280px]">
+    <li className="group flex min-w-0 w-full flex-col gap-space-8 transition-transform duration-[650ms] ease-[cubic-bezier(0.25,0.1,0.25,1)] hover:scale-[1.01] focus-within:scale-[1.01] sm:w-[335px] md:w-[226px] lg:w-[280px]">
       <article className="contents">
         <Link
           href={`/product/${product.id}`}
@@ -68,9 +70,10 @@ const ProductCard = ({
               size="pill"
               aria-label={`Add ${product.name} to cart`}
               className="min-h-[34px] min-w-[108px] px-space-16 py-space-10 text-14 font-medium leading-space-14 border-0"
+              disabled={isAddToCartPending}
               onClick={() => onAddToCart(product)}
             >
-              Add to cart
+              {isAddToCartPending ? 'Adding...' : 'Add to cart'}
             </Button>
 
             <Link

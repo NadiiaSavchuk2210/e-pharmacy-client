@@ -1,12 +1,11 @@
 'use client';
 
-import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useSyncExternalStore } from 'react';
 
 import { refreshAuthSession } from '@/shared/api/apiClient';
-import { hasAuthSession } from '@/shared/api/authSession';
+import { hasAuthAccessToken } from '@/shared/api/authSession';
 
-import { clearAuthState } from './authState';
+import { useClearAuthState } from './authState';
 import { useAuthSessionStatus } from './useAuthSessionStatus';
 
 type AuthSessionRestoreStatus = 'idle' | 'pending' | 'settled';
@@ -57,7 +56,7 @@ const restoreAuthSessionOnce = () => {
 
 export const useAuthSessionRestore = (enabled = true) => {
   const hasSession = useAuthSessionStatus();
-  const queryClient = useQueryClient();
+  const clearAuthState = useClearAuthState();
   const status = useSyncExternalStore(
     subscribeToAuthSessionRestore,
     getAuthSessionRestoreStatus,
@@ -71,12 +70,17 @@ export const useAuthSessionRestore = (enabled = true) => {
       return;
     }
 
-    if (hasAuthSession()) return;
+    if (hasAuthAccessToken()) {
+      setAuthSessionRestoreStatus('settled');
+      return;
+    }
 
     restoreAuthSessionOnce().catch(() => {
-      clearAuthState(queryClient);
+      if (hasAuthAccessToken()) return;
+
+      void clearAuthState();
     });
-  }, [enabled, hasSession, queryClient, status]);
+  }, [clearAuthState, enabled, hasSession, status]);
 
   return {
     hasTriedSessionRestore: status === 'settled',

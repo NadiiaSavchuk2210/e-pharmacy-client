@@ -1,9 +1,9 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 
 import { apiClient } from '@/shared/api/apiClient';
 
 import { AUTH_ENDPOINTS } from '../../config/authEndpoints';
-import { clearAuthState } from '../../model/session/authState';
+import { useClearAuthState } from '../../model/session/authState';
 
 export const logoutUser = async () => {
   try {
@@ -16,12 +16,12 @@ export const logoutUser = async () => {
 };
 
 export const useLogoutMutation = () => {
-  const queryClient = useQueryClient();
+  const clearAuthState = useClearAuthState();
 
   return useMutation({
     mutationFn: logoutUser,
     onSettled: () => {
-      clearAuthState(queryClient);
+      return clearAuthState();
     },
   });
 };
