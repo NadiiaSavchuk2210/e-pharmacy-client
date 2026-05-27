@@ -1,13 +1,9 @@
 'use client';
 
-import {
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
+import { orderQueryKeys } from '@/entities/order';
 import type { Product } from '@/entities/product';
-import { THIRTY_SECONDS_MS } from '@/shared/constants/time';
 
 import {
   checkoutCart,
@@ -15,25 +11,25 @@ import {
   getDeliveryQuote,
   updateCart,
 } from '../../api/cartApi';
-import {
-  EMPTY_CART,
-  EMPTY_CART_ITEMS,
-  getCartProductId,
-} from '../lib';
-import { cartQueryKeys } from '../queries';
+import { EMPTY_CART, EMPTY_CART_ITEMS, getCartProductId } from '../lib';
+import { CART_QUERY_STALE_TIME_MS, cartQueryKeys } from '../queries';
 
 import type {
-  Cart,
-  CheckoutCartPayload,
-  DeliveryQuotePayload,
-  UpdateCartPayload,
-} from '../types';
+  DeliveryQuoteQueryParams,
+  UpdateUserCartMutationVariables,
+} from './cartHook.types';
+import type { Cart, CheckoutCartPayload } from '../types';
 
-type UpdateUserCartMutationVariables = UpdateCartPayload & {
-  userId?: string | null;
+const getCartItemQuantity = (cart: Cart, productId: string) => {
+  return (
+    cart.items.find((item) => getCartProductId(item.product) === productId)
+      ?.quantity ?? 0
+  );
 };
 
-const CART_QUERY_STALE_TIME_MS = THIRTY_SECONDS_MS;
+const normalizeCartQuantity = (quantity: number) => {
+  return Math.max(0, Math.floor(quantity));
+};
 
 export const useUserCartQuery = (userId: string | null | undefined) => {
   return useQuery({
@@ -70,38 +66,39 @@ export const useUpdateUserCartMutation = () => {
 
 export const useCartDeliveryQuoteQuery = ({
   address,
-  subtotal,
+  cartTotalPrice,
   enabled = true,
-}: DeliveryQuotePayload & { enabled?: boolean }) => {
+}: DeliveryQuoteQueryParams) => {
   const normalizedAddress = address.trim();
 
   return useQuery({
-    queryKey: cartQueryKeys.deliveryQuote(normalizedAddress, subtotal),
+    queryKey: cartQueryKeys.deliveryQuote(normalizedAddress, cartTotalPrice),
     queryFn: () =>
       getDeliveryQuote({
         address: normalizedAddress,
-        subtotal,
       }),
     enabled: enabled && normalizedAddress.length > 0,
     staleTime: CART_QUERY_STALE_TIME_MS,
   });
 };
 
-export const useCheckoutCartMutation = (
-  userId: string | null | undefined,
-) => {
+export const useCheckoutCartMutation = (userId: string | null | undefined) => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (payload: CheckoutCartPayload) => checkoutCart(payload),
     onSuccess: () => {
       if (userId) {
-        queryClient.setQueryData<Cart>(cartQueryKeys.current(userId), EMPTY_CART);
+        queryClient.setQueryData<Cart>(
+          cartQueryKeys.current(userId),
+          EMPTY_CART,
+        );
       }
 
-      return queryClient.invalidateQueries({
-        queryKey: cartQueryKeys.all,
-      });
+      return Promise.all([
+        queryClient.invalidateQueries({ queryKey: orderQueryKeys.all }),
+        queryClient.invalidateQueries({ queryKey: cartQueryKeys.all }),
+      ]);
     },
   });
 };
@@ -133,10 +130,7 @@ export const useAddProductToUserCart = () => {
       })) ??
       EMPTY_CART;
     const productId = getCartProductId(product);
-    const currentQuantity =
-      currentCart.items.find(
-        (item) => getCartProductId(item.product) === productId,
-      )?.quantity ?? 0;
+    const currentQuantity = getCartItemQuantity(currentCart, productId);
     const updatedCart = await updateCartMutation.mutateAsync({
       userId,
       productId,
@@ -154,7 +148,7 @@ export const useSetUserCartItemQuantity = () => {
     const updatedCart = await updateCartMutation.mutateAsync({
       userId,
       productId,
-      quantity: Math.max(0, Math.floor(quantity)),
+      quantity: normalizeCartQuantity(quantity),
     });
 
     return updatedCart.items;
@@ -183,14 +177,12 @@ export const useClearUserCart = () => {
       cartQueryKeys.current(userId),
     );
 
-    await Promise.all(
-      (currentCart?.items ?? []).map((item) =>
-        updateCart({
-          productId: getCartProductId(item.product),
-          quantity: 0,
-        }),
-      ),
-    );
+    for (const item of currentCart?.items ?? []) {
+      await updateCart({
+        productId: getCartProductId(item.product),
+        quantity: 0,
+      });
+    }
 
     queryClient.setQueryData<Cart>(cartQueryKeys.current(userId), EMPTY_CART);
     await queryClient.invalidateQueries({

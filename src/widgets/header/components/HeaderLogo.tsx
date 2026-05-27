@@ -26,7 +26,7 @@ export const HeaderLogo = ({
     <Link
       href="/home"
       className={cn(
-        'flex items-center gap-3 rounded-2xl md:gap-space-14',
+        'flex items-center gap-3 rounded-2xl max-[479px]:gap-space-8 md:gap-space-14',
         'transition duration-fast ease-fast hover:opacity-80 focus-visible:outline-none focus-visible:ring-[0.25rem] focus-visible:ring-offset-[0.1875rem]',
         isInverse
           ? 'focus-visible:ring-neutral-0 focus-visible:ring-offset-header-brand-bg'
@@ -48,7 +48,7 @@ export const HeaderLogo = ({
       </picture>
       <span
         className={cn(
-          'text-16 font-semibold leading-150 md:text-20',
+          'whitespace-nowrap text-16 font-semibold leading-150 max-[479px]:text-14 max-[374px]:sr-only md:text-20',
           isInverse
             ? 'text-text-inverse'
             : isSticky

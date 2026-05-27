@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element -- next/image is not supported inside ImageResponse markup. */
 import { ImageResponse } from 'next/og';
 
 import { getProductById } from '../product.data';

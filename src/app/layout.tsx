@@ -2,6 +2,7 @@ import { Inter } from 'next/font/google';
 import { Suspense } from 'react';
 
 import QueryProvider from '@/app/providers/QueryProvider';
+import ThemeInitScript from '@/app/providers/ThemeInitScript';
 import AppShell from '@/shared/layout/AppShell';
 import AppToaster from '@/shared/ui/AppToaster';
 
@@ -27,6 +28,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
+        <ThemeInitScript />
         <QueryProvider>
           <Suspense>
             <AppShell>{children}</AppShell>

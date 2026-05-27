@@ -1,5 +1,6 @@
 import { Dialog as DialogPrimitive } from 'radix-ui';
 
+import { AnimatedThemeToggler } from '@/components/ui/animated-theme-toggler';
 import type { User } from '@/entities/user';
 import { cn } from '@/lib/utils';
 
@@ -52,9 +53,13 @@ export const MobileMenu = ({
             Site navigation and account links
           </DialogPrimitive.Description>
 
-          <DialogPrimitive.Close asChild>
-            <MobileMenuButton isOpen tone="inverse" onClick={onClose} />
-          </DialogPrimitive.Close>
+          <div className="flex items-center justify-between">
+            <AnimatedThemeToggler tone="inverse" />
+
+            <DialogPrimitive.Close asChild>
+              <MobileMenuButton isOpen tone="inverse" onClick={onClose} />
+            </DialogPrimitive.Close>
+          </div>
 
           <nav
             className="flex flex-1 items-center justify-center py-space-48"

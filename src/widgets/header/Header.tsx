@@ -3,6 +3,7 @@
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+import { AnimatedThemeToggler } from '@/components/ui/animated-theme-toggler';
 import { AUTH_LOGIN_PATH } from '@/features/auth/constants/routes';
 import { useLogoutMutation } from '@/features/auth/logout/api/logoutApi';
 import { useAuth } from '@/features/auth/model/useAuth';
@@ -51,12 +52,16 @@ const Header = () => {
             : 'bg-bg',
       )}
     >
-      <div className="container | flex w-full items-center justify-between py-space-25 md:py-space-28 xl:py-8">
+      <div className="container | flex w-full items-center justify-between py-space-25 max-[479px]:py-space-20 max-[374px]:[--container-padding:12px] md:py-space-28 xl:py-8">
         <HeaderLogo tone={headerTone} />
 
         <HeaderNavigation pathname={pathname} />
 
-        <div className="flex items-center gap-space-10 md:gap-space-16 lg:gap-space-16">
+        <div className="flex items-center gap-space-10 max-[479px]:gap-space-6 md:gap-space-16 lg:gap-space-16">
+          <AnimatedThemeToggler
+            tone={headerTone === 'inverse' ? 'inverse' : 'default'}
+          />
+
           {isAuthLoading ? (
             <HeaderAccountActionsSkeleton className="hidden xl:flex" />
           ) : isLoggedInView && user ? (

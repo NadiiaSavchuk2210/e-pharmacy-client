@@ -91,7 +91,7 @@ export const getMobileMenuButtonLineClassName = ({
 }: MobileMenuButtonLineClassNameOptions) => {
   return cn(
     'absolute h-0.5 rounded-full transition-[background-color,opacity,transform] duration-base ease-base group-hover:opacity-100',
-    isOpen ? 'w-6' : 'w-8',
+    isOpen ? 'w-6' : 'w-8 max-[479px]:w-7',
     getMenuButtonLineColorClassName(tone),
     getMenuButtonLineInteractiveClassName({ isOpen, tone }),
     isOpen
