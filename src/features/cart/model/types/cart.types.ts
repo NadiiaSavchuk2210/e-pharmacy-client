@@ -1,4 +1,17 @@
+import type {
+  Order,
+  PaymentMethod,
+  ShippingInfo,
+} from '@/entities/order';
 import type { ApiProduct, Product } from '@/entities/product';
+
+export type {
+  Order,
+  OrderItem,
+  OrderStatus,
+  PaymentMethod,
+  ShippingInfo,
+} from '@/entities/order';
 
 export type CartItem = {
   product: Product;
@@ -31,23 +44,16 @@ export type UpdateCartPayload = {
   quantity: number;
 };
 
-export type PaymentMethod = 'cash_on_delivery' | 'bank';
-
-export type ShippingInfo = {
-  name: string;
-  email: string;
-  phone: string;
-  address: string;
-};
-
 export type DeliveryQuotePayload = {
   address: string;
-  subtotal?: number;
 };
 
 export type DeliveryQuote = {
+  subtotal: number;
   deliveryFee: number;
   additionalFee: number;
+  freeDeliveryThreshold: number;
+  amountToFreeDelivery: number;
   message: string;
 };
 
@@ -55,29 +61,6 @@ export type CheckoutCartPayload = {
   shippingInfo: ShippingInfo;
   paymentMethod: PaymentMethod;
   comment?: string;
-};
-
-export type OrderItem = {
-  productId: string;
-  name: string;
-  price: number;
-  quantity: number;
-  total: number;
-};
-
-export type OrderStatus = 'pending' | 'paid' | 'cancelled' | 'completed';
-
-export type Order = {
-  id: string;
-  items: OrderItem[];
-  shippingInfo: ShippingInfo;
-  paymentMethod: PaymentMethod;
-  subtotal: number;
-  deliveryFee: number;
-  additionalFee: number;
-  total: number;
-  status: OrderStatus;
-  createdAt: string;
 };
 
 export type CheckoutCartResponse = {

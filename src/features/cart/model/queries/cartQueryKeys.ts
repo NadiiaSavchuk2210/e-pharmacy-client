@@ -4,6 +4,12 @@ export const cartQueryKeys = {
     [...cartQueryKeys.all, 'current', userId ?? 'anonymous'] as const,
   deliveryQuote: (
     address: string,
-    subtotal: number | null | undefined,
-  ) => [...cartQueryKeys.all, 'deliveryQuote', address, subtotal ?? 0] as const,
+    cartTotalPrice: number | null | undefined,
+  ) =>
+    [
+      ...cartQueryKeys.all,
+      'deliveryQuote',
+      address,
+      cartTotalPrice ?? 0,
+    ] as const,
 };

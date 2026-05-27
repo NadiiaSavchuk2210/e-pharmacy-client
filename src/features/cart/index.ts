@@ -14,8 +14,9 @@ export {
 } from './model';
 
 export {
+  CartApiError,
   getCartErrorMessage,
-} from './api/cartApi';
+} from './api/cartError';
 
 export type {
   Cart,
