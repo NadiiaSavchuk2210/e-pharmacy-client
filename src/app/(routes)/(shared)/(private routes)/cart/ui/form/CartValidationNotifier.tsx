@@ -19,20 +19,22 @@ const getFirstErrorMessage = (errors: unknown): string | undefined => {
 };
 
 const CartValidationNotifier = () => {
-  const { errors, submitCount } = useFormikContext();
-  const previousSubmitCount = useRef(submitCount);
+  const { errors, isSubmitting, isValidating, submitCount } =
+    useFormikContext();
+  const notifiedSubmitCount = useRef(submitCount);
 
   useEffect(() => {
-    if (submitCount === previousSubmitCount.current) return;
+    if (submitCount === notifiedSubmitCount.current) return;
+    if (isSubmitting || isValidating) return;
 
-    previousSubmitCount.current = submitCount;
+    notifiedSubmitCount.current = submitCount;
 
     const firstError = getFirstErrorMessage(errors);
 
     if (firstError) {
       toast.error(firstError);
     }
-  }, [errors, submitCount]);
+  }, [errors, isSubmitting, isValidating, submitCount]);
 
   return null;
 };

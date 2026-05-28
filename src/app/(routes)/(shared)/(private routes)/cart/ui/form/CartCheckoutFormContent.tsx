@@ -13,10 +13,9 @@ import CartValidationNotifier from './CartValidationNotifier';
 import PaymentMethodSection from './PaymentMethodSection';
 import ShippingInfoSection from './ShippingInfoSection';
 import { getShippingInfoFromCartForm } from '../../lib';
+import { cartCheckoutSchema, type CartCheckoutFormValues } from '../../model';
 import SelectedProductsSection from '../products/SelectedProductsSection';
 import OrderSummary from '../summary/OrderSummary';
-
-import type { CartCheckoutFormValues } from '../../model';
 
 type CartCheckoutFormContentProps = {
   cart: Cart;
@@ -33,8 +32,7 @@ const CartCheckoutFormContent = ({
   pendingProductId,
   onQuantityChange,
 }: CartCheckoutFormContentProps) => {
-  const { isSubmitting, isValid, values } =
-    useFormikContext<CartCheckoutFormValues>();
+  const { isSubmitting, values } = useFormikContext<CartCheckoutFormValues>();
   const shippingInfo = getShippingInfoFromCartForm(values);
   const deliveryQuoteQuery = useCartDeliveryQuoteQuery({
     address: shippingInfo.address,
@@ -49,8 +47,12 @@ const CartCheckoutFormContent = ({
     () => subtotal + deliveryFee + additionalFee,
     [additionalFee, deliveryFee, subtotal],
   );
+  const isFormValid = useMemo(
+    () => cartCheckoutSchema.isValidSync(values),
+    [values],
+  );
   const isPlacingOrder = isSubmitting || isCheckoutPending;
-  const canPlaceOrder = cart.items.length > 0 && isValid && !isPlacingOrder;
+  const canPlaceOrder = cart.items.length > 0 && isFormValid && !isPlacingOrder;
 
   return (
     <Form

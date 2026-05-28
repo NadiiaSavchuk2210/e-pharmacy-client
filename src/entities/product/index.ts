@@ -15,6 +15,7 @@ export type {
   ApiProduct,
   ApiProductPage,
   Product,
+  ProductDescriptionSection,
   ProductPage,
   ProductPageMeta,
   ProductSearchParams,

@@ -26,7 +26,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const title = product.name;
-  const description = `${product.name} by ${product.suppliers}. Explore product details, price, availability, and customer reviews on E-Pharmacy.`;
+  const description =
+    product.description ??
+    `${product.name} by ${product.suppliers}. Explore product details, price, availability, and customer reviews on E-Pharmacy.`;
   const canonicalPath = `/product/${productId}`;
   const openGraphImage = `${canonicalPath}/og-image`;
 

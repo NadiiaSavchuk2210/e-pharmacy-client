@@ -1,9 +1,8 @@
 import Image from 'next/image';
 
-import { Button } from '@/components/ui/button';
 import { PRODUCT_IMAGE_PLACEHOLDER } from '@/entities/product';
 import { type CartItem } from '@/features/cart';
-import { Icon } from '@/shared/ui/Icon';
+import { ProductCartActions } from '@/shared/ui/ProductCartActions';
 
 import { formatMoney, parsePrice } from '../../lib';
 
@@ -57,59 +56,39 @@ const CartItemRow = ({
           {formatMoney(itemTotal)}
         </p>
 
-        <div className="flex items-center justify-between gap-space-8 md:col-span-2 md:gap-space-12 max-[374px]:gap-space-4">
-          <div
-            className="flex h-[32px] w-[95px] items-center justify-center rounded-full border border-card-border bg-bg max-[374px]:w-[84px] md:h-[44px] md:min-w-[108px]"
-            role="group"
-            aria-label={`${item.product.name} quantity`}
-          >
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon"
-              className="size-8 rounded-full text-brand-500 hover:bg-transparent hover:text-brand-700 focus-visible:bg-transparent max-[374px]:size-7 md:size-11"
-              aria-label={`Increase ${item.product.name} quantity`}
-              disabled={isDisabled}
-              onClick={() => void onQuantityChange(item, item.quantity + 1)}
-            >
-              <Icon name="plus" className="size-4 max-[374px]:size-3.5 md:size-5" />
-            </Button>
-
-            <span className="flex min-w-[1.5rem] justify-center text-14 font-normal leading-space-20 text-text max-[374px]:min-w-[1.25rem] md:text-16 md:leading-space-20">
-              {item.quantity}
-            </span>
-
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon"
-              className="size-8 rounded-full text-brand-500 hover:bg-transparent hover:text-brand-700 focus-visible:bg-transparent max-[374px]:size-7 md:size-11"
-              aria-label={
-                shouldRemoveOnDecrease
-                  ? `Remove ${item.product.name} from cart`
-                  : `Decrease ${item.product.name} quantity`
-              }
-              disabled={isDisabled}
-              onClick={() =>
-                void onQuantityChange(item, Math.max(0, item.quantity - 1))
-              }
-            >
-              <Icon name="minus" className="size-4 max-[374px]:size-3.5 md:size-5" />
-            </Button>
-          </div>
-
-          <Button
-            type="button"
-            variant="delete"
-            size="delete"
-            className="h-[32px] w-[89px] text-14 font-medium max-[374px]:w-[74px] max-[374px]:text-12"
-            aria-label={`Remove ${item.product.name} from cart`}
-            disabled={isDisabled}
-            onClick={() => void onQuantityChange(item, 0)}
-          >
-            Remove
-          </Button>
-        </div>
+        <ProductCartActions
+          quantity={item.quantity}
+          quantityAriaLabel={`${item.product.name} quantity`}
+          increaseAriaLabel={`Increase ${item.product.name} quantity`}
+          decreaseAriaLabel={
+            shouldRemoveOnDecrease
+              ? `Remove ${item.product.name} from cart`
+              : `Decrease ${item.product.name} quantity`
+          }
+          onIncrease={() => void onQuantityChange(item, item.quantity + 1)}
+          onDecrease={() =>
+            void onQuantityChange(item, Math.max(0, item.quantity - 1))
+          }
+          actionLabel="Remove"
+          actionAriaLabel={`Remove ${item.product.name} from cart`}
+          onAction={() => void onQuantityChange(item, 0)}
+          actionVariant="delete"
+          actionSize="delete"
+          disabled={isDisabled}
+          className="gap-space-8 md:col-span-2 md:gap-space-12 max-[374px]:gap-space-4"
+          classNames={{
+            quantityControl:
+              'h-[32px] w-[95px] max-[374px]:w-[84px] md:h-[44px] md:min-w-[108px]',
+            quantityButton:
+              'size-8 max-[374px]:size-7 md:size-11',
+            quantityIcon:
+              'size-4 max-[374px]:size-3.5 md:size-5',
+            quantityValue:
+              'text-14 leading-space-20 max-[374px]:min-w-[1.25rem] md:text-16 md:leading-space-20',
+            actionButton:
+              'h-[32px] w-[89px] text-14 font-medium max-[374px]:w-[74px] max-[374px]:text-12',
+          }}
+        />
       </div>
     </li>
   );

@@ -81,21 +81,21 @@ const AuthRequiredDialog = ({
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent
         showCloseButton={false}
-        className="flex flex-col gap-space-25 max-h-[calc(100dvh-2rem)] w-[343px] overflow-y-auto rounded-[20px] border-0 px-space-32 py-space-40 shadow-none md:w-[463px] md:max-w-[463px] md:py-[50px] md:px-[70px]"
+        className="flex max-h-[calc(100dvh-2rem)] w-[343px] flex-col gap-space-25 overflow-y-auto rounded-[20px] border-0 px-space-32 py-space-40 shadow-none md:w-[463px] md:max-w-[463px] md:px-[70px] md:py-[50px]"
       >
         <DialogClose asChild>
           <Button
             type="button"
             variant="ghost"
             size="icon-sm"
-            className="absolute top-space-16 right-space-16 size-5 text-text-muted hover:bg-accent-soft hover:text-text focus-visible:border-brand-700 focus-visible:bg-accent-soft focus-visible:ring-brand-700/35 md:top-space-20 md:right-space-20 md:size-6"
+            className="absolute right-space-16 top-space-16 size-5 text-text-muted hover:bg-accent-soft hover:text-text focus-visible:border-brand-700 focus-visible:bg-accent-soft focus-visible:ring-brand-700/35 md:right-space-20 md:top-space-20 md:size-6"
           >
             <XIcon className="size-5" aria-hidden="true" />
             <span className="sr-only">Close</span>
           </Button>
         </DialogClose>
 
-        <DialogHeader className="items-center text-center gap-space-14">
+        <DialogHeader className="items-center gap-space-14 text-center">
           <DialogTitle className="max-w-[280px] text-28 font-semibold leading-space-32 text-text md:max-w-[301px]">
             {copy.title}
           </DialogTitle>

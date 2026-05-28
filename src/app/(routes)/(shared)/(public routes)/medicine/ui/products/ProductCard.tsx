@@ -2,12 +2,12 @@
 
 import Link from 'next/link';
 
-import { Button } from '@/components/ui/button';
 import {
   getDiscountLabel,
   getPriceLabel,
   type Product,
 } from '@/entities/product';
+import { ProductCartActions } from '@/shared/ui/ProductCartActions';
 
 import ProductImage from './ProductImage';
 
@@ -64,17 +64,19 @@ const ProductCard = ({
           </div>
 
           <div className="flex items-center justify-between gap-space-16">
-            <Button
-              type="button"
-              variant="primary"
-              size="pill"
-              aria-label={`Add ${product.name} to cart`}
-              className="min-h-[34px] min-w-[108px] px-space-16 py-space-10 text-14 font-medium leading-space-14 border-0"
-              disabled={isAddToCartPending}
-              onClick={() => onAddToCart(product)}
-            >
-              {isAddToCartPending ? 'Adding...' : 'Add to cart'}
-            </Button>
+            <ProductCartActions
+              actionLabel={isAddToCartPending ? 'Adding...' : 'Add to cart'}
+              actionAriaLabel={`Add ${product.name} to cart`}
+              actionVariant="primary"
+              actionSize="pill"
+              actionDisabled={isAddToCartPending}
+              onAction={() => onAddToCart(product)}
+              className="justify-start"
+              classNames={{
+                actionButton:
+                  'min-h-[34px] min-w-[108px] border-0 px-space-16 py-space-10 text-14 font-medium leading-space-14',
+              }}
+            />
 
             <Link
               href={`/product/${product.id}`}

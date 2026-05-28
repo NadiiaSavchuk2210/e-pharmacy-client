@@ -70,12 +70,12 @@ const MedicineStoreDetailsPage = async ({ params }: Props) => {
                 Phone
               </dt>
               <dd>
-                <a
+                <Link
                   href={store.phoneHref}
                   className="text-16 leading-space-20 text-text transition-colors hover:text-brand-700"
                 >
                   {store.phone}
-                </a>
+                </Link>
               </dd>
             </div>
           </div>
