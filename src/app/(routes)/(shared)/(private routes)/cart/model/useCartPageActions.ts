@@ -25,11 +25,13 @@ import type { CartCheckoutFormValues } from './cartForm.schema';
 type UseCartPageActionsParams = {
   user: AuthUser | null | undefined;
   cart: Cart;
+  onCheckoutSuccess?: () => void;
 };
 
 export const useCartPageActions = ({
   user,
   cart,
+  onCheckoutSuccess,
 }: UseCartPageActionsParams) => {
   const [pendingProductId, setPendingProductId] = useState<string | null>(null);
   const updateCartMutation = useUpdateUserCartMutation();
@@ -72,6 +74,7 @@ export const useCartPageActions = ({
 
       toast.success(`Order ${result.order.id} placed`);
       void celebrateOrderSuccess();
+      onCheckoutSuccess?.();
       resetForm({
         values: getCartCheckoutInitialValues(user),
       });

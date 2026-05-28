@@ -1,34 +1,14 @@
-import { notFound } from 'next/navigation';
-import { Suspense } from 'react';
+import { redirect } from 'next/navigation';
 
-import { getProductById } from './product.data';
-
-interface Props {
+type Props = {
   params: Promise<{
     productId: string;
   }>;
-}
-
-const Product = async ({ params }: Props) => {
-  const { productId } = await params;
-  const product = await getProductById(productId);
-
-  if (!product) {
-    notFound();
-  }
-
-  return <p>Product: {product.name}</p>;
 };
 
-const ProductPage = ({ params }: Props) => {
-  return (
-    <>
-      <h1>ProductPage</h1>
-      <Suspense fallback={<p>Loading...</p>}>
-        <Product params={params} />
-      </Suspense>
-    </>
-  );
+const ProductPage = async ({ params }: Props) => {
+  const { productId } = await params;
+  redirect(`/product/${productId}/description`);
 };
 
 export { generateMetadata } from './metadata';

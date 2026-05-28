@@ -31,6 +31,14 @@ const normalizeCartQuantity = (quantity: number) => {
   return Math.max(0, Math.floor(quantity));
 };
 
+const normalizeAddQuantity = (quantity: number | undefined) => {
+  if (typeof quantity !== 'number' || !Number.isFinite(quantity)) {
+    return 1;
+  }
+
+  return Math.max(1, Math.floor(quantity));
+};
+
 export const useUserCartQuery = (userId: string | null | undefined) => {
   return useQuery({
     queryKey: cartQueryKeys.current(userId),
@@ -119,7 +127,7 @@ export const useAddProductToUserCart = () => {
   const queryClient = useQueryClient();
   const updateCartMutation = useUpdateUserCartMutation();
 
-  return async (userId: string, product: Product) => {
+  return async (userId: string, product: Product, quantity?: number) => {
     const cartQueryKey = cartQueryKeys.current(userId);
     const currentCart =
       queryClient.getQueryData<Cart>(cartQueryKey) ??
@@ -131,10 +139,11 @@ export const useAddProductToUserCart = () => {
       EMPTY_CART;
     const productId = getCartProductId(product);
     const currentQuantity = getCartItemQuantity(currentCart, productId);
+    const addQuantity = normalizeAddQuantity(quantity);
     const updatedCart = await updateCartMutation.mutateAsync({
       userId,
       productId,
-      quantity: currentQuantity + 1,
+      quantity: currentQuantity + addQuantity,
     });
 
     return updatedCart.items;

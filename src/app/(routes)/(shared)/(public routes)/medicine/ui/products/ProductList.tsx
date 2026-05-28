@@ -6,13 +6,13 @@ import toast from 'react-hot-toast';
 
 import type { Product } from '@/entities/product';
 import { useAuth } from '@/features/auth/model';
+import AuthRequiredDialog from '@/features/auth/ui/AuthRequiredDialog';
 import {
   getCartErrorMessage,
   getCartProductId,
   useAddProductToUserCart,
 } from '@/features/cart';
 
-import AuthRequiredDialog from './AuthRequiredDialog';
 import ProductCard from './ProductCard';
 
 type ProductListProps = {

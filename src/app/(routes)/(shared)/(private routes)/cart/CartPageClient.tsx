@@ -1,12 +1,10 @@
 'use client';
 
-import { useMemo } from 'react';
-
 import { useAuth } from '@/features/auth/model';
 import { EMPTY_CART, useUserCartQuery } from '@/features/cart';
 import PageTitle from '@/shared/ui/PageTitle';
 
-import { getCartCheckoutInitialValues } from './lib';
+import { useCartCheckoutDraft } from './model/useCartCheckoutDraft';
 import { useCartPageActions } from './model/useCartPageActions';
 import {
   CartCheckoutForm,
@@ -17,28 +15,26 @@ import {
 
 const CartPageClient = () => {
   const { user, isAuthLoading } = useAuth();
-  const initialValues = useMemo(
-    () => getCartCheckoutInitialValues(user),
-    [user],
-  );
+  const { clearDraft, initialValues, saveDraft } = useCartCheckoutDraft(user);
   const cartQuery = useUserCartQuery(user?.id);
   const cart = cartQuery.data ?? EMPTY_CART;
-  const isCartLoading = isAuthLoading || cartQuery.isPending;
+  const isCartLoading =
+    isAuthLoading || cartQuery.isPending || cartQuery.isPlaceholderData;
   const {
     handleCheckoutSubmit,
     handleQuantityChange,
     isCartBusy,
     isCheckoutPending,
     pendingProductId,
-  } = useCartPageActions({ user, cart });
+  } = useCartPageActions({ user, cart, onCheckoutSuccess: clearDraft });
 
   const renderCartContent = () => {
-    if (isCartLoading) {
-      return <CartLoadingState />;
-    }
-
     if (cartQuery.isError) {
       return <CartErrorState onRetry={() => void cartQuery.refetch()} />;
+    }
+
+    if (isCartLoading) {
+      return <CartLoadingState />;
     }
 
     if (cart.items.length === 0) {
@@ -54,6 +50,7 @@ const CartPageClient = () => {
         pendingProductId={pendingProductId}
         onQuantityChange={handleQuantityChange}
         onSubmit={handleCheckoutSubmit}
+        onValuesChange={saveDraft}
       />
     );
   };
