@@ -1,4 +1,5 @@
 import { fetchApiData } from '@/shared/api/apiFetch';
+import { cacheTags } from '@/shared/cache/cacheTags';
 
 import { findStoreInList, normalizeMedicineStore } from '../lib/storeMappers';
 
@@ -18,6 +19,7 @@ const fetchApiStoresResponse = (
   fetchApiData<ApiStoresResponse>({
     path,
     params: { ...params },
+    tags: [cacheTags.medicineStores],
     errorMessage: 'Failed to fetch stores',
   });
 

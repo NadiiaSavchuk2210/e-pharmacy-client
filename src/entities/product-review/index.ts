@@ -1,4 +1,7 @@
-export { getProductReviews } from './api/productReviewsApi';
+export {
+  getProductReviews,
+  getProductReviewsSummary,
+} from './api/productReviewsApi';
 export { formatProductReviewDate } from './lib/formatProductReviewDate';
 
 export type {
@@ -7,5 +10,6 @@ export type {
   ProductReview,
   ProductReviewsPage,
   ProductReviewsPageMeta,
+  ProductReviewsSummary,
   ProductReviewsSearchParams,
 } from './model/types';

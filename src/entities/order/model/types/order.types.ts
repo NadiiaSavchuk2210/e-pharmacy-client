@@ -30,6 +30,19 @@ export type Order = {
   createdAt: string;
 };
 
+export type OrdersPageMeta = {
+  totalItems: number;
+  currentPage: number;
+  perPage: number;
+  totalPages: number;
+};
+
 export type OrdersResponse = {
   orders: Order[];
+  meta: OrdersPageMeta;
+};
+
+export type OrdersSearchParams = {
+  limit?: string | number;
+  page?: string | number;
 };

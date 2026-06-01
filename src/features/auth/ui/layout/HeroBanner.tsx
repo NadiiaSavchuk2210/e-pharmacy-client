@@ -18,7 +18,6 @@ const HeroBanner = () => {
           fill
           sizes="(min-width: 1280px) 179px, (min-width: 768px) 179px, 95px"
           className="object-contain"
-          priority
         />
       </div>
 

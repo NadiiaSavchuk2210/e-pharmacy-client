@@ -1,4 +1,5 @@
 import { fetchApiData } from '@/shared/api/apiFetch';
+import { cacheTags } from '@/shared/cache/cacheTags';
 
 import type { ApiCustomerReview, CustomerReview } from '../model/types';
 
@@ -23,6 +24,7 @@ export const getCustomerReviews = async () => {
   const reviews = await fetchApiData<ApiCustomerReview[]>({
     path: '/customer-reviews',
     revalidate: 300,
+    tags: [cacheTags.customerReviews],
     errorMessage: 'Failed to fetch customer reviews',
   });
 

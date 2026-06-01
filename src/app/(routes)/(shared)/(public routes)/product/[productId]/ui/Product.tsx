@@ -1,5 +1,6 @@
 'use client';
 
+import { Star } from 'lucide-react';
 import Image from 'next/image';
 
 import {
@@ -8,6 +9,7 @@ import {
   PRODUCT_IMAGE_PLACEHOLDER,
   type Product as ProductType,
 } from '@/entities/product';
+import type { ProductReviewsSummary } from '@/entities/product-review';
 import AuthRequiredDialog from '@/features/auth/ui/AuthRequiredDialog';
 import { ProductCartActions } from '@/shared/ui/ProductCartActions';
 
@@ -15,9 +17,13 @@ import { useProductCartControls } from '../model/useProductCartControls';
 
 type Props = {
   product: ProductType;
+  reviewsSummary: ProductReviewsSummary;
 };
 
-const Product = ({ product }: Props) => {
+const formatReviewsCount = (count: number) =>
+  `${count} ${count === 1 ? 'review' : 'reviews'}`;
+
+const Product = ({ product, reviewsSummary }: Props) => {
   const {
     availableQuantityLabel,
     handleAddToCart,
@@ -33,6 +39,7 @@ const Product = ({ product }: Props) => {
   } = useProductCartControls(product);
   const imageSrc = getProductImageSrc(product.photo);
   const isPlaceholder = imageSrc === PRODUCT_IMAGE_PLACEHOLDER;
+  const hasReviews = reviewsSummary.totalReviews > 0;
 
   return (
     <>
@@ -46,7 +53,7 @@ const Product = ({ product }: Props) => {
             alt={product.name}
             fill
             sizes="(min-width: 1440px) 380px, (min-width: 768px) 364px, 335px"
-            priority
+            preload
             className="object-contain p-space-32 md:p-space-40"
             unoptimized={isPlaceholder}
           />
@@ -64,6 +71,23 @@ const Product = ({ product }: Props) => {
               <p className="text-12 leading-space-18 text-secondary-text">
                 Brand: {product.suppliers}
               </p>
+              <div className="mt-space-8 flex items-center gap-space-6 text-12 leading-space-18 text-text-muted">
+                <Star
+                  aria-hidden="true"
+                  className={`size-4 ${
+                    hasReviews
+                      ? 'fill-brand-700 text-brand-700'
+                      : 'text-text-weak'
+                  }`}
+                />
+                <span>
+                  {hasReviews
+                    ? `${reviewsSummary.averageRating.toFixed(1)} (${formatReviewsCount(
+                        reviewsSummary.totalReviews,
+                      )})`
+                    : 'No reviews yet'}
+                </span>
+              </div>
               <p
                 className={`mt-space-8 text-12 font-medium leading-space-18 ${
                   isOutOfStock ? 'text-danger' : 'text-brand-700'

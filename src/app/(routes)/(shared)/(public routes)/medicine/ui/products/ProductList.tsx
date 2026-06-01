@@ -14,19 +14,27 @@ import {
 } from '@/features/cart';
 
 import ProductCard from './ProductCard';
+import {
+  getProductListKey,
+  getProductRevealDelay,
+  getUniqueProductsById,
+} from './productList.helpers';
 
 type ProductListProps = {
   products: Product[];
-  currentPage: number;
 };
 
-const ProductList = ({ products, currentPage }: ProductListProps) => {
+const ProductList = ({ products }: ProductListProps) => {
   const { user } = useAuth();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const [pendingProductId, setPendingProductId] = useState<string | null>(null);
   const addProductToUserCart = useAddProductToUserCart();
+  const uniqueProducts = useMemo(
+    () => getUniqueProductsById(products),
+    [products],
+  );
 
   const redirectPath = useMemo(() => {
     const params = searchParams.toString();
@@ -61,16 +69,20 @@ const ProductList = ({ products, currentPage }: ProductListProps) => {
       </h2>
 
       <ul className="grid w-full grid-cols-1 justify-center gap-y-space-20 sm:grid-cols-[335px] md:grid-cols-[repeat(3,226px)] md:justify-between md:gap-y-space-32 lg:grid-cols-[repeat(4,280px)] lg:gap-y-space-40">
-        {products.map((product, index) => (
-          <ProductCard
-            key={`${product.apiId ?? product.id}-${currentPage}-${index}`}
-            product={product}
-            imageEager={index === 0}
-            isAddToCartPending={pendingProductId === getCartProductId(product)}
-            style={{ animationDelay: `${Math.min(index, 11) * 75}ms` }}
-            onAddToCart={handleAddToCart}
-          />
-        ))}
+        {uniqueProducts.map((product, index) => {
+          const cartProductId = getCartProductId(product);
+
+          return (
+            <ProductCard
+              key={getProductListKey(product)}
+              product={product}
+              imageEager={index === 0}
+              isAddToCartPending={pendingProductId === cartProductId}
+              style={{ animationDelay: getProductRevealDelay(index) }}
+              onAddToCart={handleAddToCart}
+            />
+          );
+        })}
       </ul>
 
       <AuthRequiredDialog

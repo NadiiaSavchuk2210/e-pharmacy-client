@@ -1,4 +1,35 @@
 export type PaginationItem = number | 'ellipsis';
+export type PaginationSearchParamsRecord = Record<
+  string,
+  string | string[] | undefined
+>;
+export type PaginationRouteSearchParams<
+  TSearchParams extends PaginationSearchParamsRecord = PaginationSearchParamsRecord,
+> = Promise<TSearchParams>;
+
+export const getPaginationSearchParam = (
+  searchParams: PaginationSearchParamsRecord,
+  key: string,
+) => {
+  const value = searchParams[key];
+
+  return Array.isArray(value) ? value[0] : value;
+};
+
+export const getCurrentPage = (
+  searchParams: PaginationSearchParamsRecord,
+) => {
+  const page = getPaginationSearchParam(searchParams, 'page');
+  const parsedPage = Number.parseInt(page ?? '', 10);
+
+  return Number.isNaN(parsedPage) || parsedPage < 1 ? 1 : parsedPage;
+};
+
+export const getPageHref = (pathname: string, page: number) =>
+  page > 1 ? `${pathname}?page=${page}` : pathname;
+
+export const createPageHref = (pathname: string) => (page: number) =>
+  getPageHref(pathname, page);
 
 export const getPaginationItems = (
   currentPage: number,

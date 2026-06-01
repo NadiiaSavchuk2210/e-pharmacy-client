@@ -1,4 +1,5 @@
 import { fetchApiData } from '@/shared/api/apiFetch';
+import { cacheTags } from '@/shared/cache/cacheTags';
 
 import type {
   ApiProduct,
@@ -13,6 +14,7 @@ export const fetchApiProductsResponse = (params?: URLSearchParams) =>
     path: '/products',
     params,
     revalidate: 120,
+    tags: [cacheTags.products],
     errorMessage: 'Failed to fetch products',
   });
 

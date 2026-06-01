@@ -12,6 +12,7 @@ type ApiFetchOptions = {
   path: string;
   params?: ApiSearchParams;
   revalidate?: number;
+  tags?: string[];
   errorMessage?: string;
 };
 
@@ -54,10 +55,11 @@ export const fetchApiData = async <T>({
   path,
   params,
   revalidate = 300,
+  tags,
   errorMessage = `Failed to fetch ${path}`,
 }: ApiFetchOptions) => {
   const response = await fetch(createApiUrl(path, params), {
-    next: { revalidate },
+    next: { revalidate, tags },
   });
 
   if (!response.ok) {

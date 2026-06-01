@@ -4,6 +4,7 @@ import {
   getProductById as fetchProductById,
   type Product,
 } from '@/entities/product';
+import { cacheTags } from '@/shared/cache/cacheTags';
 
 export const getProductById = async (
   productId: string,
@@ -11,7 +12,7 @@ export const getProductById = async (
   'use cache';
 
   cacheLife('hours');
-  cacheTag(`product:${productId}`);
+  cacheTag(cacheTags.products, cacheTags.product(productId));
 
   return fetchProductById(productId);
 };

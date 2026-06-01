@@ -1,21 +1,20 @@
+import {
+  createPageHref,
+  getCurrentPage,
+  type PaginationRouteSearchParams,
+  type PaginationSearchParamsRecord,
+} from '@/shared/lib/pagination';
+
 export const REVIEWS_PER_PAGE = 4;
 
-export type ReviewsSearchParamsRecord = Record<
-  string,
-  string | string[] | undefined
->;
+export type ReviewsSearchParamsRecord = PaginationSearchParamsRecord;
 
-export type ReviewsSearchParams = Promise<ReviewsSearchParamsRecord>;
+export type ReviewsSearchParams =
+  PaginationRouteSearchParams<ReviewsSearchParamsRecord>;
 
 export const getCurrentReviewPage = (
   searchParams: ReviewsSearchParamsRecord,
-) => {
-  const value = searchParams.page;
-  const page = Array.isArray(value) ? value[0] : value;
-  const parsedPage = Number.parseInt(page ?? '', 10);
-
-  return Number.isNaN(parsedPage) || parsedPage < 1 ? 1 : parsedPage;
-};
+) => getCurrentPage(searchParams);
 
 export const getProductReviewsPageHref = (
   productId: string,
@@ -23,9 +22,5 @@ export const getProductReviewsPageHref = (
 ) => {
   const pathname = `/product/${productId}/reviews`;
 
-  if (page <= 1) {
-    return pathname;
-  }
-
-  return `${pathname}?page=${page}`;
+  return createPageHref(pathname)(page);
 };
