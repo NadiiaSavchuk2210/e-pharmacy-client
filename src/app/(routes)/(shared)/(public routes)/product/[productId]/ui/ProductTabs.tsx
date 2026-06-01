@@ -2,51 +2,39 @@
 
 import Link from 'next/link';
 import { useRouter, useSelectedLayoutSegment } from 'next/navigation';
+import { Suspense, useEffect, type ReactNode } from 'react';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-import type { ReactNode } from 'react';
-
-const productTabs = [
-  {
-    value: 'description',
-    label: 'Description',
-  },
-  {
-    value: 'reviews',
-    label: 'Reviews',
-  },
-] as const;
-
-type ProductTabValue = (typeof productTabs)[number]['value'];
+import { productTabsContainerClassName } from './productTabs.styles';
+import ProductDescriptionSkeleton from '../description/ui/ProductDescriptionSkeleton';
+import {
+  getActiveProductTab,
+  getProductTabHref,
+  isProductTabValue,
+  productTabs,
+} from '../lib/productTabs';
+import ReviewsSkeleton from '../reviews/ui/ReviewsSkeleton';
 
 type ProductTabsProps = {
   children: ReactNode;
   productId: string;
 };
 
-const getProductTabHref = (productId: string, tab: ProductTabValue) =>
-  `/product/${productId}/${tab}`;
-
-const isProductTabValue = (value: string): value is ProductTabValue =>
-  productTabs.some((tab) => tab.value === value);
-
-const getActiveTab = (segment: string | null): ProductTabValue => {
-  if (segment === 'reviews') {
-    return 'reviews';
-  }
-
-  return 'description';
-};
-
 const ProductTabs = ({ children, productId }: ProductTabsProps) => {
   const router = useRouter();
   const segment = useSelectedLayoutSegment();
-  const activeTab = getActiveTab(segment);
+  const activeTab = getActiveProductTab(segment);
+  const fallback =
+    activeTab === 'reviews' ? <ReviewsSkeleton /> : <ProductDescriptionSkeleton />;
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [activeTab, productId]);
 
   const handleValueChange = (value: string) => {
     if (isProductTabValue(value) && value !== activeTab) {
-      router.push(getProductTabHref(productId, value));
+      router.push(getProductTabHref(productId, value), { scroll: true });
     }
   };
 
@@ -54,7 +42,7 @@ const ProductTabs = ({ children, productId }: ProductTabsProps) => {
     <Tabs
       value={activeTab}
       activationMode="manual"
-      className="rounded-[27px] bg-surface p-space-20 pb-space-40 md:p-space-32 md:pb-space-64 md:gap-space-32 lg:p-space-40 lg:pb-space-80 lg:gap-space-40"
+      className={productTabsContainerClassName}
       onValueChange={handleValueChange}
     >
       <TabsList
@@ -69,7 +57,7 @@ const ProductTabs = ({ children, productId }: ProductTabsProps) => {
             asChild
             className="h-[33px] rounded-full bg-accent-soft px-space-10 sm:px-space-25 py-[8px] text-14 font-medium leading-space-18 text-brand-700 data-active:bg-accent data-active:text-text-inverse data-active:shadow-none"
           >
-            <Link href={getProductTabHref(productId, tab.value)}>
+            <Link href={getProductTabHref(productId, tab.value)} scroll>
               {tab.label}
             </Link>
           </TabsTrigger>
@@ -77,7 +65,7 @@ const ProductTabs = ({ children, productId }: ProductTabsProps) => {
       </TabsList>
 
       <TabsContent value={activeTab} className="text-14 leading-space-22">
-        {children}
+        <Suspense fallback={fallback}>{children}</Suspense>
       </TabsContent>
     </Tabs>
   );

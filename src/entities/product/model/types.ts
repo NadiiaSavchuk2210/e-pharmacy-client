@@ -5,7 +5,7 @@ export type ProductDescriptionSection = {
 
 export type ApiProduct = {
   _id?: string;
-  id: string;
+  id?: string | number;
   photo: string;
   name: string;
   suppliers: string;
@@ -18,7 +18,8 @@ export type ApiProduct = {
   sourceUrl?: string;
 };
 
-export type Product = Omit<ApiProduct, '_id'> & {
+export type Product = Omit<ApiProduct, '_id' | 'id'> & {
+  id: string;
   apiId?: string;
 };
 

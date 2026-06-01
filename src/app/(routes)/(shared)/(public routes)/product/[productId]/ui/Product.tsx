@@ -1,9 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import { usePathname, useSearchParams } from 'next/navigation';
-import { useMemo, useState } from 'react';
-import toast from 'react-hot-toast';
 
 import {
   getPriceLabel,
@@ -11,52 +8,31 @@ import {
   PRODUCT_IMAGE_PLACEHOLDER,
   type Product as ProductType,
 } from '@/entities/product';
-import { useAuth } from '@/features/auth/model';
 import AuthRequiredDialog from '@/features/auth/ui/AuthRequiredDialog';
-import { getCartErrorMessage, useAddProductToUserCart } from '@/features/cart';
 import { ProductCartActions } from '@/shared/ui/ProductCartActions';
+
+import { useProductCartControls } from '../model/useProductCartControls';
 
 type Props = {
   product: ProductType;
 };
 
 const Product = ({ product }: Props) => {
-  const { user } = useAuth();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const [quantity, setQuantity] = useState(1);
-  const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
-  const [isAddToCartPending, setIsAddToCartPending] = useState(false);
-  const addProductToUserCart = useAddProductToUserCart();
+  const {
+    availableQuantityLabel,
+    handleAddToCart,
+    handleDecreaseQuantity,
+    handleIncreaseQuantity,
+    isAddToCartPending,
+    isAuthDialogOpen,
+    isMaxQuantitySelected,
+    isOutOfStock,
+    quantity,
+    redirectPath,
+    setIsAuthDialogOpen,
+  } = useProductCartControls(product);
   const imageSrc = getProductImageSrc(product.photo);
   const isPlaceholder = imageSrc === PRODUCT_IMAGE_PLACEHOLDER;
-  const redirectPath = useMemo(() => {
-    const params = searchParams.toString();
-
-    return params ? `${pathname}?${params}` : pathname;
-  }, [pathname, searchParams]);
-
-  const handleAddToCart = async () => {
-    if (!user) {
-      setIsAuthDialogOpen(true);
-      return;
-    }
-
-    setIsAddToCartPending(true);
-
-    try {
-      await addProductToUserCart(user.id, product, quantity);
-      toast.success(
-        quantity === 1
-          ? `${product.name} added to cart`
-          : `${quantity} ${product.name} added to cart`,
-      );
-    } catch (error) {
-      toast.error(getCartErrorMessage(error));
-    } finally {
-      setIsAddToCartPending(false);
-    }
-  };
 
   return (
     <>
@@ -88,6 +64,13 @@ const Product = ({ product }: Props) => {
               <p className="text-12 leading-space-18 text-secondary-text">
                 Brand: {product.suppliers}
               </p>
+              <p
+                className={`mt-space-8 text-12 font-medium leading-space-18 ${
+                  isOutOfStock ? 'text-danger' : 'text-brand-700'
+                }`}
+              >
+                Available quantity: {availableQuantityLabel}
+              </p>
             </div>
 
             <p className="shrink-0 text-16 font-semibold leading-space-22 text-text md:text-20 md:leading-space-28">
@@ -100,19 +83,28 @@ const Product = ({ product }: Props) => {
             quantityAriaLabel={`${product.name} quantity`}
             increaseAriaLabel={`Increase ${product.name} quantity`}
             decreaseAriaLabel={`Decrease ${product.name} quantity`}
-            onIncrease={() =>
-              setQuantity((currentQuantity) => currentQuantity + 1)
+            onIncrease={handleIncreaseQuantity}
+            onDecrease={handleDecreaseQuantity}
+            increaseDisabled={isOutOfStock || isMaxQuantitySelected}
+            decreaseDisabled={isOutOfStock || quantity <= 1}
+            quantityDisabled={isOutOfStock}
+            actionLabel={
+              isOutOfStock
+                ? 'Out of stock'
+                : isAddToCartPending
+                  ? 'Adding...'
+                  : 'Add to cart'
             }
-            onDecrease={() =>
-              setQuantity((currentQuantity) => Math.max(1, currentQuantity - 1))
+            actionAriaLabel={
+              isOutOfStock
+                ? `${product.name} is out of stock`
+                : `Add ${quantity} ${product.name} to cart`
             }
-            decreaseDisabled={quantity <= 1}
-            actionLabel={isAddToCartPending ? 'Adding...' : 'Add to cart'}
-            actionAriaLabel={`Add ${quantity} ${product.name} to cart`}
-            onAction={() => void handleAddToCart()}
+            onAction={handleAddToCart}
             actionVariant="primary"
             actionSize="pill"
             disabled={isAddToCartPending}
+            actionDisabled={isOutOfStock}
             className="flex-wrap gap-space-12"
             classNames={{
               quantityControl:

@@ -30,7 +30,7 @@ const CartPageClient = () => {
 
   const renderCartContent = () => {
     if (cartQuery.isError) {
-      return <CartErrorState onRetry={() => void cartQuery.refetch()} />;
+      return <CartErrorState onRetry={() => cartQuery.refetch()} />;
     }
 
     if (isCartLoading) {

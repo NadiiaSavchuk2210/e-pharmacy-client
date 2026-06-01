@@ -7,8 +7,8 @@ export const normalizeProduct = (product: ApiProduct): Product => {
 
   return {
     ...productFields,
-    id: String(id),
-    apiId: _id,
+    id: String(id ?? _id ?? ''),
+    apiId: _id ? String(_id) : undefined,
     photo: getProductImageSrc(productFields.photo),
   };
 };

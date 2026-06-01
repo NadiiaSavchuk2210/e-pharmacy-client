@@ -1,4 +1,20 @@
-import type { ProductSearchParams } from '../model/types';
+import { fetchApiData } from '@/shared/api/apiFetch';
+
+import type {
+  ApiProduct,
+  ApiProductPage,
+  ProductSearchParams,
+} from '../model/types';
+
+type ApiProductsResponse = ApiProduct[] | ApiProductPage;
+
+export const fetchApiProductsResponse = (params?: URLSearchParams) =>
+  fetchApiData<ApiProductsResponse>({
+    path: '/products',
+    params,
+    revalidate: 120,
+    errorMessage: 'Failed to fetch products',
+  });
 
 export const createProductSearchParams = ({
   category,

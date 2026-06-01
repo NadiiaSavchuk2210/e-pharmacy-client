@@ -1,11 +1,13 @@
 import { ApiFetchError, fetchApiData } from '@/shared/api/apiFetch';
 
-import { createProductSearchParams } from './productsApi.helpers';
+import {
+  createProductSearchParams,
+  fetchApiProductsResponse,
+} from './productsApi.helpers';
 import { normalizeProduct } from '../lib/productMappers';
 
 import type {
   ApiProduct,
-  ApiProductPage,
   Product,
   ProductPage,
   ProductSearchParams,
@@ -26,12 +28,7 @@ export const getProducts = async ({
     page,
   });
 
-  const products = await fetchApiData<ApiProduct[] | ApiProductPage>({
-    path: '/products',
-    params: searchParams,
-    revalidate: 120,
-    errorMessage: 'Failed to fetch products',
-  });
+  const products = await fetchApiProductsResponse(searchParams);
 
   if (Array.isArray(products)) {
     const items = products.map(normalizeProduct);
@@ -54,9 +51,11 @@ export const getProducts = async ({
 };
 
 export const getProductById = async (id: string): Promise<Product | null> => {
+  const encodedId = encodeURIComponent(id);
+
   try {
     const product = await fetchApiData<ApiProduct>({
-      path: `/products/${id}`,
+      path: `/products/${encodedId}`,
       errorMessage: 'Failed to fetch product',
     });
 
