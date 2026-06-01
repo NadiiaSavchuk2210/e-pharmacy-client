@@ -31,7 +31,7 @@ export const getHeaderAccountFocusRingClassName = (
   }
 
   if (tone === 'sticky') {
-    return 'focus-visible:ring-brand-700 focus-visible:ring-offset-bg dark:focus-visible:ring-text';
+    return 'focus-visible:ring-brand-700 focus-visible:ring-offset-bg';
   }
 
   return 'focus-visible:ring-brand-700 focus-visible:ring-offset-neutral-0 dark:focus-visible:ring-text dark:focus-visible:ring-offset-bg';

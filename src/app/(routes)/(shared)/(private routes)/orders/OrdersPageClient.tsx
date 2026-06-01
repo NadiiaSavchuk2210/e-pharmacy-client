@@ -26,7 +26,7 @@ const OrdersPageClient = () => {
       return (
         <OrdersErrorState
           message={getOrdersErrorMessage(ordersQuery.error)}
-          onRetry={() => void ordersQuery.refetch()}
+          onRetry={() => ordersQuery.refetch()}
         />
       );
     }

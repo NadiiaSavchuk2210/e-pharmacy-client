@@ -15,5 +15,3 @@ export const getProductById = async (
 
   return fetchProductById(productId);
 };
-
-export type { Product };

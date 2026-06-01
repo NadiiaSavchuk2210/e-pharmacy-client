@@ -13,10 +13,6 @@ export {
 
 export type {
   ApiProduct,
-  ApiProductPage,
   Product,
-  ProductDescriptionSection,
-  ProductPage,
-  ProductPageMeta,
   ProductSearchParams,
 } from './model/types';

@@ -5,10 +5,6 @@ export {
   isProductCategory,
 } from './medicine.filters.helpers';
 export {
-  getMobilePaginationItems,
-  getPaginationItems,
-} from './medicine.pagination';
-export {
   getCurrentPage,
   getMedicinePageHref,
   getProductQuery,

@@ -65,13 +65,13 @@ const CartItemRow = ({
               ? `Remove ${item.product.name} from cart`
               : `Decrease ${item.product.name} quantity`
           }
-          onIncrease={() => void onQuantityChange(item, item.quantity + 1)}
+          onIncrease={() => onQuantityChange(item, item.quantity + 1)}
           onDecrease={() =>
-            void onQuantityChange(item, Math.max(0, item.quantity - 1))
+            onQuantityChange(item, Math.max(0, item.quantity - 1))
           }
           actionLabel="Remove"
           actionAriaLabel={`Remove ${item.product.name} from cart`}
-          onAction={() => void onQuantityChange(item, 0)}
+          onAction={() => onQuantityChange(item, 0)}
           actionVariant="delete"
           actionSize="delete"
           disabled={isDisabled}

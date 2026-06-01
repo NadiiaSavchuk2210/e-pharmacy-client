@@ -1,7 +1,7 @@
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { getProductById } from '../product.data';
-import Link from 'next/link';
 
 type Props = {
   params: Promise<{ productId: string }>;
