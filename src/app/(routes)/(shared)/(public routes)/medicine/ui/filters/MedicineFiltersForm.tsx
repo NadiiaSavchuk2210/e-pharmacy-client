@@ -63,7 +63,7 @@ const MedicineFiltersForm = ({
             variant="primary"
             size="pill"
             disabled={isSubmitting}
-            className="min-h-[44px] w-[116px] flex gap-space-8 px-space-30 py-space-12 font-medium text-14 leading-space-18"
+            className="min-h-[44px] w-[116px] flex gap-space-8 bg-brand-700 px-space-30 py-space-12 font-medium text-14 leading-space-18 hover:bg-brand-600 focus-visible:bg-brand-700 active:bg-brand-700"
           >
             <FunnelIcon aria-hidden="true" className="size-3.5" />
             Filter

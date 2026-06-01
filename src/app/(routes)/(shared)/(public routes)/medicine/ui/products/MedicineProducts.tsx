@@ -35,7 +35,7 @@ const MedicineProducts = async ({
             {query.discount
               ? `Products with ${query.discount}% discount`
               : 'Products found'}
-            <span className="text-text-weak">: {meta.totalItems}</span>
+            <span className="text-text-muted">: {meta.totalItems}</span>
           </p>
 
           <Link

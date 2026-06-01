@@ -1,13 +1,15 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { Suspense } from 'react';
 
 import { getProductById } from '../product.data';
+import ProductDescriptionSkeleton from './ui/ProductDescriptionSkeleton';
 
 type Props = {
   params: Promise<{ productId: string }>;
 };
 
-const ProductDescriptionPage = async ({ params }: Props) => {
+const ProductDescriptionContent = async ({ params }: Props) => {
   const { productId } = await params;
   const product = await getProductById(productId);
 
@@ -86,6 +88,14 @@ const ProductDescriptionPage = async ({ params }: Props) => {
         </p>
       ) : null}
     </section>
+  );
+};
+
+const ProductDescriptionPage = (props: Props) => {
+  return (
+    <Suspense fallback={<ProductDescriptionSkeleton />}>
+      <ProductDescriptionContent {...props} />
+    </Suspense>
   );
 };
 

@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation';
+import { Suspense } from 'react';
 
 import { getProductReviews } from '@/entities/product-review';
 
@@ -10,13 +11,14 @@ import {
 } from './lib/reviewsPagination';
 import ReviewsList from './ui/ReviewsList';
 import ReviewsPagination from './ui/ReviewsPagination';
+import ReviewsSkeleton from './ui/ReviewsSkeleton';
 
 type Props = {
   params: Promise<{ productId: string }>;
   searchParams: ReviewsSearchParams;
 };
 
-const ProductReviewsPage = async ({ params, searchParams }: Props) => {
+const ProductReviewsContent = async ({ params, searchParams }: Props) => {
   const { productId } = await params;
   const resolvedSearchParams = await searchParams;
   const page = getCurrentReviewPage(resolvedSearchParams);
@@ -44,6 +46,14 @@ const ProductReviewsPage = async ({ params, searchParams }: Props) => {
         totalPages={totalPages}
       />
     </section>
+  );
+};
+
+const ProductReviewsPage = (props: Props) => {
+  return (
+    <Suspense fallback={<ReviewsSkeleton />}>
+      <ProductReviewsContent {...props} />
+    </Suspense>
   );
 };
 

@@ -32,9 +32,10 @@ type HeaderAccountActionsProps = {
 
 const CART_PATH = '/cart';
 const ORDERS_PATH = '/orders';
-const DEFAULT_LOGOUT_CLASS_NAME = 'hidden xl:inline-flex';
+const DEFAULT_LOGOUT_CLASS_NAME =
+  'hidden xl:inline-flex xl:h-[2.375rem] xl:w-[5.75rem] xl:px-space-20 xl:py-space-10 xl:text-13 lg:h-[2.875rem] lg:w-[7.1875rem] lg:px-space-32 lg:py-space-16 lg:text-14-08';
 const accountIconLinkClassName =
-  'relative flex size-9 shrink-0 items-center justify-center rounded-full border bg-neutral-0 text-brand-500 shadow-[0_-0.0625rem_0.4375rem_0_rgba(71,71,71,0.05)] max-[479px]:size-8 md:size-11';
+  'relative flex size-9 shrink-0 items-center justify-center rounded-full border bg-neutral-0 text-brand-500 shadow-[0_-0.0625rem_0.4375rem_0_rgba(71,71,71,0.05)] max-[479px]:size-8 md:size-11 xl:size-[2.375rem] lg:size-11';
 const accountIconLinkInteractiveClassName =
   'transition-[background-color,border-color,color,box-shadow,transform] duration-base ease-base hover:border-brand-700 hover:text-brand-700 hover:shadow-md active:scale-95';
 const accountIconLinkFocusClassName =
@@ -76,7 +77,7 @@ export const HeaderAccountActions = ({
         onClick={onNavigate}
       >
         <ReceiptText
-          className="size-3.5 fill-none stroke-current md:size-4"
+          className="size-3.5 fill-none stroke-current md:size-4 xl:size-[0.875rem] lg:size-4"
           aria-hidden="true"
         />
       </Link>
@@ -96,7 +97,7 @@ export const HeaderAccountActions = ({
       >
         <Icon
           name="shopping-cart"
-          className="size-3.5 fill-none stroke-current md:size-4"
+          className="size-3.5 fill-none stroke-current md:size-4 xl:size-[0.875rem] lg:size-4"
         />
         <span
           aria-hidden="true"
@@ -107,7 +108,7 @@ export const HeaderAccountActions = ({
       </Link>
 
       <span
-        className="flex size-9 shrink-0 items-center justify-center rounded-full bg-mint-100 text-13 font-semibold leading-space-18 text-brand-500 max-[479px]:size-8 max-[479px]:text-12 md:size-11 md:text-18 md:leading-space-25 dark:bg-surface-muted dark:text-text"
+        className="flex size-9 shrink-0 items-center justify-center rounded-full bg-mint-100 text-13 font-semibold leading-space-18 text-brand-500 max-[479px]:size-8 max-[479px]:text-12 md:size-11 md:text-18 md:leading-space-25 xl:size-[2.375rem] xl:text-[0.9375rem] lg:size-11 lg:text-18 dark:bg-surface-muted dark:text-text"
         title={userLabel}
       >
         <span aria-hidden="true">{getHeaderAccountUserInitial(user)}</span>

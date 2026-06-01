@@ -8,7 +8,7 @@ type HeaderNavigationLinkState = {
 };
 
 export const headerNavigationLinkClassName =
-  'h-[2.875rem] min-w-[auto] px-[1rem] py-[1rem] text-14';
+  'h-[2.375rem] min-w-[auto] px-[0.75rem] py-[0.75rem] lg:h-[2.875rem] lg:px-[1rem] lg:py-[1rem]';
 
 export const headerNavigationListClassNames: Record<
   HeaderNavigationOrientation,
@@ -29,7 +29,7 @@ export const headerNavigationItemClassNames: Record<
 };
 
 const linkBaseClassName =
-  'relative flex items-center justify-center overflow-hidden rounded-4xl border-1 border-neutral-350 bg-neutral-0';
+  'relative flex items-center justify-center overflow-hidden whitespace-nowrap rounded-4xl border-1 border-neutral-350 bg-neutral-0';
 
 const linkTextClassName =
   'text-14 font-normal leading-1 text-neutral-700 shadow-sm transition duration-base ease-base';
@@ -38,7 +38,7 @@ const linkFocusClassName =
   'hover:text-brand-700 focus-visible:z-20 focus-visible:text-brand-700 focus-visible:outline-none focus-visible:ring-[0.25rem] focus-visible:ring-brand-700 focus-visible:ring-offset-[0.1875rem]';
 
 const activeLinkClassName =
-  "bg-neutral-0 text-text-inverse before:absolute before:inset-[0.375rem] before:rounded-4xl before:bg-accent before:content-[''] hover:text-text-inverse focus-visible:text-text-inverse dark:before:bg-brand-700";
+  "bg-neutral-0 text-text-inverse before:absolute before:inset-[0.25rem] before:rounded-4xl before:bg-accent before:content-[''] hover:text-text-inverse focus-visible:text-text-inverse lg:before:inset-[0.375rem] dark:before:bg-brand-700";
 
 export const getHeaderNavigationLinkClassName = ({
   isActive,

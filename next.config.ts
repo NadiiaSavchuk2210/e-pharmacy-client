@@ -7,6 +7,7 @@ const BACKEND_URL = (
 
 const nextConfig: NextConfig = {
   /* config options here */
+  poweredByHeader: false,
   reactCompiler: true,
   cacheComponents: true,
   async rewrites() {
@@ -23,9 +24,11 @@ const nextConfig: NextConfig = {
   },
   images: {
     formats: ['image/avif', 'image/webp'],
-    deviceSizes: [375, 768, 1024, 1440, 1920],
+    minimumCacheTTL: 31536000,
+    deviceSizes: [375, 640, 768, 1024, 1440, 1920],
 
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    qualities: [60, 75],
     remotePatterns: [
       {
         protocol: 'https',

@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation';
+import { Suspense } from 'react';
 
 import {
   getMedicineStoresPage,
@@ -19,7 +20,9 @@ type MedicineStorePageProps = {
   searchParams: MedicineStoreRouteSearchParams;
 };
 
-const MedicineStorePage = async ({ searchParams }: MedicineStorePageProps) => {
+const MedicineStorePageContent = async ({
+  searchParams,
+}: MedicineStorePageProps) => {
   const resolvedSearchParams = await searchParams;
   const page = getCurrentPage(resolvedSearchParams);
   const { items: stores, meta } = await getMedicineStoresPage({
@@ -58,6 +61,28 @@ const MedicineStorePage = async ({ searchParams }: MedicineStorePageProps) => {
         </div>
       )}
     </section>
+  );
+};
+
+const MedicineStorePage = (props: MedicineStorePageProps) => {
+  return (
+    <Suspense
+      fallback={
+        <section className="container | py-[39px] md:py-[52px] lg:py-[68px]">
+          <PageTitle>Medicine store</PageTitle>
+          <div className="grid grid-cols-1 gap-space-20 md:grid-cols-3 lg:gap-x-space-20 lg:gap-y-space-40">
+            {Array.from({ length: MEDICINE_STORES_PER_PAGE }).map((_, index) => (
+              <div
+                key={index}
+                className="h-[202px] animate-pulse rounded-[27px] border border-card-border bg-card-bg"
+              />
+            ))}
+          </div>
+        </section>
+      }
+    >
+      <MedicineStorePageContent {...props} />
+    </Suspense>
   );
 };
 

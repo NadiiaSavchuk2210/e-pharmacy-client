@@ -49,7 +49,7 @@ const MedicineCategoryField = () => {
           <span
             className={cn(
               'truncate',
-              !values.category && 'text-12 leading-space-18 text-text-weak',
+              !values.category && 'text-12 leading-space-18 text-text-muted',
             )}
           >
             {values.category || 'Product category'}
