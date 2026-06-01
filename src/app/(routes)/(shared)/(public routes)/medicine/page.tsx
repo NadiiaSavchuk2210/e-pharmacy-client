@@ -11,7 +11,6 @@ import {
 } from './lib';
 import {
   MedicineFiltersForm,
-  MedicinePageSizeSync,
   MedicineProducts,
   MedicineProductsSkeleton,
 } from './ui';
@@ -39,10 +38,6 @@ const MedicinePage = async ({ searchParams }: MedicinePageProps) => {
           discount={query.discount}
           limit={query.limit}
         />
-
-        <Suspense fallback={null}>
-          <MedicinePageSizeSync />
-        </Suspense>
 
         <Suspense
           key={productResultsKey}

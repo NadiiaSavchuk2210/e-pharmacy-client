@@ -1,4 +1,5 @@
 import { ApiFetchError, fetchApiData } from '@/shared/api/apiFetch';
+import { cacheTags } from '@/shared/cache/cacheTags';
 
 import {
   createProductSearchParams,
@@ -56,6 +57,7 @@ export const getProductById = async (id: string): Promise<Product | null> => {
   try {
     const product = await fetchApiData<ApiProduct>({
       path: `/products/${encodedId}`,
+      tags: [cacheTags.products, cacheTags.product(id)],
       errorMessage: 'Failed to fetch product',
     });
 

@@ -49,7 +49,7 @@ const MedicineProducts = async ({
 
       {products.length > 0 ? (
         <>
-          <ProductList products={products} currentPage={currentPage} />
+          <ProductList products={products} />
 
           <Pagination
             currentPage={currentPage}

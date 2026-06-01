@@ -1,3 +1,5 @@
+import { getProductReviewsSummary } from '@/entities/product-review';
+
 import { getProductById } from './product.data';
 import Product from './ui/Product';
 import ProductNotFoundState from './ui/ProductNotFoundState';
@@ -18,11 +20,13 @@ const Layout = async ({ children, params }: Props) => {
     return <ProductNotFoundState />;
   }
 
+  const reviewsSummary = await getProductReviewsSummary(product.id);
+
   return (
     <div className="bg-surface-muted">
       <section className="container | py-space-44 md:pt-space-34 md:pb-space-120 lg:[--container-max:1184px]">
         <div className="flex flex-col gap-space-8 md:gap-space-16 lg:flex-row lg:gap-space-20 items-start justify-start">
-          <Product product={product} />
+          <Product product={product} reviewsSummary={reviewsSummary} />
           <ProductTabs productId={product.id}>{children}</ProductTabs>
         </div>
       </section>

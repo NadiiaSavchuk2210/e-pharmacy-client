@@ -1,4 +1,5 @@
 import { ApiFetchError, fetchApiData } from '@/shared/api/apiFetch';
+import { cacheTags } from '@/shared/cache/cacheTags';
 
 import {
   findFallbackApiStoreById,
@@ -36,6 +37,7 @@ export const getMedicineStoreById = async (id: string) => {
   try {
     const store = await fetchApiData<ApiMedicineStore>({
       path: `/stores/${encodedId}`,
+      tags: [cacheTags.medicineStores, cacheTags.medicineStore(id)],
       errorMessage: 'Failed to fetch store',
     });
 
