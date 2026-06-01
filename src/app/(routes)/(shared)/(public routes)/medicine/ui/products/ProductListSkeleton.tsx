@@ -1,11 +1,23 @@
 import { Skeleton } from '@/components/ui/skeleton';
+import { cn } from '@/lib/utils';
+
+import { PRODUCTS_PER_PAGE } from '../../config';
 
 type ProductListSkeletonProps = {
   count: number;
 };
 
-const ProductCardSkeleton = () => (
-  <li className="flex min-w-0 w-full flex-col gap-space-8 sm:w-[335px] md:w-[226px] lg:w-[280px]">
+type ProductCardSkeletonProps = {
+  className?: string;
+};
+
+const ProductCardSkeleton = ({ className }: ProductCardSkeletonProps) => (
+  <li
+    className={cn(
+      'flex min-w-0 w-full flex-col gap-space-8 sm:w-[335px] md:w-[226px] lg:w-[280px]',
+      className,
+    )}
+  >
     <Skeleton className="h-[300px] w-full rounded-[27px] border-[1.15px] border-brand-border bg-neutral-75 md:h-[260px] lg:h-[280px]" />
 
     <div className="flex min-h-[135px] flex-col gap-space-14 rounded-[20px] bg-surface p-space-20">
@@ -33,7 +45,12 @@ const ProductListSkeleton = ({ count }: ProductListSkeletonProps) => {
     <section aria-label="Loading medicine products" aria-busy="true">
       <ul className="grid w-full grid-cols-1 justify-center gap-y-space-20 sm:grid-cols-[335px] md:grid-cols-[repeat(3,226px)] md:justify-between md:gap-y-space-32 lg:grid-cols-[repeat(4,280px)] lg:gap-y-space-40">
         {skeletonItems.map((_, index) => (
-          <ProductCardSkeleton key={index} />
+          <ProductCardSkeleton
+            key={index}
+            className={
+              index >= PRODUCTS_PER_PAGE ? 'max-[89.999rem]:hidden' : ''
+            }
+          />
         ))}
       </ul>
     </section>

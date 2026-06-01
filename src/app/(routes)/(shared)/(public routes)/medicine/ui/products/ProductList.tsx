@@ -19,6 +19,7 @@ import {
   getProductRevealDelay,
   getUniqueProductsById,
 } from './productList.helpers';
+import { PRODUCTS_PER_PAGE } from '../../config';
 
 type ProductListProps = {
   products: Product[];
@@ -78,6 +79,9 @@ const ProductList = ({ products }: ProductListProps) => {
               product={product}
               imageEager={index === 0}
               isAddToCartPending={pendingProductId === cartProductId}
+              className={
+                index >= PRODUCTS_PER_PAGE ? 'max-[89.999rem]:hidden' : ''
+              }
               style={{ animationDelay: getProductRevealDelay(index) }}
               onAddToCart={handleAddToCart}
             />

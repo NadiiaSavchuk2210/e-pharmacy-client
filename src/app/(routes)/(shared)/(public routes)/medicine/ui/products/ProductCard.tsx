@@ -7,6 +7,7 @@ import {
   getPriceLabel,
   type Product,
 } from '@/entities/product';
+import { cn } from '@/lib/utils';
 import { ProductCartActions } from '@/shared/ui/ProductCartActions';
 
 import ProductImage from './ProductImage';
@@ -15,6 +16,7 @@ import type { CSSProperties } from 'react';
 
 type ProductCardProps = {
   product: Product;
+  className?: string;
   imageEager?: boolean;
   isAddToCartPending?: boolean;
   style?: CSSProperties;
@@ -23,6 +25,7 @@ type ProductCardProps = {
 
 const ProductCard = ({
   product,
+  className,
   imageEager = false,
   isAddToCartPending = false,
   style,
@@ -33,7 +36,10 @@ const ProductCard = ({
   return (
     <li
       style={style}
-      className="group flex min-w-0 w-full flex-col gap-space-8 content-card-reveal transition-transform duration-[650ms] ease-[cubic-bezier(0.25,0.1,0.25,1)] hover:scale-[1.01] focus-within:scale-[1.01] sm:w-[335px] md:w-[226px] lg:w-[280px]"
+      className={cn(
+        'group flex min-w-0 w-full flex-col gap-space-8 content-card-reveal transition-transform duration-[650ms] ease-[cubic-bezier(0.25,0.1,0.25,1)] hover:scale-[1.01] focus-within:scale-[1.01] sm:w-[335px] md:w-[226px] lg:w-[280px]',
+        className,
+      )}
     >
       <article className="contents">
         <Link

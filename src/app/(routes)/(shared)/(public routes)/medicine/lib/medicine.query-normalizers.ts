@@ -1,7 +1,7 @@
 import type { ProductSearchParams } from '@/entities/product';
 
 import {
-  PRODUCTS_PER_PAGE,
+  DESKTOP_PRODUCTS_PER_PAGE,
   allowedProductsPerPage,
   productCategories,
 } from '../config';
@@ -30,7 +30,7 @@ export const normalizeLimit = (limit?: string) => {
 
   return allowedProductsPerPage.some((item) => item === parsedLimit)
     ? parsedLimit
-    : PRODUCTS_PER_PAGE;
+    : DESKTOP_PRODUCTS_PER_PAGE;
 };
 
 export const normalizeCategory = (category?: string) =>
