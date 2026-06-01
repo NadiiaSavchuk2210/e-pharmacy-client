@@ -16,6 +16,74 @@
   }
 }
 
+@keyframes auth-fade-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0.75rem, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes auth-pill-drop-roll {
+  0% {
+    opacity: 0;
+    transform: translate3d(1.5rem, -7rem, 0) rotate(-46deg) scale(0.92);
+  }
+
+  52% {
+    opacity: 1;
+    transform: translate3d(0.15rem, 0.45rem, 0) rotate(18deg) scale(1.02);
+  }
+
+  74% {
+    transform: translate3d(-0.1rem, -0.4rem, 0) rotate(-9deg) scale(1);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+}
+
+@keyframes auth-lines-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(2rem, 1.5rem, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes auth-lines-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0.75rem, -0.625rem, 0);
+  }
+}
+
+@keyframes content-card-reveal {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0.5rem, 0) scale(0.995);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
 @custom-variant dark (&:is(.dark *));
 
 ::view-transition-old(root),
@@ -27,6 +95,53 @@
 @theme {
   --breakpoint-sm: 23.4375rem;
   --breakpoint-lg: 90rem;
+}
+
+@layer utilities {
+  .auth-logo-reveal {
+    animation: auth-fade-up 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .auth-hero-title-reveal {
+    animation: auth-fade-up 540ms cubic-bezier(0.16, 1, 0.3, 1) 120ms both;
+  }
+
+  .auth-field-reveal {
+    animation: auth-fade-up 440ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .auth-pill-drop {
+    animation: auth-pill-drop-roll 880ms cubic-bezier(0.16, 1, 0.3, 1) 160ms both;
+    transform-origin: 50% 50%;
+    will-change: transform, opacity;
+  }
+
+  .auth-lines-drift {
+    animation:
+      auth-lines-enter 700ms cubic-bezier(0.16, 1, 0.3, 1) 220ms both,
+      auth-lines-drift 13s ease-in-out 1s infinite;
+    will-change: transform, opacity;
+  }
+
+  .content-card-reveal {
+    animation: content-card-reveal 720ms cubic-bezier(0.19, 1, 0.22, 1)
+      backwards;
+    will-change: transform, opacity;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .auth-logo-reveal,
+    .auth-hero-title-reveal,
+    .auth-field-reveal,
+    .auth-pill-drop,
+    .auth-lines-drift,
+    .content-card-reveal {
+      animation: none;
+      opacity: 1;
+      transform: none;
+      will-change: auto;
+    }
+  }
 }
 
 @theme inline {

@@ -14,8 +14,12 @@ const ReviewsList = ({ reviews }: ReviewsListProps) => {
 
   return (
     <ul className="flex flex-col gap-space-20">
-      {reviews.map((review) => (
-        <ReviewCard key={review.id} review={review} />
+      {reviews.map((review, index) => (
+        <ReviewCard
+          key={review.id}
+          review={review}
+          style={{ animationDelay: `${Math.min(index, 8) * 100}ms` }}
+        />
       ))}
     </ul>
   );

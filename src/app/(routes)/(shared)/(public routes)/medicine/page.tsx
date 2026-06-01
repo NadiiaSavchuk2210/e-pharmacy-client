@@ -1,23 +1,19 @@
-import Link from 'next/link';
-import { redirect } from 'next/navigation';
 import { Suspense } from 'react';
 
-import { getProducts } from '@/entities/product';
 import PageTitle from '@/shared/ui/PageTitle';
 
+import { PRODUCTS_PER_PAGE } from './config';
 import {
   getCurrentPage,
-  getMedicinePageHref,
   getProductQuery,
   hasActiveProductFilters,
   type MedicineSearchParams,
 } from './lib';
 import {
-  MedicineEmptyState,
   MedicineFiltersForm,
   MedicinePageSizeSync,
-  Pagination,
-  ProductList,
+  MedicineProducts,
+  MedicineProductsSkeleton,
 } from './ui';
 
 type MedicinePageProps = {
@@ -28,14 +24,9 @@ const MedicinePage = async ({ searchParams }: MedicinePageProps) => {
   const resolvedSearchParams = await searchParams;
   const query = getProductQuery(resolvedSearchParams);
   const page = getCurrentPage(resolvedSearchParams);
-  const { items: products, meta } = await getProducts({ ...query, page });
-  const totalPages = meta.totalPages;
-  const currentPage = meta.totalItems > 0 ? meta.currentPage : 1;
   const hasActiveFilters = hasActiveProductFilters(query);
-
-  if (meta.totalItems > 0 && page > totalPages) {
-    redirect(getMedicinePageHref(query, totalPages));
-  }
+  const skeletonProductsCount = Number(query.limit) || PRODUCTS_PER_PAGE;
+  const productResultsKey = JSON.stringify({ page, ...query });
 
   return (
     <div className="bg-surface-muted">
@@ -53,37 +44,21 @@ const MedicinePage = async ({ searchParams }: MedicinePageProps) => {
           <MedicinePageSizeSync />
         </Suspense>
 
-        {hasActiveFilters ? (
-          <div className="mb-space-24 flex flex-col gap-space-14 md:flex-row md:items-center md:justify-between">
-            <p className="text-14 leading-space-18 text-text-muted">
-              {query.discount
-                ? `Products with ${query.discount}% discount`
-                : 'Products found'}
-              <span className="text-text-weak">: {meta.totalItems}</span>
-            </p>
-
-            <Link
-              href={getMedicinePageHref({ limit: query.limit }, 1)}
-              className="text-14 font-medium leading-space-18 text-brand-700 transition-colors hover:text-brand-500"
-            >
-              Clear filters
-            </Link>
-          </div>
-        ) : null}
-
-        {products.length > 0 ? (
-          <>
-            <ProductList products={products} currentPage={currentPage} />
-
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              query={query}
+        <Suspense
+          key={productResultsKey}
+          fallback={
+            <MedicineProductsSkeleton
+              count={skeletonProductsCount}
+              showFilterSummary={hasActiveFilters}
             />
-          </>
-        ) : (
-          <MedicineEmptyState />
-        )}
+          }
+        >
+          <MedicineProducts
+            hasActiveFilters={hasActiveFilters}
+            page={page}
+            query={query}
+          />
+        </Suspense>
       </section>
     </div>
   );

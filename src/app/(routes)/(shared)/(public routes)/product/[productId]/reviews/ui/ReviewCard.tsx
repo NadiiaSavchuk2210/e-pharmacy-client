@@ -7,15 +7,21 @@ import {
 
 import ReviewRating from './ReviewRating';
 
+import type { CSSProperties } from 'react';
+
 type ReviewCardProps = {
   review: ProductReview;
+  style?: CSSProperties;
 };
 
-const ReviewCard = ({ review }: ReviewCardProps) => {
+const ReviewCard = ({ review, style }: ReviewCardProps) => {
   const createdAtLabel = formatProductReviewDate(review.createdAt);
 
   return (
-    <li className="py-space-14 px-space-28 border border-solid border-neutral-100 rounded-[20px] dark:border-card-border">
+    <li
+      style={style}
+      className="py-space-14 px-space-28 border border-solid border-neutral-100 rounded-[20px] content-card-reveal dark:border-card-border"
+    >
       <div className="mb-space-14 flex gap-space-20">
         <Image
           src={review.authorAvatar}

@@ -27,7 +27,7 @@ const AppShell = ({ children }: Props) => {
 
           <Icon
             name="lines"
-            className="fixed bottom-0 right-0 text-brand-50 w-[216px] h-[168px] md:w-[277px] md:h-[271px] lg:w-[279px] lg:h-[257px]"
+            className="fixed bottom-0 right-0 h-[168px] w-[216px] text-brand-50 auth-lines-drift md:h-[271px] md:w-[277px] lg:h-[257px] lg:w-[279px]"
           />
         </div>
       )}

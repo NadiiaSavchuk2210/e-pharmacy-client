@@ -67,6 +67,7 @@ const ProductList = ({ products, currentPage }: ProductListProps) => {
             product={product}
             imageEager={index === 0}
             isAddToCartPending={pendingProductId === getCartProductId(product)}
+            style={{ animationDelay: `${Math.min(index, 11) * 75}ms` }}
             onAddToCart={handleAddToCart}
           />
         ))}
