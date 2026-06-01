@@ -11,10 +11,13 @@ import { ProductCartActions } from '@/shared/ui/ProductCartActions';
 
 import ProductImage from './ProductImage';
 
+import type { CSSProperties } from 'react';
+
 type ProductCardProps = {
   product: Product;
   imageEager?: boolean;
   isAddToCartPending?: boolean;
+  style?: CSSProperties;
   onAddToCart: (product: Product) => void;
 };
 
@@ -22,12 +25,16 @@ const ProductCard = ({
   product,
   imageEager = false,
   isAddToCartPending = false,
+  style,
   onAddToCart,
 }: ProductCardProps) => {
   const discountLabel = getDiscountLabel(product.discount);
 
   return (
-    <li className="group flex min-w-0 w-full flex-col gap-space-8 transition-transform duration-[650ms] ease-[cubic-bezier(0.25,0.1,0.25,1)] hover:scale-[1.01] focus-within:scale-[1.01] sm:w-[335px] md:w-[226px] lg:w-[280px]">
+    <li
+      style={style}
+      className="group flex min-w-0 w-full flex-col gap-space-8 content-card-reveal transition-transform duration-[650ms] ease-[cubic-bezier(0.25,0.1,0.25,1)] hover:scale-[1.01] focus-within:scale-[1.01] sm:w-[335px] md:w-[226px] lg:w-[280px]"
+    >
       <article className="contents">
         <Link
           href={`/product/${product.id}`}

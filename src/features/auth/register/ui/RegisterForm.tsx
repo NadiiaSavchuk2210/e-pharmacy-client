@@ -4,6 +4,8 @@ import { Form, Formik, type FormikHelpers } from 'formik';
 import { useRouter, useSearchParams } from 'next/navigation';
 import toast from 'react-hot-toast';
 
+import { cn } from '@/lib/utils';
+
 import { getAuthFieldErrors } from '../../api/authError';
 import {
   AUTH_PRIVATE_REDIRECT_PATH,
@@ -129,13 +131,14 @@ const RegisterForm = ({
           >
             <AuthValidationNotifier />
 
-            {REGISTER_FIELDS.map((field) => (
+            {REGISTER_FIELDS.map((field, index) => (
               <AuthTextField
                 key={field.name}
                 {...field}
                 {...getFieldFormatting(field.name)}
-                className={fieldClassName}
+                className={cn(fieldClassName, 'auth-field-reveal')}
                 inputClassName={inputClassName}
+                style={{ animationDelay: `${240 + index * 70}ms` }}
               />
             ))}
 

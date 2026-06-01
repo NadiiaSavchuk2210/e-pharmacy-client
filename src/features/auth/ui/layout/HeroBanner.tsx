@@ -9,7 +9,7 @@ const HeroBanner = () => {
       aria-labelledby="auth-hero-title"
     >
       <div
-        className="pointer-events-none absolute top-[50%] right-[10%] sm:top-[11%] sm:right-[6%] z-0 size-[5.9375rem] md:right-[18%] md:top-[16%] md:size-[9.5rem] lg:top-[27%] lg:right-[6%]"
+        className="pointer-events-none absolute top-[50%] right-[10%] sm:top-[11%] sm:right-[6%] z-0 size-[5.9375rem] auth-pill-drop md:right-[18%] md:top-[16%] md:size-[9.5rem] lg:top-[27%] lg:right-[6%]"
         aria-hidden="true"
       >
         <Image
@@ -24,7 +24,7 @@ const HeroBanner = () => {
 
       <h1
         id="auth-hero-title"
-        className="relative z-10 text-28 font-semibold leading-34 text-text md:text-54 md:leading-60"
+        className="relative z-10 text-28 font-semibold leading-34 text-text auth-hero-title-reveal md:text-54 md:leading-60"
       >
         Your medication,
         <br />

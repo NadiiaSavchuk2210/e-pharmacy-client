@@ -22,11 +22,12 @@ const MedicineStoresList = ({
         className,
       )}
     >
-      {stores.map((store) => (
+      {stores.map((store, index) => (
         <MedicineStoreCard
           key={store.id}
           store={store}
           showVisitButton={showVisitButton}
+          style={{ animationDelay: `${Math.min(index, 8) * 80}ms` }}
         />
       ))}
     </ul>

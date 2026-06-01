@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 import {
   AUTH_FORM_FOOTER_STYLES,
@@ -54,7 +55,11 @@ const AuthFormFooter = (props: AuthFormFooterProps) => {
           type="submit"
           variant="primary"
           size="primary"
-          className={classNames?.submitButton ?? 'w-full'}
+          className={cn(
+            classNames?.submitButton ?? 'w-full',
+            'auth-field-reveal',
+          )}
+          style={{ animationDelay: '520ms' }}
           disabled={isSubmitting}
         >
           {isSubmitting ? submittingLabel : submitLabel}
@@ -64,13 +69,18 @@ const AuthFormFooter = (props: AuthFormFooterProps) => {
       {props.onNavigationClick ? (
         <button
           type="button"
-          className={navigationClassName}
+          className={cn(navigationClassName, 'auth-field-reveal')}
+          style={{ animationDelay: '590ms' }}
           onClick={props.onNavigationClick}
         >
           {navigationLabel}
         </button>
       ) : (
-        <Link href={props.navigationHref} className={navigationClassName}>
+        <Link
+          href={props.navigationHref}
+          className={cn(navigationClassName, 'auth-field-reveal')}
+          style={{ animationDelay: '590ms' }}
+        >
           {navigationLabel}
         </Link>
       )}

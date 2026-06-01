@@ -20,6 +20,7 @@ type AuthTextFieldProps<TFieldName extends string> =
     normalizeValue?: (value: string) => string;
     className?: string;
     inputClassName?: string;
+    style?: ComponentProps<'label'>['style'];
   };
 
 const AuthTextField = <TFieldName extends string>({
@@ -29,6 +30,7 @@ const AuthTextField = <TFieldName extends string>({
   normalizeValue,
   className,
   inputClassName,
+  style,
   ...inputProps
 }: AuthTextFieldProps<TFieldName>) => {
   return (
@@ -50,6 +52,7 @@ const AuthTextField = <TFieldName extends string>({
 
         return (
           <label
+            style={style}
             className={cn(
               'flex w-full flex-col gap-space-4 text-12 font-medium leading-18 text-text-muted md:w-[17.5rem] lg:w-[calc((100%_-_var(--space-14))_/_2)]',
               className,

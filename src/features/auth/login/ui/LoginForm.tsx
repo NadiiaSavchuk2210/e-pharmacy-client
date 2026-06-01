@@ -4,6 +4,8 @@ import { Form, Formik, type FormikHelpers } from 'formik';
 import { useRouter, useSearchParams } from 'next/navigation';
 import toast from 'react-hot-toast';
 
+import { cn } from '@/lib/utils';
+
 import { getAuthFieldErrors } from '../../api/authError';
 import {
   AUTH_PRIVATE_REDIRECT_PATH,
@@ -100,12 +102,16 @@ const LoginForm = ({
           <Form className={formClassName ?? AUTH_FORM_STYLES.login.form} noValidate>
             <AuthValidationNotifier />
 
-            {LOGIN_FIELDS.map((field) => (
+            {LOGIN_FIELDS.map((field, index) => (
               <AuthTextField
                 key={field.name}
                 {...field}
-                className={fieldClassName ?? AUTH_FORM_STYLES.login.field}
+                className={cn(
+                  fieldClassName ?? AUTH_FORM_STYLES.login.field,
+                  'auth-field-reveal',
+                )}
                 inputClassName={inputClassName}
+                style={{ animationDelay: `${240 + index * 70}ms` }}
               />
             ))}
 
