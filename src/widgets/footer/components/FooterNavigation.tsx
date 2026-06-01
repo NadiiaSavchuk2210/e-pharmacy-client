@@ -1,12 +1,17 @@
+'use client';
+
+import { usePathname } from 'next/navigation';
+
 import { cn } from '@/lib/utils';
 import { NavigationLinks } from '@/shared/navigation/components/NavigationLinks';
 
 interface FooterNavigationProps {
-  pathname: string;
   className?: string;
 }
 
-const FooterNavigation = ({ pathname, className }: FooterNavigationProps) => {
+const FooterNavigation = ({ className }: FooterNavigationProps) => {
+  const pathname = usePathname();
+
   return (
     <nav className={className} aria-label="Footer navigation">
       <NavigationLinks

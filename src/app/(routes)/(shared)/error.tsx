@@ -2,12 +2,12 @@
 
 import ErrorStatePage from '@/shared/ui/ErrorStatePage';
 
-type ErrorPageProps = {
+type SharedErrorPageProps = {
   reset: () => void;
 };
 
-const ErrorPage = ({ reset }: ErrorPageProps) => {
+const SharedErrorPage = ({ reset }: SharedErrorPageProps) => {
   return <ErrorStatePage reset={reset} />;
 };
 
-export default ErrorPage;
+export default SharedErrorPage;

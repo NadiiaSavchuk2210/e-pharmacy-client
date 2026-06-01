@@ -19,7 +19,7 @@ type MedicinePageProps = {
   searchParams: MedicineSearchParams;
 };
 
-const MedicinePage = async ({ searchParams }: MedicinePageProps) => {
+const MedicinePageContent = async ({ searchParams }: MedicinePageProps) => {
   const resolvedSearchParams = await searchParams;
   const query = getProductQuery(resolvedSearchParams);
   const page = getCurrentPage(resolvedSearchParams);
@@ -56,6 +56,26 @@ const MedicinePage = async ({ searchParams }: MedicinePageProps) => {
         </Suspense>
       </section>
     </div>
+  );
+};
+
+const MedicinePage = (props: MedicinePageProps) => {
+  return (
+    <Suspense
+      fallback={
+        <div className="bg-surface-muted">
+          <section className="container | py-space-40 md:py-space-60 lg:[--container-max:1184px]">
+            <PageTitle>Medicine</PageTitle>
+            <MedicineProductsSkeleton
+              count={PRODUCTS_PER_PAGE}
+              showFilterSummary={false}
+            />
+          </section>
+        </div>
+      }
+    >
+      <MedicinePageContent {...props} />
+    </Suspense>
   );
 };
 

@@ -1,5 +1,6 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -15,10 +16,20 @@ import { HeaderAccountActions } from './components/account/HeaderAccountActions'
 import { HeaderAccountActionsSkeleton } from './components/account/HeaderAccountActionsSkeleton';
 import { HeaderAuthLinks } from './components/HeaderAuthLinks';
 import { HeaderLogo } from './components/HeaderLogo';
-import { MobileMenu } from './components/mobile-menu/MobileMenu';
 import { MobileMenuButton } from './components/mobile-menu/MobileMenuButton';
 import { HeaderNavigation } from './components/navigation/HeaderNavigation';
 import { getHeaderInteractiveTone, getHeaderTone } from './header.helpers';
+
+const MobileMenu = dynamic(
+  () =>
+    import('./components/mobile-menu/MobileMenu').then(
+      (module) => module.MobileMenu,
+    ),
+  {
+    loading: () => null,
+    ssr: false,
+  },
+);
 
 const Header = () => {
   const pathname = usePathname();
@@ -57,8 +68,9 @@ const Header = () => {
 
         <HeaderNavigation pathname={pathname} />
 
-        <div className="flex items-center gap-space-10 max-[479px]:gap-space-6 md:gap-space-16 lg:gap-space-16">
+        <div className="flex items-center gap-space-10 max-[479px]:gap-space-6 md:gap-space-16 xl:gap-space-8 lg:gap-space-16">
           <AnimatedThemeToggler
+            className="xl:size-[2.375rem] lg:size-11"
             tone={headerTone === 'inverse' ? 'inverse' : 'default'}
           />
 
@@ -90,15 +102,17 @@ const Header = () => {
         </div>
       </div>
 
-      <MobileMenu
-        isAuthLoading={isAuthLoading}
-        user={isLoggedInView ? user : null}
-        isOpen={isMenuOpen}
-        pathname={pathname}
-        isLoggingOut={logoutMutation.isPending}
-        onLogout={handleLogout}
-        onClose={closeMenu}
-      />
+      {isMenuOpen && (
+        <MobileMenu
+          isAuthLoading={isAuthLoading}
+          user={isLoggedInView ? user : null}
+          isOpen={isMenuOpen}
+          pathname={pathname}
+          isLoggingOut={logoutMutation.isPending}
+          onLogout={handleLogout}
+          onClose={closeMenu}
+        />
+      )}
     </header>
   );
 };

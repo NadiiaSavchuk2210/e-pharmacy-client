@@ -25,13 +25,14 @@ const SelectedProductsSection = ({
       </h2>
 
       <ul className="flex flex-col">
-        {items.map((item) => {
+        {items.map((item, index) => {
           const productId = getCartProductId(item.product);
 
           return (
             <CartItemRow
               key={productId}
               item={item}
+              isPriority={index === 0}
               isDisabled={isCartBusy || pendingProductId === productId}
               onQuantityChange={onQuantityChange}
             />

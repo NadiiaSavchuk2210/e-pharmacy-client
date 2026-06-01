@@ -1,7 +1,6 @@
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
 
 import {
   AUTH_FORM_FOOTER_STYLES,
@@ -35,6 +34,9 @@ type AuthFormFooterProps = AuthFormFooterBaseProps &
       }
   );
 
+const DEFAULT_AUTH_SUBMIT_BUTTON_CLASS =
+  'w-full bg-brand-700 hover:bg-brand-600 focus-visible:bg-brand-700 active:bg-brand-700';
+
 const AuthFormFooter = (props: AuthFormFooterProps) => {
   const {
     isSubmitting,
@@ -55,11 +57,9 @@ const AuthFormFooter = (props: AuthFormFooterProps) => {
           type="submit"
           variant="primary"
           size="primary"
-          className={cn(
-            classNames?.submitButton ?? 'w-full',
-            'auth-field-reveal',
-          )}
-          style={{ animationDelay: '520ms' }}
+          className={
+            classNames?.submitButton ?? DEFAULT_AUTH_SUBMIT_BUTTON_CLASS
+          }
           disabled={isSubmitting}
         >
           {isSubmitting ? submittingLabel : submitLabel}
@@ -69,8 +69,7 @@ const AuthFormFooter = (props: AuthFormFooterProps) => {
       {props.onNavigationClick ? (
         <button
           type="button"
-          className={cn(navigationClassName, 'auth-field-reveal')}
-          style={{ animationDelay: '590ms' }}
+          className={navigationClassName}
           onClick={props.onNavigationClick}
         >
           {navigationLabel}
@@ -78,8 +77,7 @@ const AuthFormFooter = (props: AuthFormFooterProps) => {
       ) : (
         <Link
           href={props.navigationHref}
-          className={cn(navigationClassName, 'auth-field-reveal')}
-          style={{ animationDelay: '590ms' }}
+          className={navigationClassName}
         >
           {navigationLabel}
         </Link>

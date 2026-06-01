@@ -30,11 +30,19 @@ const loginButtonToneClassNames: Partial<Record<HeaderInteractiveTone, string>> 
 export const getHeaderRegisterButtonClassName = (
   tone: HeaderInteractiveTone,
 ) => {
-  return cn(headerAuthFocusClassNames[tone], registerButtonToneClassNames[tone]);
+  return cn(
+    'xl:h-[2.375rem] xl:w-[5.75rem] xl:px-space-20 xl:py-space-10 xl:text-13 lg:h-[2.875rem] lg:w-[7.4375rem] lg:px-space-32 lg:py-space-16 lg:text-14-08',
+    headerAuthFocusClassNames[tone],
+    registerButtonToneClassNames[tone],
+  );
 };
 
 export const getHeaderLoginButtonClassName = (
   tone: HeaderInteractiveTone,
 ) => {
-  return cn(headerAuthFocusClassNames[tone], loginButtonToneClassNames[tone]);
+  return cn(
+    'xl:text-13 lg:text-14-08',
+    headerAuthFocusClassNames[tone],
+    loginButtonToneClassNames[tone],
+  );
 };

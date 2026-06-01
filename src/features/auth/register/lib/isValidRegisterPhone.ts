@@ -1,4 +1,4 @@
-import { isValidPhoneNumber } from 'libphonenumber-js/max';
+import { isValidPhoneNumber } from 'libphonenumber-js/min';
 
 import { normalizeRegisterPhone } from './registerPhoneMask';
 

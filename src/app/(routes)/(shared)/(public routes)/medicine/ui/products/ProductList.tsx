@@ -1,12 +1,12 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import toast from 'react-hot-toast';
 
 import type { Product } from '@/entities/product';
 import { useAuth } from '@/features/auth/model';
-import AuthRequiredDialog from '@/features/auth/ui/AuthRequiredDialog';
 import {
   getCartErrorMessage,
   getCartProductId,
@@ -24,6 +24,14 @@ import { PRODUCTS_PER_PAGE } from '../../config';
 type ProductListProps = {
   products: Product[];
 };
+
+const AuthRequiredDialog = dynamic(
+  () => import('@/features/auth/ui/AuthRequiredDialog'),
+  {
+    loading: () => null,
+    ssr: false,
+  },
+);
 
 const ProductList = ({ products }: ProductListProps) => {
   const { user } = useAuth();
@@ -89,11 +97,13 @@ const ProductList = ({ products }: ProductListProps) => {
         })}
       </ul>
 
-      <AuthRequiredDialog
-        open={isAuthDialogOpen}
-        onOpenChange={setIsAuthDialogOpen}
-        redirectPath={redirectPath}
-      />
+      {isAuthDialogOpen && (
+        <AuthRequiredDialog
+          open={isAuthDialogOpen}
+          onOpenChange={setIsAuthDialogOpen}
+          redirectPath={redirectPath}
+        />
+      )}
     </section>
   );
 };

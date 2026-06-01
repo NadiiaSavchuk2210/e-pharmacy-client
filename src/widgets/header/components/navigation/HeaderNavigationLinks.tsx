@@ -45,7 +45,7 @@ export const HeaderNavigationLinks = ({
           linkClassName,
         )
       }
-      labelClassName="relative z-10"
+      labelClassName="relative z-10 whitespace-nowrap text-13 lg:text-14"
       onNavigate={onNavigate}
     />
   );

@@ -27,13 +27,14 @@ const PaginationLink = ({
 }: PaginationLinkProps) => {
   if (disabled) {
     return (
-      <span
-        aria-disabled="true"
+      <button
+        type="button"
+        disabled
         aria-label={label}
         className={cn(controlClassName, disabledControlClassName, className)}
       >
         {children}
-      </span>
+      </button>
     );
   }
 

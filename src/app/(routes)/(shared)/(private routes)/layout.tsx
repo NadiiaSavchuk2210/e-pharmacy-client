@@ -1,3 +1,6 @@
+import { Suspense } from 'react';
+
+import AuthRouteLoader from '@/features/auth/ui/guards/AuthRouteLoader';
 import PrivateRouteGuard from '@/features/auth/ui/guards/PrivateRouteGuard';
 
 type PrivateRoutesLayoutProps = {
@@ -5,7 +8,11 @@ type PrivateRoutesLayoutProps = {
 };
 
 const PrivateRoutesLayout = ({ children }: PrivateRoutesLayoutProps) => {
-  return <PrivateRouteGuard>{children}</PrivateRouteGuard>;
+  return (
+    <Suspense fallback={<AuthRouteLoader />}>
+      <PrivateRouteGuard>{children}</PrivateRouteGuard>
+    </Suspense>
+  );
 };
 
 export default PrivateRoutesLayout;

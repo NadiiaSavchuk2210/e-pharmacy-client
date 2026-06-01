@@ -9,12 +9,14 @@ import { formatMoney, parsePrice } from '../../lib';
 type CartItemRowProps = {
   item: CartItem;
   isDisabled: boolean;
+  isPriority?: boolean;
   onQuantityChange: (item: CartItem, quantity: number) => void | Promise<void>;
 };
 
 const CartItemRow = ({
   item,
   isDisabled,
+  isPriority = false,
   onQuantityChange,
 }: CartItemRowProps) => {
   const unitPrice = parsePrice(item.product.price);
@@ -31,6 +33,7 @@ const CartItemRow = ({
             fill
             sizes="(min-width: 768px) 122px, (max-width: 374px) 88px, 120px"
             className="object-contain dark:p-space-8"
+            priority={isPriority}
             unoptimized={item.product.photo === PRODUCT_IMAGE_PLACEHOLDER}
           />
         </div>

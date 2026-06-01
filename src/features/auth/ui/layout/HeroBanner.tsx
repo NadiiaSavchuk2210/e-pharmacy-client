@@ -16,7 +16,10 @@ const HeroBanner = () => {
           src={PillowImage}
           alt=""
           fill
-          sizes="(min-width: 1280px) 179px, (min-width: 768px) 179px, 95px"
+          sizes="(min-width: 768px) 152px, 95px"
+          preload
+          fetchPriority="high"
+          quality={75}
           className="object-contain"
         />
       </div>

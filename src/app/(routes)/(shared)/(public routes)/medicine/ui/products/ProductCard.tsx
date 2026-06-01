@@ -66,7 +66,7 @@ const ProductCard = ({
               <h3 className="mb-space-4 text-16 font-semibold leading-space-22 text-text md:text-18 md:leading-space-25 overflow-x-auto">
                 {product.name}
               </h3>
-              <p className="text-12 leading-space-18 text-secondary-text">
+              <p className="text-12 leading-space-18 text-text-muted">
                 {product.suppliers}
               </p>
             </div>
@@ -87,7 +87,7 @@ const ProductCard = ({
               className="justify-start"
               classNames={{
                 actionButton:
-                  'min-h-[34px] min-w-[108px] border-0 px-space-16 py-space-10 text-14 font-medium leading-space-14',
+                  'min-h-[34px] min-w-[108px] border-0 bg-brand-700 px-space-16 py-space-10 text-14 font-medium leading-space-14 hover:bg-brand-600 focus-visible:bg-brand-700 active:bg-brand-700',
               }}
             />
 
