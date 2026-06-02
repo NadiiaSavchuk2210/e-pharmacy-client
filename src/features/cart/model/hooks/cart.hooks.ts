@@ -11,6 +11,7 @@ import {
   getDeliveryQuote,
   updateCart,
 } from '../../api/cartApi';
+import { revalidateOrderProducts } from '../actions/cartRevalidation.actions';
 import { EMPTY_CART, EMPTY_CART_ITEMS, getCartProductId } from '../lib';
 import { CART_QUERY_STALE_TIME_MS, cartQueryKeys } from '../queries';
 
@@ -95,7 +96,7 @@ export const useCheckoutCartMutation = (userId: string | null | undefined) => {
 
   return useMutation({
     mutationFn: (payload: CheckoutCartPayload) => checkoutCart(payload),
-    onSuccess: () => {
+    onSuccess: (result) => {
       if (userId) {
         queryClient.setQueryData<Cart>(
           cartQueryKeys.current(userId),
@@ -104,6 +105,9 @@ export const useCheckoutCartMutation = (userId: string | null | undefined) => {
       }
 
       return Promise.all([
+        revalidateOrderProducts(result.order).catch((error: unknown) => {
+          console.error('Unable to revalidate order products', error);
+        }),
         queryClient.invalidateQueries({ queryKey: orderQueryKeys.all }),
         queryClient.invalidateQueries({ queryKey: cartQueryKeys.all }),
       ]);
