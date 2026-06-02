@@ -15,6 +15,23 @@ export const getIncreasedQuantity = (
 export const getDecreasedQuantity = (currentQuantity: number) =>
   Math.max(1, currentQuantity - 1);
 
+export const getQuantityWithinAvailability = (
+  quantity: number,
+  availableQuantity: number | null,
+) => {
+  if (availableQuantity === 0) {
+    return 0;
+  }
+
+  const normalizedQuantity = Math.max(1, Math.floor(quantity));
+
+  if (typeof availableQuantity === 'number') {
+    return Math.min(availableQuantity, normalizedQuantity);
+  }
+
+  return normalizedQuantity;
+};
+
 export const getAddToCartSuccessMessage = (
   productName: string,
   quantity: number,

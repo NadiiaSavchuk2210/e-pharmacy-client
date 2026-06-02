@@ -1,23 +1,15 @@
 import { cacheTags } from '@/shared/cache/cacheTags';
 
+import {
+  getProductIdsForOrder,
+  getStringValue,
+  getUniqueProductIds,
+} from './route.payload.helpers';
+
+import type { RevalidatePayload } from './route.types';
 import type { NextRequest } from 'next/server';
 
 export const REVALIDATE_SECRET_HEADER = 'x-revalidate-secret';
-
-type RevalidatePayload = {
-  id?: unknown;
-  productId?: unknown;
-  type?: unknown;
-};
-
-const getStringValue = (
-  payload: RevalidatePayload,
-  key: 'id' | 'productId',
-) => {
-  const value = payload[key];
-
-  return typeof value === 'string' && value.trim() ? value.trim() : null;
-};
 
 export const getRevalidateSecret = () => process.env.REVALIDATE_SECRET?.trim();
 
@@ -33,6 +25,19 @@ export const getTagsForRevalidatePayload = (payload: RevalidatePayload) => {
   switch (payload.type) {
     case 'product.created':
       return [cacheTags.products];
+
+    case 'order.created': {
+      const productId = getStringValue(payload, 'productId');
+      const productIds = getProductIdsForOrder(payload);
+      const affectedProductIds = getUniqueProductIds(
+        productId ? [productId, ...productIds] : productIds,
+      );
+
+      return [
+        cacheTags.products,
+        ...affectedProductIds.map((id) => cacheTags.product(id)),
+      ];
+    }
 
     case 'product.deleted':
     case 'product.updated': {

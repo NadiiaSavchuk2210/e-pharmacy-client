@@ -6,11 +6,12 @@ const parseProductStock = (stock: string) => {
 
 export const getAvailableQuantity = (stock: string) => parseProductStock(stock);
 
-export const getAvailableQuantityLabel = (stock: string) => {
-  const availableQuantity = getAvailableQuantity(stock);
-
+export const getAvailableQuantityLabelFromQuantity = (
+  availableQuantity: number | null,
+  fallbackStock: string,
+) => {
   if (availableQuantity === null) {
-    return stock.trim() || 'Not specified';
+    return fallbackStock.trim() || 'Not specified';
   }
 
   if (availableQuantity === 0) {
@@ -19,3 +20,6 @@ export const getAvailableQuantityLabel = (stock: string) => {
 
   return `${availableQuantity} available`;
 };
+
+export const getAvailableQuantityLabel = (stock: string) =>
+  getAvailableQuantityLabelFromQuantity(getAvailableQuantity(stock), stock);

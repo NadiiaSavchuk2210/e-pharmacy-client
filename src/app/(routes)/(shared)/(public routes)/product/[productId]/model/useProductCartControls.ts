@@ -6,33 +6,56 @@ import toast from 'react-hot-toast';
 
 import type { Product } from '@/entities/product';
 import { useAuth } from '@/features/auth/model';
-import { getCartErrorMessage, useAddProductToUserCart } from '@/features/cart';
+import {
+  getCartErrorMessage,
+  getCartProductId,
+  useAddProductToUserCart,
+  useUserCartItems,
+} from '@/features/cart';
 
 import {
   getAddToCartSuccessMessage,
   getDecreasedQuantity,
   getIncreasedQuantity,
   getInitialQuantity,
+  getQuantityWithinAvailability,
 } from './useProductCartControls.helpers';
 import {
   getAvailableQuantity,
-  getAvailableQuantityLabel,
+  getAvailableQuantityLabelFromQuantity,
 } from '../lib/productAvailability';
 
 export const useProductCartControls = (product: Product) => {
   const { user } = useAuth();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const availableQuantity = getAvailableQuantity(product.stock);
+  const cartItems = useUserCartItems(user?.id);
+  const stockQuantity = getAvailableQuantity(product.stock);
+  const productId = getCartProductId(product);
+  const cartProductQuantity = useMemo(
+    () =>
+      cartItems.find((item) => getCartProductId(item.product) === productId)
+        ?.quantity ?? 0,
+    [cartItems, productId],
+  );
+  const availableQuantity =
+    typeof stockQuantity === 'number'
+      ? Math.max(0, stockQuantity - cartProductQuantity)
+      : stockQuantity;
   const [quantity, setQuantity] = useState(() =>
     getInitialQuantity(availableQuantity),
   );
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const [isAddToCartPending, setIsAddToCartPending] = useState(false);
   const addProductToUserCart = useAddProductToUserCart();
+  const selectedQuantity = getQuantityWithinAvailability(
+    quantity,
+    availableQuantity,
+  );
   const isOutOfStock = availableQuantity === 0;
   const isMaxQuantitySelected =
-    typeof availableQuantity === 'number' && quantity >= availableQuantity;
+    typeof availableQuantity === 'number' &&
+    selectedQuantity >= availableQuantity;
 
   const redirectPath = useMemo(() => {
     const params = searchParams.toString();
@@ -41,13 +64,11 @@ export const useProductCartControls = (product: Product) => {
   }, [pathname, searchParams]);
 
   const handleIncreaseQuantity = () => {
-    setQuantity((currentQuantity) =>
-      getIncreasedQuantity(currentQuantity, availableQuantity),
-    );
+    setQuantity(getIncreasedQuantity(selectedQuantity, availableQuantity));
   };
 
   const handleDecreaseQuantity = () => {
-    setQuantity(getDecreasedQuantity);
+    setQuantity(getDecreasedQuantity(selectedQuantity));
   };
 
   const handleAddToCart = async () => {
@@ -64,8 +85,8 @@ export const useProductCartControls = (product: Product) => {
     setIsAddToCartPending(true);
 
     try {
-      await addProductToUserCart(user.id, product, quantity);
-      toast.success(getAddToCartSuccessMessage(product.name, quantity));
+      await addProductToUserCart(user.id, product, selectedQuantity);
+      toast.success(getAddToCartSuccessMessage(product.name, selectedQuantity));
     } catch (error) {
       toast.error(getCartErrorMessage(error));
     } finally {
@@ -74,7 +95,10 @@ export const useProductCartControls = (product: Product) => {
   };
 
   return {
-    availableQuantityLabel: getAvailableQuantityLabel(product.stock),
+    availableQuantityLabel: getAvailableQuantityLabelFromQuantity(
+      availableQuantity,
+      product.stock,
+    ),
     handleAddToCart,
     handleDecreaseQuantity,
     handleIncreaseQuantity,
@@ -82,7 +106,7 @@ export const useProductCartControls = (product: Product) => {
     isAuthDialogOpen,
     isMaxQuantitySelected,
     isOutOfStock,
-    quantity,
+    quantity: selectedQuantity,
     redirectPath,
     setIsAuthDialogOpen,
   };
