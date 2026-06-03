@@ -3,7 +3,10 @@
 import { useEffect, useSyncExternalStore } from 'react';
 
 import { refreshAuthSession } from '@/shared/api/apiClient';
-import { hasAuthAccessToken } from '@/shared/api/authSession';
+import {
+  hasAuthAccessToken,
+  hasAuthSessionRestoreHint,
+} from '@/shared/api/authSession';
 
 import { useClearAuthState } from './authState';
 import { useAuthSessionStatus } from './useAuthSessionStatus';
@@ -71,6 +74,11 @@ export const useAuthSessionRestore = (enabled = true) => {
     }
 
     if (hasAuthAccessToken()) {
+      setAuthSessionRestoreStatus('settled');
+      return;
+    }
+
+    if (!hasAuthSessionRestoreHint()) {
       setAuthSessionRestoreStatus('settled');
       return;
     }

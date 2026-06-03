@@ -16,6 +16,7 @@ export type AuthTokenPayload = {
 const ACCESS_TOKEN_KEY = 'accessToken';
 const REFRESH_TOKEN_KEY = 'refreshToken';
 const ACCESS_TOKEN_EXPIRES_AT_KEY = 'accessTokenExpiresAt';
+const AUTH_SESSION_RESTORE_HINT_KEY = 'hasAuthSession';
 const AUTH_SESSION_CHANGE_EVENT = 'auth-session-change';
 const LEGACY_LOCAL_STORAGE_KEYS = [
   ACCESS_TOKEN_KEY,
@@ -72,6 +73,18 @@ const removeStoredAccessToken = () => {
   sessionStorage?.removeItem(ACCESS_TOKEN_EXPIRES_AT_KEY);
 };
 
+const setAuthSessionRestoreHint = () => {
+  if (!isBrowser()) return;
+
+  getBrowserGlobal().localStorage?.setItem(AUTH_SESSION_RESTORE_HINT_KEY, '1');
+};
+
+const removeAuthSessionRestoreHint = () => {
+  if (!isBrowser()) return;
+
+  getBrowserGlobal().localStorage?.removeItem(AUTH_SESSION_RESTORE_HINT_KEY);
+};
+
 const hydrateAuthAccessToken = () => {
   const accessToken = readStoredAccessToken();
   const expiresAt = readStoredAccessTokenExpiresAt();
@@ -98,6 +111,15 @@ export const getAuthAccessToken = () => authAccessToken;
 export const getAuthAccessTokenExpiresAt = () => authAccessTokenExpiresAt;
 
 export const hasAuthAccessToken = () => Boolean(getAuthAccessToken());
+
+export const hasAuthSessionRestoreHint = () => {
+  if (!isBrowser()) return false;
+
+  return (
+    getBrowserGlobal().localStorage?.getItem(AUTH_SESSION_RESTORE_HINT_KEY) ===
+    '1'
+  );
+};
 
 export const getAuthTokenFromPayload = (data: AuthTokenPayload) =>
   data.token ?? data.accessToken ?? null;
@@ -132,8 +154,10 @@ export const persistAuthSession = (data: AuthTokenPayload) => {
 
   if (accessToken) {
     browserGlobal.sessionStorage?.setItem(ACCESS_TOKEN_KEY, accessToken);
+    setAuthSessionRestoreHint();
   } else {
     browserGlobal.sessionStorage?.removeItem(ACCESS_TOKEN_KEY);
+    removeAuthSessionRestoreHint();
   }
 
   if (expiresAt) {
@@ -155,6 +179,7 @@ export const clearAuthSession = () => {
   authAccessTokenExpiresAt = null;
   clearLegacyAuthStorage();
   removeStoredAccessToken();
+  removeAuthSessionRestoreHint();
   notifyAuthSessionChange();
 };
 
