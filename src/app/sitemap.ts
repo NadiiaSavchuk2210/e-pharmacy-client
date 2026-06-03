@@ -2,7 +2,15 @@ import { BASE_URL } from '@/shared/constants/constants';
 
 import type { MetadataRoute } from 'next';
 
-const indexedRoutes = ['/', '/home', '/medicine-store', '/medicine', '/feature'];
+const indexedRoutes = [
+  '/',
+  '/home',
+  '/medicine-store',
+  '/medicine',
+  '/feature',
+  '/privacy-policy',
+  '/terms-and-conditions',
+];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return indexedRoutes.map((route) => ({

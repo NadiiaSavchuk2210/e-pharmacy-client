@@ -10,6 +10,7 @@ const inter = Inter({
   variable: '--font-inter',
   subsets: ['latin'],
   display: 'swap',
+  preload: false,
   fallback: ['Arial', 'Helvetica', 'sans-serif'],
 });
 
